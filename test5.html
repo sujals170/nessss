@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IELTS Academic Reading — Recent Actual Test 6, Test 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f2eb;--surface:#ffffff;--surface2:#f9f7f2;--surface3:#f0ede4;
+  --accent:#1a5c3e;--accent-light:#e8f5ee;--accent2:#2a7a54;
+  --text:#1c1c1c;--muted:#6b6b6b;--muted2:#999;
+  --border:#ddd8cc;--border2:#e8e4da;
+  --hl-y:rgba(255,220,0,0.5);--hl-g:rgba(80,200,120,0.45);
+  --hl-p:rgba(255,100,160,0.45);--hl-b:rgba(60,150,255,0.45);
+  --shadow:0 2px 12px rgba(0,0,0,0.08);
+  --passage-fs:14.5px;--question-fs:12.5px;
+}
+html{height:100%;overflow:hidden}
+body{height:100%;overflow:hidden;display:flex;flex-direction:column;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+#topbar{height:52px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;position:relative;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+#topbar-left{display:flex;align-items:center;gap:10px}
+#topbar-logo{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:0.7}
+#topbar-title{font-size:14px;font-weight:600}
+#topbar-right{display:flex;align-items:center;gap:8px}
+#timer-display{font-size:20px;font-weight:700;font-family:'Courier New',monospace;letter-spacing:3px;min-width:70px;text-align:center}
+#timer-display.warn{color:#ffd080}
+#timer-display.danger{color:#ff8888;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.5}}
+.topbar-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s}
+.topbar-btn:hover{background:rgba(255,255,255,0.28)}
+.topbar-btn.submit{background:#fff;color:var(--accent);border-color:#fff}
+.topbar-btn.submit:hover{background:#e8f5ee}
+/* Font size buttons */
+.fs-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;width:28px;height:28px;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;transition:background 0.2s;line-height:1}
+.fs-btn:hover{background:rgba(255,255,255,0.32)}
+.fs-group{display:flex;align-items:center;gap:3px;border:1px solid rgba(255,255,255,0.25);border-radius:6px;padding:2px 5px;gap:4px}
+.fs-label{font-size:10px;opacity:0.7;letter-spacing:0.5px;font-weight:600}
+#prog-bar{height:4px;background:rgba(255,255,255,0.2);flex-shrink:0}
+#prog-fill{height:100%;background:#6ee7b7;transition:width 0.4s ease}
+#passage-tabs{background:var(--surface);border-bottom:2px solid var(--border);display:flex;flex-shrink:0;overflow-x:auto}
+.ptab{padding:11px 18px;font-size:12px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all 0.18s;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:7px}
+.ptab:hover{color:var(--accent);background:var(--accent-light)}
+.ptab.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-light)}
+.ptab-badge{font-size:10px;background:var(--border);color:var(--muted);padding:2px 7px;border-radius:10px;font-weight:700}
+.ptab.active .ptab-badge{background:var(--accent);color:#fff}
+#main{display:flex;flex:1;overflow:hidden;min-height:0}
+#passage-panel{flex:1;overflow-y:auto;padding:28px 36px;background:var(--surface);border-right:1px solid var(--border);min-width:0}
+#passage-panel::-webkit-scrollbar{width:6px}
+#passage-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.passage-header{margin-bottom:22px}
+.passage-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.passage-title{font-size:22px;font-weight:700;font-family:'Merriweather',serif;color:var(--text);margin-bottom:6px}
+.passage-instruct{font-size:12px;color:var(--muted);font-style:italic;padding:8px 12px;background:var(--surface3);border-radius:6px;border-left:3px solid var(--accent)}
+.passage-body p{font-family:'Merriweather',serif;font-size:var(--passage-fs);line-height:1.9;margin-bottom:16px;text-align:justify;color:#222}
+.passage-body .section-letter{font-size:12px;font-weight:700;color:var(--accent);font-family:'Inter',sans-serif;border:2px solid var(--accent);border-radius:4px;padding:1px 7px;display:inline-block;margin-right:8px;vertical-align:middle}
+.passage-ref{border-radius:3px;padding:1px 3px;display:inline}
+.passage-ref.ref-correct{background:rgba(26,92,62,0.13);border-bottom:2px solid #1a5c3e}
+.passage-ref.ref-wrong{background:rgba(192,57,43,0.12);border-bottom:2px solid #c0392b}
+.passage-ref.ref-blank{background:rgba(224,160,32,0.13);border-bottom:2px solid #e0a020}
+.ref-badge{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;font-size:9px;font-weight:700;font-family:'Inter',sans-serif;color:#fff;vertical-align:middle;margin-right:2px;flex-shrink:0;line-height:1}
+.ref-badge.rb-correct{background:#1a5c3e}
+.ref-badge.rb-wrong{background:#c0392b}
+.ref-badge.rb-blank{background:#e0a020}
+mark.hy{background:var(--hl-y);border-radius:2px;padding:0 1px}
+mark.hg{background:var(--hl-g);border-radius:2px;padding:0 1px}
+mark.hp{background:var(--hl-p);border-radius:2px;padding:0 1px}
+mark.hb{background:var(--hl-b);border-radius:2px;padding:0 1px}
+#resizer{width:6px;background:var(--border);cursor:col-resize;flex-shrink:0;transition:background 0.2s;position:relative}
+#resizer:hover,#resizer.dragging{background:var(--accent)}
+#resizer::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:32px;background:var(--muted2);border-radius:2px}
+#questions-panel{width:400px;overflow-y:auto;background:var(--surface2);padding:16px;flex-shrink:0;min-width:260px}
+#questions-panel::-webkit-scrollbar{width:5px}
+#questions-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-bar{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 12px;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;box-shadow:var(--shadow)}
+.hl-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted)}
+.hl-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:transform 0.15s,border-color 0.15s;flex-shrink:0}
+.hl-dot:hover{transform:scale(1.2)}
+.hl-dot.active{border-color:#333;transform:scale(1.15)}
+.hl-dot.dy{background:#ffd800}
+.hl-dot.dg{background:#50c878}
+.hl-dot.dp{background:#ff64a0}
+.hl-dot.db{background:#3c96ff}
+.hl-sep{width:1px;height:20px;background:var(--border)}
+.hl-erase{font-size:11px;font-family:'Inter',sans-serif;color:var(--muted);background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:4px 9px;cursor:pointer;font-weight:600}
+.hl-erase:hover{background:var(--border)}
+.hl-note{font-size:10px;color:var(--muted2);font-style:italic}
+/* Question highlight mode indicator */
+.hl-mode-btn{
+  font-size:11px;font-family:'Inter',sans-serif;background:var(--surface3);
+  border:1px solid var(--border);border-radius:4px;padding:4px 9px;
+  cursor:pointer;font-weight:600;color:var(--muted);transition:all 0.15s;
+}
+.hl-mode-btn.qmode-on{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.q-section{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow)}
+.q-section-hd{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+.q-section-instruct{font-size:11.5px;color:var(--muted);font-style:italic;line-height:1.5;margin-bottom:12px;padding:7px 10px;background:var(--surface3);border-radius:5px}
+.q-item{border-bottom:1px solid var(--border2);padding-bottom:10px;margin-bottom:10px;border-radius:6px;padding:8px;transition:background 0.2s,border-left 0.2s;user-select:text}
+.q-item.review-correct{background:#edfaf3;border-left:4px solid #1a5c3e}
+.q-item.review-wrong{background:#fdf0f0;border-left:4px solid #c0392b}
+.q-item.review-blank{background:#fdf6e8;border-left:4px solid #e0a020}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-num{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px}
+.q-text{font-size:var(--question-fs);color:var(--text);line-height:1.5;margin-bottom:7px}
+.q-opts{display:flex;flex-direction:column;gap:4px}
+.q-opt{display:flex;align-items:flex-start;gap:7px;font-size:var(--question-fs);padding:5px 7px;border-radius:5px;cursor:pointer;transition:background 0.15s;line-height:1.45;border:1px solid transparent}
+.q-opt:hover{background:var(--accent-light);border-color:var(--border)}
+.q-opt input[type=radio]{accent-color:var(--accent);margin-top:2px;flex-shrink:0}
+.q-opt.selected{background:var(--accent-light);border-color:var(--accent)}
+.q-opt.correct-ans{background:#d4f4e8;border-color:#1a5c3e}
+.q-opt.wrong-ans{background:#fde8e8;border-color:#c0392b}
+.q-fill{width:100%;border:none;border-bottom:2px solid var(--border);background:transparent;font-size:var(--question-fs);font-family:'Inter',sans-serif;padding:4px 2px;outline:none;color:var(--text);transition:border-color 0.2s}
+.q-fill:focus{border-bottom-color:var(--accent)}
+.q-fill.correct{border-bottom-color:#1a5c3e;background:rgba(80,200,130,0.1)}
+.q-fill.wrong{border-bottom-color:#c0392b;background:rgba(200,60,60,0.08)}
+.q-match-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:var(--question-fs)}
+.q-match-sel{border:1px solid var(--border);border-radius:5px;padding:4px 7px;font-size:11.5px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;min-width:52px}
+.q-match-sel:focus{border-color:var(--accent)}
+.q-match-sel.correct{border-color:#1a5c3e;background:#d4f4e8}
+.q-match-sel.wrong{border-color:#c0392b;background:#fde8e8}
+#bottom-bar{height:48px;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+#answered-info{font-size:12px;color:var(--muted);font-weight:500}
+.nav-btns{display:flex;gap:8px}
+.nav-btn{padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.18s;border:1px solid var(--border);background:var(--surface2);color:var(--text)}
+.nav-btn:hover{background:var(--border)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-btn.primary:hover{background:var(--accent2)}
+#result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999;align-items:center;justify-content:center}
+#result-overlay.show{display:flex}
+#result-box{background:var(--surface);border-radius:16px;padding:40px 36px;max-width:460px;width:92%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25)}
+.result-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.result-title{font-size:22px;font-weight:700;margin-bottom:4px;font-family:'Merriweather',serif}
+.result-subtitle{font-size:13px;color:var(--muted);margin-bottom:18px}
+.band-score{font-size:64px;font-weight:700;color:var(--accent);line-height:1;margin:10px 0 6px;font-family:'Merriweather',serif}
+.band-label{font-size:12px;color:var(--muted);margin-bottom:20px}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.score-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 8px}
+.score-card .sc-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px}
+.score-card .sc-val{font-size:22px;font-weight:700;color:var(--text)}
+.result-btns{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.result-btn{padding:11px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border:1px solid var(--border);background:var(--surface2);color:var(--text);transition:all 0.18s}
+.result-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.result-btn:hover{opacity:0.88}
+#pause-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:500;align-items:center;justify-content:center}
+#pause-overlay.show{display:flex}
+#pause-box{background:var(--surface);border-radius:16px;padding:48px 40px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+#pause-box h2{font-size:28px;font-family:'Merriweather',serif;margin-bottom:8px}
+#pause-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
+.q-answer-reveal{font-size:11.5px;padding:6px 10px;border-radius:5px;margin-top:6px;display:none}
+.q-answer-reveal.show{display:block}
+.q-answer-reveal.correct-msg{background:#d4f4e8;color:#1a5c3e;border-left:3px solid #1a5c3e}
+.q-answer-reveal.wrong-msg{background:#fde8e8;color:#922b2b;border-left:3px solid #c0392b}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-tip{position:fixed;background:#1c1c1c;color:#fff;font-size:11px;padding:4px 10px;border-radius:4px;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:300;font-family:'Inter',sans-serif}
+/* ── TEST NAVIGATOR ── */
+#nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.52);z-index:998}
+#nav-overlay.show{display:flex}
+#nav-panel{background:var(--surface);width:290px;height:100%;overflow-y:auto;display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,0.18)}
+#nav-hd{background:var(--accent);color:#fff;padding:18px 20px}
+#nav-hd h3{font-size:15px;font-weight:700;margin-bottom:2px}
+#nav-hd p{font-size:11px;opacity:0.72}
+.nav-home-lnk{display:flex;align-items:center;gap:8px;padding:11px 20px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;transition:background 0.15s}
+.nav-home-lnk:hover{background:var(--accent-light);color:var(--accent)}
+.ntc{display:block;padding:13px 20px;border-bottom:1px solid var(--border2);text-decoration:none;color:var(--text);transition:background 0.15s;border-left:3px solid transparent}
+.ntc:hover{background:var(--accent-light)}
+.ntc.cur{background:var(--accent-light);border-left-color:var(--accent)}
+.ntc-num{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:2px}
+.ntc-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.ntc-pass{font-size:11px;color:var(--muted);line-height:1.5}
+.ntc-badge{display:inline-block;font-size:10px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:10px;margin-top:5px;font-weight:600}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div id="topbar-left">
+    <span style="opacity:0.3;font-size:16px">|</span>
+    <span id="topbar-title">IELTS Academic — Test 5</span>
+    <button class="topbar-btn" onclick="openNav()">☰ Tests</button>
+  </div>
+  <div id="topbar-right">
+    <div class="fs-group">
+      <span class="fs-label">A</span>
+      <button class="fs-btn" onclick="changeFontSize(-1)" title="Decrease font size">−</button>
+      <button class="fs-btn" onclick="changeFontSize(1)" title="Increase font size">+</button>
+    </div>
+    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" style="opacity:0.7"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span id="timer-display">60:00</span>
+    <button class="topbar-btn" id="pause-btn" onclick="togglePause()">Pause</button>
+    <button class="topbar-btn submit" onclick="submitTest()">Submit Test</button>
+  </div>
+</div>
+<div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
+
+<div id="passage-tabs">
+  <button class="ptab active" onclick="goToPassage(0)" id="tab0">
+    Passage 1 — The Pearl
+    <span class="ptab-badge" id="badge0">0/13</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(1)" id="tab1">
+    Passage 2 — History of the Automobile
+    <span class="ptab-badge" id="badge1">0/14</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(2)" id="tab2">
+    Passage 3 — Elephant Communication
+    <span class="ptab-badge" id="badge2">0/13</span>
+  </button>
+</div>
+
+<div style="display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0" id="layout">
+<div id="main">
+  <div id="passage-panel"></div>
+  <div id="resizer"></div>
+  <div id="questions-panel">
+    <div id="hl-bar">
+      <span class="hl-label">Highlight</span>
+      <button class="hl-dot dy active" id="hly" onclick="setHL('y')" title="Yellow"></button>
+      <button class="hl-dot dg" id="hlg" onclick="setHL('g')" title="Green"></button>
+      <button class="hl-dot dp" id="hlp" onclick="setHL('p')" title="Pink"></button>
+      <button class="hl-dot db" id="hlb" onclick="setHL('b')" title="Blue"></button>
+      <div class="hl-sep"></div>
+      <button class="hl-erase" onclick="setHL('e')">✕ Erase</button>
+      <div class="hl-sep"></div>
+      <button class="hl-mode-btn" id="qhl-toggle" onclick="toggleQHL()" title="Toggle question highlighting">Q Highlight</button>
+      <span class="hl-note" id="hl-note-txt">Passage</span>
+    </div>
+    <div id="q-panel"></div>
+  </div>
+</div>
+<div id="bottom-bar">
+  <span id="answered-info">0 / 40 answered</span>
+  <div class="nav-btns">
+    <button class="nav-btn" onclick="goToPassage(currentPassage-1)" id="btn-prev">← Previous</button>
+    <button class="nav-btn primary" onclick="goToPassage(currentPassage+1)" id="btn-next">Next Passage →</button>
+  </div>
+</div>
+</div>
+
+<div id="pause-overlay">
+  <div id="pause-box">
+    <h2>Test Paused</h2>
+    <p>Your progress is saved. Click resume to continue.</p>
+    <button class="nav-btn primary" style="padding:12px 32px;font-size:14px" onclick="togglePause()">▶ Resume</button>
+  </div>
+</div>
+
+<div id="result-overlay">
+  <div id="result-box">
+    <div class="result-tag">Test Complete</div>
+    <div class="result-title">IELTS Academic Reading</div>
+    <div class="result-subtitle">Recent Actual Test 6, Test 5 — Your Results</div>
+    <div class="band-score" id="r-band">—</div>
+    <div class="band-label">Estimated Band Score</div>
+    <div class="score-grid">
+      <div class="score-card"><div class="sc-label">Correct</div><div class="sc-val" id="r-correct" style="color:#1a5c3e">—</div></div>
+      <div class="score-card"><div class="sc-label">Incorrect</div><div class="sc-val" id="r-wrong" style="color:#c0392b">—</div></div>
+      <div class="score-card"><div class="sc-label">Unanswered</div><div class="sc-val" id="r-blank" style="color:#999">—</div></div>
+    </div>
+    <div class="result-btns">
+      <button class="result-btn primary" onclick="reviewAnswers()">Review All Answers</button>
+      <button class="result-btn" onclick="location.href='index.html'">← All Tests</button>
+      <button class="result-btn" onclick="restartTest()">Restart Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- Test Navigator -->
+<div id="nav-overlay" onclick="closeNav(event)">
+  <div id="nav-panel">
+    <div id="nav-hd"><h3>IELTS Practice Tests</h3><p>Academic Reading</p></div>
+    <a href="index.html" class="nav-home-lnk">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home — All Tests
+    </a>
+    <!-- ADD MORE TESTS BELOW -->
+    <a href="test5.html" class="ntc cur">
+      <div class="ntc-num">Test 5</div>
+      <div class="ntc-name">Recent Actual Test 6</div>
+      <div class="ntc-pass">The Pearl · History of Automobile · Elephant Communication</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test6.html" class="ntc">
+      <div class="ntc-num">Test 6</div>
+      <div class="ntc-name">Academic Reading Test 6</div>
+      <div class="ntc-pass">History of Refrigeration · Ancient People in Sahara · Texting the Television</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+  </div>
+</div>
+
+<div id="hl-tip"></div>
+
+<script>
+const ANSWER_KEY = {
+  q1:'A', q2:'E', q3:'G', q4:'C',
+  q5:'ancient Rome', q6:'Persia', q7:'Mallorca',
+  q8:'Japan', q9:'Australia', q10:'Bahrain',
+  q11:'A', q12:'C', q13:'A',
+  q14:'D', q15:'A', q16:'B', q17:'F', q18:'C', q19:'E',
+  q20:'internal combustion', q21:'identity and status',
+  q22:'15 minutes', q23:'1973 oil crisis',
+  q24:'gas-guzzler', q25:'fuel power', q26:'toxic gas',
+  q27:'B',
+  q28:'hammer', q29:'body', q30:'pad', q31:'sinus cavities',
+  q32:'trunks and feet', q33:'infrasonic', q34:'ecology',
+  q35:'seismic signals', q36:'auditory communication',
+  q37:'mate', q38:'ground',
+  q39:'A', q40:'C'
+};
+
+const PASSAGE_REFS = {
+  q1:'women from ancient Rome went to bed with pearls',
+  q2:'the irritant may be rejected',
+  q3:'Several factors are taken into account to evaluate a pearl',
+  q4:'There is only one difference between cultured pearls and natural ones',
+  q5:'women from ancient Rome went to bed with pearls on them',
+  q6:'In the eastern countries like Persia, ground pearl powders',
+  q7:'The Island of Mallorca in Spain is renowned',
+  q8:"Japan's Akoya pearls are one of the glossiest pearls",
+  q9:'the south sea water of Australia is a cradle to bigger pearls',
+  q10:'found in the Persian Gulf, particularly around Bahrain',
+  q11:'This results in much larger cores in cultivated pearls',
+  q13:"Japan's Akoya pearls are one of the glossiest pearls out there, while the south sea water of Australia",
+  q14:'Benz attained a patent for his invention on 29 January 1886',
+  q15:'This large-scale, production-line manufacture of affordable automobiles was debuted',
+  q16:'BMC first launched a revolutionary space-friendly Mini in 1959',
+  q17:'kept upgraded in terms of overall performance in other nations',
+  q18:'full-size sedans such as Cadillac and Lincoln scored a huge comeback',
+  q19:'Mazda achieved many triumphs with its engine firstly installed in the fore-wheel',
+  q20:'petrol-fueled internal combustion engine in 1885',
+  q21:'cars immediately became a symbol of identity and status',
+  q22:'A Ford car would come off all assembled from the line every 15 minutes',
+  q23:'the American automobile industry suffered from the 1973 oil crisis',
+  q24:'it gained itself a reputation as a gas-guzzler',
+  q25:'sharp elevation of fuel power in the modern engine management system',
+  q26:'Toxic gas from both fuels is known to pollute the air',
+  q28:"The hammer bone in an elephant's inner ear",
+  q29:'their massive bodies, which enable them to give out low-frequency sounds',
+  q30:"the elephant's toe bones are set on a fatty pad",
+  q31:'The front of the skull is riddled with sinus cavities',
+  q32:"listening' with their trunks and feet instead of their ears",
+  q33:'one detects infrasonic vibration',
+  q34:'geophysics, neurophysiology and ecology',
+  q35:'sending and receiving seismic signals',
+  q36:'auditory communication is not the only thing that is going on',
+  q37:'difficult for an elephant to find a mate',
+  q38:'sense warning signals through the ground'
+};
+
+const PASSAGES = [
+  {
+    tag:'Passage 1', title:'The Pearl',
+    instruct:'You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.',
+    body:`<p><span class="section-letter">A</span> The pearl has always had a special status in the rich and powerful all through the history. For instance, women from ancient Rome went to bed with pearls on them, so that they could remind themselves how wealthy they were after waking up. Pearls used to have more commercial value than diamonds until jewellers learnt to cut gems. In the eastern countries like Persia, ground pearl powders could be used as a medicine to cure anything including heart diseases and epilepsy.</p>
+<p><span class="section-letter">B</span> Pearls can generally be divided into three categories: natural, cultured and imitation. When an irritant (such as a grain of sand) gets inside a certain type of oyster, mussel, or clam, the mollusc will secrete a fluid as a means of defence to coat the irritant. Gradually, layers are accumulated around the irritant until a lustrous natural pearl is formed.</p>
+<p><span class="section-letter">C</span> A cultured pearl undergoes the same process. There is only one difference between cultured pearls and natural ones: in cultured pearls, the irritant is a bead called 'mother of pearl' and is placed in the oyster through surgical implantation. This results in much larger cores in cultivated pearls than those in natural pearls. As long as there are enough layers of nacre (the secreted fluid covering the irritant) to create a gorgeous, gem-quality pearl, the size of the nucleus wouldn't make a difference to beauty or durability.</p>
+<p><span class="section-letter">D</span> Pearls can come from both salt and freshwater sources. Typically, pearls from salt water usually have high quality, although several freshwater pearls are considered high in quality, too. In addition, freshwater pearls often have irregular shapes, with a puffed rice appearance. Nevertheless, it is the individual merits that determine the pearl's value more than the sources of pearls. Saltwater pearl oysters are usually cultivated in protected lagoons or volcanic atolls, while most freshwater cultured pearls sold today come from China. There are a number of options for producing cultured pearls: use fresh water or sea water shells, transplant the graft into the mantle or into the gonad, add a spherical bead or do it nonbeaded.</p>
+<p><span class="section-letter">E</span> No matter which method is used to get pearls, the process usually takes several years. Mussels must reach a mature age, which may take up almost three years, and then be transplanted an irritant. When the irritant is put in place, it takes approximately another three years for a pearl to reach its full size. Sometimes, the irritant may be rejected. As a result, the pearl may be seriously deformed, or the oyster may directly die from such numerous complications as diseases. At the end of a 5- to 10-year circle, only half of the oysters may have made it through. Among the pearls that are actually produced in the end, only about 5% of them will be high-quality enough for the jewellery makers.</p>
+<p><span class="section-letter">F</span> Imitation pearls are of another different story. The Island of Mallorca in Spain is renowned for its imitation pearl industry. In most cases, a bead is dipped into a solution made from fish scales. But this coating is quite thin and often wears off. One way to distinguish the imitation pearls is to have a bite on it. Fake pearls glide through your teeth, while the layers of nacre on the real pearls feel gritty.</p>
+<p><span class="section-letter">G</span> Several factors are taken into account to evaluate a pearl: size, shape, colour, the quality of surface and lustre. Generally, the three types of pearls come in such order (with the value decreasing): natural pearls, cultured pearls and imitation pearls (which basically are worthless). For jewellers, one way to tell whether a pearl is natural or cultured is to send it to a gem lab and perform an X-ray on it. High-quality natural pearls are extremely rare. Japan's Akoya pearls are one of the glossiest pearls out there, while the south sea water of Australia is a cradle to bigger pearls.</p>
+<p><span class="section-letter">H</span> Historically, the pearls with the highest quality around the globe are found in the Persian Gulf, particularly around Bahrain. These pearls have to be hand-harvested by divers with no advanced equipment. Unfortunately, when the large reserve of oil was discovered in the early 1930s, Persian Gulf's natural pearl industry came to a sudden end because the contaminated water destroyed the once pristine pearls. In the present days, India probably has the largest stock of natural pearls. However, it is quite an irony that a large part of India's stock of natural pearls are originally from Bahrain.</p>`
+  },
+  {
+    tag:'Passage 2', title:'The History of the Automobile',
+    instruct:'You should spend about 20 minutes on Questions 14–27, which are based on Reading Passage 2 below.',
+    body:`<p>The start of the automobile's history went all the way back to 1769 when automobiles running on the steam engine were invented as carriers for human transport. In 1806, the first batch of cars powered by an internal combustion engine came into being, which pioneered the introduction of the widespread modern petrol-fueled internal combustion engine in 1885.</p>
+<p>It is generally acknowledged that the first practical automobiles equipped with petrol/gasoline-powered internal combustion engines were invented almost at the same time by different German inventors who were working on their own. Karl Benz first built the automobile in 1885 in Mannheim. Benz attained a patent for his invention on 29 January 1886, and in 1888, he started to produce automobiles in a company that later became the renowned Mercedes-Benz.</p>
+<p>As this century began, the automobile industry marched into the transportation market for the wealth. Drivers at that time were an adventurous bunch; they would go out regardless of the weather condition even if they weren't even protected by an enclosed body or a convertible top. Everybody in the community knew who owned what car, and cars immediately became a symbol of identity and status. Later, cars became more popular among the public since it allowed people to travel whenever and wherever they wanted. Thus, the price of automobiles in Europe and North America kept dropping, and more people from the middle class could afford them. This was especially attributed to Henry Ford who did two crucial things. First, he set the price as reasonable as possible for his cars; second, he paid his employees enough salaries so that they could afford the cars made by their very own hands.</p>
+<p>The trend of interchangeable parts and mass production in an assembly line style had been led by America, and from 1914, this concept was significantly reinforced by Henry Ford. This large-scale, production-line manufacture of affordable automobiles was debuted. A Ford car would come off all assembled from the line every 15 minutes, an interval shorter than any of the former methods. Not only did it raise productivity, but also cut down on the requirement for manpower. Ford significantly lowered the chance of injury by carrying out complicated safety procedures in production—particularly assigning workers to specific locations rather than giving them the freedom to wander around. This mixture of high wages and high efficiency was known as Fordism, which provided a valuable lesson for most major industries.</p>
+<p>The first Jeep automobile that came out as the prototype Bantam BRC was the primary light 4-wheel-drive automobile of the U.S. Army and Allies, and during World War II and the postwar period, its sale skyrocketed. Since then, plenty of Jeep derivatives with similar military and civilian functions have been created and kept upgraded in terms of overall performance in other nations.</p>
+<p>Through all the 1950s, engine power and automobile rates grew higher, designs evolved into a more integrated and artful form, and cars were spreading globally. In the 1960s, the landscape changed as Detroit was confronted with foreign competition. The European manufacturers used the latest technology, and Japan came into the picture as a dedicated car-making country. General Motors, Chrysler, and Ford dabbled with radical tiny cars such as the GM A-bodies with little success. As joint ventures such as the British Motor Corporation unified the market, captive imports and badge imports swept all over the US and the UK. BMC first launched a revolutionary space-friendly Mini in 1959, which turned out to harvest large global sales. Previously remaining under the Austin and Morris names, Mini later became an individual marque in 1969. The trend of corporate consolidation landed in Italy when niche makers such as Maserati, Ferrari, and Lancia were bought by larger enterprises. By the end of the 20th century, there had been a sharp fall in the number of automobile marques.</p>
+<p>In the US, car performance dominated marketing, justified by the typical cases of pony cars and muscle cars. However, in the 1970s, everything changed as the American automobile industry suffered from the 1973 oil crisis, competition with Japanese and European imports, automobile emission-control regulations, and moribund innovation. The irony in all this was that full-size sedans such as Cadillac and Lincoln scored a huge comeback between the years of economic crisis. In terms of technology, the most mentionable developments that postwar era had seen were the widespread use of independent suspensions, broader application of fuel injection, and a growing emphasis on safety in automobile design. Mazda achieved many triumphs with its engine firstly installed in the fore-wheel, though it gained itself a reputation as a gas-guzzler.</p>
+<p>The modern era also has witnessed a sharp elevation of fuel power in the modern engine management system with the help of the computer. Nowadays, most automobiles in use are powered by an internal combustion engine, fueled by gasoline or diesel. Toxic gas from both fuels is known to pollute the air and is responsible for climate change as well as global warming.</p>`
+  },
+  {
+    tag:'Passage 3', title:'Elephant Communication',
+    instruct:'You should spend about 20 minutes on Questions 28–40, which are based on Reading Passage 3 below.',
+    body:`<p>O'Connell-Rodwell, a postdoctoral fellow at Stanford University, has travelled to Namibia's first-ever wildlife reserve to explore the mystical and complicated realm of elephant communication. She, along with her colleagues, is part of a scientific revolution that started almost 20 years ago. This revolution has made a stunning revelation: elephants are capable of communicating with each other over long distances with low-frequency sounds, also known as infrasounds, which are too deep for humans to hear.</p>
+<p>As might be expected, African elephants able to detect seismic sound may have something to do with their ears. The hammer bone in an elephant's inner ear is proportionally huge for a mammal, but it is rather normal for animals that use vibrational signals. Thus, it may be a sign that suggests elephants can use seismic sounds to communicate.</p>
+<p>Other aspects of elephant anatomy also support that ability. First, their massive bodies, which enable them to give out low-frequency sounds almost as powerful as the sound a jet makes during takeoff, serve as ideal frames for receiving ground vibrations and transmitting them to the inner ear. Second, the elephant's toe bones are set on a fatty pad, which might be of help when focusing vibrations from the ground into the bone. Finally, the elephant has an enormous brain that sits in the cranial cavity behind the eyes in line with the auditory canal. The front of the skull is riddled with sinus cavities, which might function as resonating chambers for ground vibrations.</p>
+<p>It remains unclear how the elephants detect such vibrations, but O'Connell-Rodwell raises a point that the pachyderms are 'listening' with their trunks and feet instead of their ears. The elephant trunk may just be the most versatile appendage in nature. Its utilisation encompasses drinking, bathing, smelling, feeding and scratching. Both trunk and feet contain two types of nerve endings that are sensitive to pressure—one detects infrasonic vibration, and another responds to vibrations higher in frequencies. As O'Connell-Rodwell sees, this research has a boundless and unpredictable future. 'Our work is really interfaced of geophysics, neurophysiology and ecology,' she says. 'We're raising questions that have never even been considered before.'</p>
+<p>It has been well-known to scientists that seismic communication is widely observed among small animals, such as spiders, scorpions, insects and quite a lot of vertebrate species like white-lipped frogs, blind mole rats, kangaroo rats and golden moles. Nevertheless, O'Connell-Rodwell first argued that a giant land animal is also sending and receiving seismic signals. 'I used to lay a male planthopper on a stem and replay the calling sound of a female, and then the male one would exhibit the same kind of behaviour that happens in elephants—he would freeze, then press down on his legs, move forward a little, then stay still again. I find it so fascinating, and it got me thinking that perhaps auditory communication is not the only thing that is going on.'</p>
+<p>Scientists have confirmed that an elephant's capacity to communicate over long distance is essential for survival, especially in places like Etosha, where more than 2,400 savanna elephants range over a land bigger than New Jersey. It is already difficult for an elephant to find a mate in such a vast wild land, and the elephant reproductive biology only complicates it. Breeding herds also adopt low-frequency sounds to send alerts regarding predators. Even though grown-up elephants have no enemies else than human beings, baby elephants are vulnerable and are susceptible to lions and hyenas attack. At the sight of a predator, older ones in the herd will clump together to form protection before running away.</p>
+<p>We now know that elephants can respond to warning calls in the air, but can they detect signals transmitted solely through the ground? To look into that matter, the research team designed an experiment in 2002, which used electronic devices that enabled them to give out signals through the ground at Mushara. 'The outcomes of our 2002 study revealed that elephants could indeed sense warning signals through the ground,' O'Connell-Rodwell observes.</p>
+<p>Last year, an experiment was set up in the hope of solving that problem. It used three different recordings—the 1994 warning call from Mushara, an anti-predator call recorded by scientist Joyce Poole in Kenya and a made-up warble tone. 'The data I've observed to this point implies that the elephants were responding the way I always expected. However, the fascinating finding is that the anti-predator call from Kenya, which is unfamiliar to them, caused them to gather around, tense up and rumble aggressively as well—but they didn't always flee. I didn't expect the results to be that clear-cut.'</p>`
+  }
+];
+
+const QUESTIONS = [
+  {id:'p1s1',passage:0,type:'section',heading:'Questions 1–4',instruct:'Reading Passage 1 has eight paragraphs, A–H.\nWhich paragraph contains the following information?\nChoose the correct letter A–H.',items:[
+    {id:'q1',num:'1',text:'Ancient stories around pearls and its customers.',type:'match',options:['A','B','C','D','E','F','G','H']},
+    {id:'q2',num:'2',text:'Difficulties in the cultivating process.',type:'match',options:['A','B','C','D','E','F','G','H']},
+    {id:'q3',num:'3',text:'Factors which decide the value of natural pearls.',type:'match',options:['A','B','C','D','E','F','G','H']},
+    {id:'q4',num:'4',text:'A growth mechanism that distinguishes cultured pearls from natural ones.',type:'match',options:['A','B','C','D','E','F','G','H']},
+  ]},
+  {id:'p1s2',passage:0,type:'section',heading:'Questions 5–10',instruct:'Complete the summary below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.',items:[
+    {id:'q5',num:'5',text:'In history, pearls were treated as gems for women in ___.', type:'fill'},
+    {id:'q6',num:'6',text:'Pearls were also used as medicine for people in ___.', type:'fill'},
+    {id:'q7',num:'7',text:'___ Island is famous for its imitation pearl industry.', type:'fill'},
+    {id:'q8',num:'8',text:'___ often manufactures some of the glitteriest pearls.', type:'fill'},
+    {id:'q9',num:'9',text:'___ produces larger size pearls due to favourable environment along the coastline.', type:'fill'},
+    {id:'q10',num:'10',text:'In the past, ___ in the Persian Gulf produced the world\'s best pearls.', type:'fill'},
+  ]},
+  {id:'p1s3',passage:0,type:'section',heading:'Questions 11–13',instruct:'Do the following statements agree with the information given in Reading Passage 1?\nA — TRUE   B — FALSE   C — NOT GIVEN',items:[
+    {id:'q11',num:'11',text:'Generally speaking, the centre of a cultured pearl is significantly larger than that of a natural pearl.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q12',num:'12',text:'Sometimes, fake pearls can be more expensive.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q13',num:'13',text:'The size of the pearls produced in Japan is usually smaller than those in Australia.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+  ]},
+  {id:'p2s1',passage:1,type:'section',heading:'Questions 14–19',instruct:'Match each description with the correct automobile brand, A–G.\n\nA. Ford   B. the BMC Mini   C. Cadillac and Lincoln   D. Mercedes Benz   E. Mazda   F. Jeep   G. Maserati, Ferrari, and Lancia',items:[
+    {id:'q14',num:'14',text:'Began producing the first automobiles.',type:'match',options:['A','B','C','D','E','F','G']},
+    {id:'q15',num:'15',text:'Produced the industrialised cars that common consumers could afford.',type:'match',options:['A','B','C','D','E','F','G']},
+    {id:'q16',num:'16',text:'Improved the utilisation rate of automobile space.',type:'match',options:['A','B','C','D','E','F','G']},
+    {id:'q17',num:'17',text:'Upgraded the overall performance of the car continuously.',type:'match',options:['A','B','C','D','E','F','G']},
+    {id:'q18',num:'18',text:'Maintained leading growth even during an economic recession.',type:'match',options:['A','B','C','D','E','F','G']},
+    {id:'q19',num:'19',text:'Installed its engine on the front wheel for the first time.',type:'match',options:['A','B','C','D','E','F','G']},
+  ]},
+  {id:'p2s2',passage:1,type:'section',heading:'Questions 20–26',instruct:'Answer the questions below.\nChoose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage for each answer.',items:[
+    {id:'q20',num:'20',text:'What is the important feature owned by the modern engine since the 19th century?', type:'fill'},
+    {id:'q21',num:'21',text:'What did a car symbolise to the rich at the very beginning of this century?', type:'fill'},
+    {id:'q22',num:'22',text:'How long did the Ford assembly line take to produce a car?', type:'fill'},
+    {id:'q23',num:'23',text:'What is the major historical event that led American cars to suffer when competing with Japanese imported cars?', type:'fill'},
+    {id:'q24',num:'24',text:'What do people call the Mazda car which was designed under the front-wheel engine?', type:'fill'},
+    {id:'q25',num:'25',text:'What has greatly increased with the computerised engine management systems in modern society?', type:'fill'},
+    {id:'q26',num:'26',text:'What factor is blamed for contributing to pollution, climate change and global warming?', type:'fill'},
+  ]},
+  {id:'p2s3',passage:1,type:'section',heading:'Question 27',instruct:'Choose the correct letter, A, B, C or D.',items:[
+    {id:'q27',num:'27',text:'What is the main idea of the passage?',type:'mcq',options:['A — The influence of the cars on the environment','B — The historical development and innovation in car designs','C — The beginning of the modern designed gasoline engines','D — The history of human and the Auto industry']},
+  ]},
+  {id:'p3s1',passage:2,type:'section',heading:'Questions 28–31',instruct:'Label the diagram below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.',items:[
+    {id:'q28',num:'28',text:'The ___ bone in an elephant\'s inner ear is proportionally huge for a mammal.',type:'fill'},
+    {id:'q29',num:'29',text:'Their massive ___ serve as ideal frames for receiving ground vibrations.',type:'fill'},
+    {id:'q30',num:'30',text:'The elephant\'s toe bones are set on a fatty ___.',type:'fill'},
+    {id:'q31',num:'31',text:'The front of the skull is riddled with ___, which may function as resonating chambers.',type:'fill'},
+  ]},
+  {id:'p3s2',passage:2,type:'section',heading:'Questions 32–38',instruct:'Complete the summary below.\nChoose NO MORE THAN THREE WORDS from the passage for each answer.',items:[
+    {id:'q32',num:'32',text:'O\'Connell-Rodwell proposes that elephants are listening with their ___ by two kinds of nerve endings.',type:'fill'},
+    {id:'q33',num:'33',text:'One nerve ending detects ___ vibration, while another responds to higher frequencies.',type:'fill'},
+    {id:'q34',num:'34',text:'O\'Connell-Rodwell\'s work is at the combination of geophysics, neurophysiology and ___.',type:'fill'},
+    {id:'q35',num:'35',text:'O\'Connell-Rodwell was the first to indicate that a large land animal would send and receive ___ too.',type:'fill'},
+    {id:'q36',num:'36',text:'He noticed the freezing behaviour, which might prove the existence of approaches besides ___.',type:'fill'},
+    {id:'q37',num:'37',text:'An elephant\'s ability to communicate over long distances is essential when elephant herds find a ___.',type:'fill'},
+    {id:'q38',num:'38',text:'The 2002 study showed that elephants could detect warning calls through the ___.',type:'fill'},
+  ]},
+  {id:'p3s3',passage:2,type:'section',heading:'Questions 39–40',instruct:'Choose the correct letter, A, B, C or D.',items:[
+    {id:'q39',num:'39',text:'According to the passage, an elephant needs to communicate over long distances for its survival:',type:'mcq',options:['A — when a threatening predator appears.','B — when young elephants meet humans.','C — when older members of the herd want to flee from the group.','D — when a male elephant is in estrus.']},
+    {id:'q40',num:'40',text:'What is the author\'s attitude toward the experiment using three different recordings in the last paragraph?',type:'mcq',options:['A — The outcome is definitely out of the original expectation.','B — The data cannot be very clearly obtained.','C — The result can be somewhat undecided or inaccurate.','D — The result can be unfamiliar to the public.']},
+  ]},
+];
+
+/* ═══ STATE ═══ */
+let currentPassage=0,timeLeft=3600,timerInterval=null,paused=false,userAnswers={},isReviewing=false,hlMode='y',qhlMode=false;
+let passageFontSize=14.5,questionFontSize=12.5;
+const FS_MIN=10,FS_MAX=22,FS_STEP=1;
+
+/* ═══ FONT SIZE ═══ */
+function changeFontSize(delta){
+  passageFontSize=Math.min(FS_MAX,Math.max(FS_MIN,passageFontSize+delta));
+  questionFontSize=Math.min(FS_MAX,Math.max(FS_MIN,questionFontSize+delta));
+  document.documentElement.style.setProperty('--passage-fs',passageFontSize+'px');
+  document.documentElement.style.setProperty('--question-fs',questionFontSize+'px');
+}
+
+/* ═══ QUESTION HIGHLIGHT TOGGLE ═══ */
+function toggleQHL(){
+  qhlMode=!qhlMode;
+  const btn=document.getElementById('qhl-toggle'),note=document.getElementById('hl-note-txt');
+  btn.classList.toggle('qmode-on',qhlMode);
+  note.textContent=qhlMode?'Questions':'Passage';
+}
+
+/* ═══ INIT ═══ */
+function init(){
+  renderPassage(0);renderQuestions(0);updateProgress();updateNavBtns();startTimer();
+  document.getElementById('passage-panel').addEventListener('mouseup',handleHighlight);
+  document.getElementById('questions-panel').addEventListener('mouseup',handleHighlight);
+  initResizer();
+}
+function initResizer(){
+  const resizer=document.getElementById('resizer'),qPanel=document.getElementById('questions-panel'),main=document.getElementById('main');
+  let startX,startW;
+  resizer.addEventListener('mousedown',e=>{
+    startX=e.clientX;startW=qPanel.offsetWidth;resizer.classList.add('dragging');
+    document.body.style.cursor='col-resize';document.body.style.userSelect='none';
+    function onMove(e){const delta=startX-e.clientX;const newW=Math.min(Math.max(startW+delta,260),main.offsetWidth-300);qPanel.style.width=newW+'px';}
+    function onUp(){resizer.classList.remove('dragging');document.body.style.cursor='';document.body.style.userSelect='';document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);}
+    document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
+  });
+}
+function startTimer(){timerInterval=setInterval(()=>{if(paused)return;timeLeft--;renderTimer();if(timeLeft<=0){clearInterval(timerInterval);submitTest();}},1000);}
+function renderTimer(){const el=document.getElementById('timer-display'),m=Math.floor(timeLeft/60),s=timeLeft%60;el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');el.className=timeLeft<=300?'danger':timeLeft<=600?'warn':'';}
+function togglePause(){paused=!paused;document.getElementById('pause-btn').textContent=paused?'Resume':'Pause';document.getElementById('pause-overlay').className=paused?'show':'';}
+function renderPassage(idx){const p=PASSAGES[idx];document.getElementById('passage-panel').innerHTML=`<div class="passage-header"><div class="passage-tag">${p.tag}</div><div class="passage-title">${p.title}</div><div class="passage-instruct">${p.instruct}</div></div><div class="passage-body" id="passage-body">${p.body}</div>`;}
+function renderQuestions(pIdx){
+  const sections=QUESTIONS.filter(s=>s.passage===pIdx);let html='';
+  sections.forEach(sec=>{
+    html+=`<div class="q-section"><div class="q-section-hd">${sec.heading}</div><div class="q-section-instruct">${sec.instruct.replace(/\n/g,'<br>')}</div>`;
+    sec.items.forEach(q=>{
+      html+=`<div class="q-item" id="item-${q.id}"><div class="q-num">Question ${q.num}</div><div class="q-text">${q.text}</div>`;
+      if(q.type==='mcq'){html+=`<div class="q-opts">`;q.options.forEach(opt=>{const letter=opt[0],checked=userAnswers[q.id]===letter;html+=`<label class="q-opt${checked?' selected':''}" id="opt-${q.id}-${letter}"><input type="radio" name="${q.id}" value="${letter}" onchange="saveAnswer('${q.id}','${letter}')" ${checked?'checked':''}>${opt}</label>`;});html+=`</div>`;}
+      else if(q.type==='match'){html+=`<div class="q-match-row"><select class="q-match-sel" id="sel-${q.id}" onchange="saveAnswer('${q.id}',this.value)"><option value="">—</option>`;q.options.forEach(o=>{html+=`<option value="${o}" ${userAnswers[q.id]===o?'selected':''}>${o}</option>`;});html+=`</select></div>`;}
+      else if(q.type==='fill'){html+=`<input class="q-fill" type="text" id="fill-${q.id}" value="${userAnswers[q.id]||''}" placeholder="Type your answer…" oninput="saveAnswer('${q.id}',this.value)">`;}
+      html+=`<div class="q-answer-reveal" id="reveal-${q.id}"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  document.getElementById('q-panel').innerHTML=html;
+}
+function saveAnswer(qid,val){userAnswers[qid]=val;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(l=>{l.className=`q-opt${l.id===`opt-${qid}-${val}`?' selected':''}`});updateProgress();}
+function updateProgress(){
+  const total=40,answered=Object.values(userAnswers).filter(v=>v&&v.trim()!=='').length;
+  document.getElementById('answered-info').textContent=`${answered} / ${total} answered`;
+  document.getElementById('prog-fill').style.width=(answered/total*100)+'%';
+  [0,1,2].forEach(pi=>{const qs=QUESTIONS.filter(s=>s.passage===pi).flatMap(s=>s.items),done=qs.filter(q=>userAnswers[q.id]&&userAnswers[q.id].trim()!=='').length;document.getElementById(`badge${pi}`).textContent=`${done}/${qs.length}`;});
+}
+function goToPassage(idx){
+  if(idx<0||idx>2)return;currentPassage=idx;
+  [0,1,2].forEach(i=>document.getElementById(`tab${i}`).className=`ptab${i===idx?' active':''}`);
+  renderPassage(idx);renderQuestions(idx);
+  if(isReviewing){showReview();highlightPassageRefs(idx);}
+  updateNavBtns();document.getElementById('passage-panel').scrollTop=0;document.getElementById('questions-panel').scrollTop=0;
+}
+function highlightPassageRefs(pIdx){
+  const body=document.getElementById('passage-body');if(!body)return;
+  const qs=QUESTIONS.filter(s=>s.passage===pIdx).flatMap(s=>s.items);let html=body.innerHTML;
+  qs.forEach(q=>{const ref=PASSAGE_REFS[q.id];if(!ref)return;const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans,cls=isBlank?'ref-blank':isCorrect?'ref-correct':'ref-wrong',rbCls=isBlank?'rb-blank':isCorrect?'rb-correct':'rb-wrong',escaped=ref.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),re=new RegExp(escaped);if(re.test(html))html=html.replace(re,`<span class="passage-ref ${cls}"><span class="ref-badge ${rbCls}">${q.num}</span>${ref}</span>`);});
+  body.innerHTML=html;
+}
+function updateNavBtns(){
+  document.getElementById('btn-prev').disabled=currentPassage===0;document.getElementById('btn-prev').style.opacity=currentPassage===0?'0.4':'1';
+  const nxt=document.getElementById('btn-next');
+  if(currentPassage===2){nxt.textContent='Submit Test';nxt.onclick=submitTest;}else{nxt.textContent='Next Passage →';nxt.onclick=()=>goToPassage(currentPassage+1);}
+}
+function setHL(mode){
+  hlMode=mode;
+  ['y','g','p','b'].forEach(m=>{const btn=document.getElementById('hl'+m);if(btn)btn.classList.toggle('active',m===mode)});
+  if(mode!=='e') qhlMode=false;
+  document.getElementById('qhl-toggle').classList.remove('qmode-on');
+  document.getElementById('hl-note-txt').textContent='Passage';
+}
+function handleHighlight(e){
+  const sel=window.getSelection();if(!sel||sel.isCollapsed)return;
+  const range=sel.getRangeAt(0);
+  const passageBody=document.getElementById('passage-body');
+  const qPanel=document.getElementById('q-panel');
+  const inPassage=passageBody&&passageBody.contains(range.commonAncestorContainer);
+  const inQuestions=qPanel&&qPanel.contains(range.commonAncestorContainer);
+  if(qhlMode&&inQuestions){applyHighlight(range,qPanel);}
+  else if(!qhlMode&&inPassage){applyHighlight(range,passageBody);}
+}
+function applyHighlight(range,container){
+  if(hlMode==='e'){
+    const sel=window.getSelection();
+    container.querySelectorAll('mark').forEach(m=>{if(sel.containsNode(m,true)){const parent=m.parentNode;while(m.firstChild)parent.insertBefore(m.firstChild,m);parent.removeChild(m);}});
+    container.normalize();
+  } else {
+    const mark=document.createElement('mark');mark.className='h'+hlMode;
+    try{range.surroundContents(mark);}catch(e){const frag=range.extractContents();mark.appendChild(frag);range.insertNode(mark);}
+  }
+  sel&&sel.removeAllRanges&&sel.removeAllRanges();
+}
+function submitTest(){
+  clearInterval(timerInterval);let correct=0,wrong=0,blank=0;
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{const ans=(userAnswers[q.id]||'').trim();if(!ans){blank++;return;}checkAnswer(ans,ANSWER_KEY[q.id])?correct++:wrong++;});
+  document.getElementById('r-band').textContent=calcBand(correct);document.getElementById('r-correct').textContent=correct;document.getElementById('r-wrong').textContent=wrong;document.getElementById('r-blank').textContent=blank;document.getElementById('result-overlay').className='show';
+}
+function checkAnswer(given,key){
+  const g=given.toLowerCase().trim(),k=key.toLowerCase().trim();if(g===k)return true;
+  if(k==='ancient rome')return g.includes('ancient rome')||g==='rome';
+  if(k==='internal combustion')return g.includes('internal combustion');
+  if(k==='identity and status')return g.includes('identity')&&g.includes('status');
+  if(k==='15 minutes')return g.replace(/[^0-9a-z]/g,'').includes('15');
+  if(k==='1973 oil crisis')return g.includes('1973')||g.includes('oil crisis');
+  if(k==='gas-guzzler')return g.replace(/[\s-]/g,'').includes('gasguzzler')||g.includes('gas guzzler')||g.includes('gas-guzzler');
+  if(k==='fuel power')return g.includes('fuel power');
+  if(k==='toxic gas')return g.includes('toxic gas');
+  if(k==='sinus cavities')return g.includes('sinus');
+  if(k==='trunks and feet')return(g.includes('trunk')&&g.includes('feet'))||(g.includes('trunk')&&g.includes('foot'));
+  if(k==='infrasonic')return g.includes('infrasonic')||g==='low';
+  if(k==='seismic signals')return g.includes('seismic');
+  if(k==='auditory communication')return g.includes('auditory');
+  if(k==='pad')return g==='pad'||g==='pads'||g==='fatty pad'||g==='fatty pads';
+  return false;
+}
+function calcBand(c){if(c>=39)return'9.0';if(c>=37)return'8.5';if(c>=35)return'8.0';if(c>=33)return'7.5';if(c>=30)return'7.0';if(c>=27)return'6.5';if(c>=23)return'6.0';if(c>=19)return'5.5';if(c>=15)return'5.0';if(c>=13)return'4.5';return'4.0';}
+function reviewAnswers(){document.getElementById('result-overlay').className='';isReviewing=true;goToPassage(0);showReview();}
+function showReview(){
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{
+    const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],reveal=document.getElementById(`reveal-${q.id}`),item=document.getElementById(`item-${q.id}`);
+    if(!reveal)return;const isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans;
+    if(item){item.classList.remove('review-correct','review-wrong','review-blank');item.classList.add(isBlank?'review-blank':isCorrect?'review-correct':'review-wrong');}
+    reveal.className=`q-answer-reveal show ${isCorrect?'correct-msg':'wrong-msg'}`;
+    reveal.innerHTML=isBlank?`<strong>Correct answer:</strong> ${key}`:isCorrect?`✓ Correct!`:`✗ Your answer: <strong>${ans}</strong> — Correct: <strong>${key}</strong>`;
+    if(q.type==='fill'){const inp=document.getElementById(`fill-${q.id}`);if(inp)inp.className=`q-fill ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='match'){const sel=document.getElementById(`sel-${q.id}`);if(sel)sel.className=`q-match-sel ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='mcq'){document.querySelectorAll(`[id^="opt-${q.id}-"]`).forEach(l=>{const letter=l.id.split('-').pop();if(letter===key)l.className='q-opt correct-ans';else if(letter===ans&&!isCorrect)l.className='q-opt wrong-ans';});}
+  });
+}
+function restartTest(){userAnswers={};isReviewing=false;timeLeft=3600;paused=false;document.getElementById('result-overlay').className='';clearInterval(timerInterval);goToPassage(0);renderTimer();updateProgress();startTimer();}
+function openNav(){document.getElementById('nav-overlay').className='show';}
+function closeNav(e){if(e.target===document.getElementById('nav-overlay'))document.getElementById('nav-overlay').className='';}
+init();
+</script>
+</body>
+</html>
