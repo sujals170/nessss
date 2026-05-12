@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IELTS Academic Reading — Test 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f2eb;--surface:#ffffff;--surface2:#f9f7f2;--surface3:#f0ede4;
+  --accent:#1a5c3e;--accent-light:#e8f5ee;--accent2:#2a7a54;
+  --text:#1c1c1c;--muted:#6b6b6b;--muted2:#999;
+  --border:#ddd8cc;--border2:#e8e4da;
+  --hl-y:rgba(255,220,0,0.5);--hl-g:rgba(80,200,120,0.45);
+  --hl-p:rgba(255,100,160,0.45);--hl-b:rgba(60,150,255,0.45);
+  --shadow:0 2px 12px rgba(0,0,0,0.08);
+  --radius:8px;
+  --passage-fs:14.5px;--question-fs:12.5px;
+}
+html{height:100%;overflow:hidden}
+body{height:100%;overflow:hidden;display:flex;flex-direction:column;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+#topbar{height:52px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;position:relative;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+#topbar-left{display:flex;align-items:center;gap:10px}
+#topbar-logo{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:0.7}
+#topbar-title{font-size:14px;font-weight:600}
+#topbar-right{display:flex;align-items:center;gap:10px}
+#timer-display{font-size:20px;font-weight:700;font-family:'Courier New',monospace;letter-spacing:3px;min-width:70px;text-align:center}
+#timer-display.warn{color:#ffd080}
+#timer-display.danger{color:#ff8888;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.5}}
+.topbar-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s}
+.topbar-btn:hover{background:rgba(255,255,255,0.28)}
+.topbar-btn.submit{background:#fff;color:var(--accent);border-color:#fff}
+.topbar-btn.submit:hover{background:#e8f5ee}
+#prog-bar{height:4px;background:rgba(255,255,255,0.2);flex-shrink:0}
+#prog-fill{height:100%;background:#6ee7b7;transition:width 0.4s ease}
+#passage-tabs{background:var(--surface);border-bottom:2px solid var(--border);display:flex;flex-shrink:0;overflow-x:auto}
+.ptab{padding:11px 18px;font-size:12px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all 0.18s;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:7px}
+.ptab:hover{color:var(--accent);background:var(--accent-light)}
+.ptab.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-light)}
+.ptab-badge{font-size:10px;background:var(--border);color:var(--muted);padding:2px 7px;border-radius:10px;font-weight:700}
+.ptab.active .ptab-badge{background:var(--accent);color:#fff}
+#main{display:flex;flex:1;overflow:hidden;min-height:0}
+#passage-panel{flex:1;overflow-y:auto;padding:28px 36px;background:var(--surface);border-right:1px solid var(--border);min-width:0}
+#passage-panel::-webkit-scrollbar{width:6px}
+#passage-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.passage-header{margin-bottom:22px}
+.passage-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.passage-title{font-size:22px;font-weight:700;font-family:'Merriweather',serif;color:var(--text);margin-bottom:6px}
+.passage-instruct{font-size:12px;color:var(--muted);font-style:italic;padding:8px 12px;background:var(--surface3);border-radius:6px;border-left:3px solid var(--accent)}
+.passage-body p{font-family:'Merriweather',serif;font-size:var(--passage-fs);line-height:1.9;margin-bottom:16px;text-align:justify;color:#222}
+.passage-body .section-letter{font-size:12px;font-weight:700;color:var(--accent);font-family:'Inter',sans-serif;border:2px solid var(--accent);border-radius:4px;padding:1px 7px;display:inline-block;margin-right:8px;vertical-align:middle}
+.passage-ref{border-radius:3px;padding:1px 3px;display:inline}
+.passage-ref.ref-correct{background:rgba(26,92,62,0.13);border-bottom:2px solid #1a5c3e}
+.passage-ref.ref-wrong{background:rgba(192,57,43,0.12);border-bottom:2px solid #c0392b}
+.passage-ref.ref-blank{background:rgba(224,160,32,0.13);border-bottom:2px solid #e0a020}
+.ref-badge{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;font-size:9px;font-weight:700;font-family:'Inter',sans-serif;color:#fff;vertical-align:middle;margin-right:2px;flex-shrink:0;line-height:1}
+.ref-badge.rb-correct{background:#1a5c3e}
+.ref-badge.rb-wrong{background:#c0392b}
+.ref-badge.rb-blank{background:#e0a020}
+mark.hy{background:var(--hl-y);border-radius:2px;padding:0 1px}
+mark.hg{background:var(--hl-g);border-radius:2px;padding:0 1px}
+mark.hp{background:var(--hl-p);border-radius:2px;padding:0 1px}
+mark.hb{background:var(--hl-b);border-radius:2px;padding:0 1px}
+#resizer{width:6px;background:var(--border);cursor:col-resize;flex-shrink:0;transition:background 0.2s;position:relative}
+#resizer:hover,#resizer.dragging{background:var(--accent)}
+#resizer::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:32px;background:var(--muted2);border-radius:2px}
+#questions-panel{width:400px;overflow-y:auto;background:var(--surface2);padding:16px;flex-shrink:0;min-width:260px}
+#questions-panel::-webkit-scrollbar{width:5px}
+#questions-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-bar{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 12px;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;box-shadow:var(--shadow)}
+.hl-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted)}
+.hl-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:transform 0.15s,border-color 0.15s;flex-shrink:0}
+.hl-dot:hover{transform:scale(1.2)}
+.hl-dot.active{border-color:#333;transform:scale(1.15)}
+.hl-dot.dy{background:#ffd800}
+.hl-dot.dg{background:#50c878}
+.hl-dot.dp{background:#ff64a0}
+.hl-dot.db{background:#3c96ff}
+.hl-sep{width:1px;height:20px;background:var(--border)}
+.hl-erase{font-size:11px;font-family:'Inter',sans-serif;color:var(--muted);background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:4px 9px;cursor:pointer;font-weight:600}
+.hl-erase:hover{background:var(--border)}
+.hl-note{font-size:10px;color:var(--muted2);font-style:italic}
+.q-section{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow)}
+.q-section-hd{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+.q-section-instruct{font-size:11.5px;color:var(--muted);font-style:italic;line-height:1.5;margin-bottom:12px;padding:7px 10px;background:var(--surface3);border-radius:5px}
+.q-item{border-bottom:1px solid var(--border2);padding-bottom:10px;margin-bottom:10px;border-radius:6px;padding:8px;transition:background 0.2s,border-left 0.2s}
+.q-item.review-correct{background:#edfaf3;border-left:4px solid #1a5c3e}
+.q-item.review-wrong{background:#fdf0f0;border-left:4px solid #c0392b}
+.q-item.review-blank{background:#fdf6e8;border-left:4px solid #e0a020}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-num{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px}
+.q-text{font-size:var(--question-fs);color:var(--text);line-height:1.5;margin-bottom:7px}
+.q-opts{display:flex;flex-direction:column;gap:4px}
+.q-opt{display:flex;align-items:flex-start;gap:7px;font-size:var(--question-fs);padding:5px 7px;border-radius:5px;cursor:pointer;transition:background 0.15s;line-height:1.45;border:1px solid transparent}
+.q-opt:hover{background:var(--accent-light);border-color:var(--border)}
+.q-opt input[type=radio]{accent-color:var(--accent);margin-top:2px;flex-shrink:0}
+.q-opt.selected{background:var(--accent-light);border-color:var(--accent)}
+.q-opt.correct-ans{background:#d4f4e8;border-color:#1a5c3e}
+.q-opt.wrong-ans{background:#fde8e8;border-color:#c0392b}
+.q-fill{width:100%;border:none;border-bottom:2px solid var(--border);background:transparent;font-size:var(--question-fs);font-family:'Inter',sans-serif;padding:4px 2px;outline:none;color:var(--text);transition:border-color 0.2s}
+.q-fill:focus{border-bottom-color:var(--accent)}
+.q-fill.correct{border-bottom-color:#1a5c3e;background:rgba(80,200,130,0.1)}
+.q-fill.wrong{border-bottom-color:#c0392b;background:rgba(200,60,60,0.08)}
+.q-match-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:var(--question-fs)}
+.q-match-sel{border:1px solid var(--border);border-radius:5px;padding:4px 7px;font-size:11.5px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;min-width:52px}
+.q-match-sel:focus{border-color:var(--accent)}
+.q-match-sel.correct{border-color:#1a5c3e;background:#d4f4e8}
+.q-match-sel.wrong{border-color:#c0392b;background:#fde8e8}
+#bottom-bar{height:48px;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+#answered-info{font-size:12px;color:var(--muted);font-weight:500}
+.nav-btns{display:flex;gap:8px}
+.nav-btn{padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.18s;border:1px solid var(--border);background:var(--surface2);color:var(--text)}
+.nav-btn:hover{background:var(--border)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-btn.primary:hover{background:var(--accent2)}
+#result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999;align-items:center;justify-content:center}
+#result-overlay.show{display:flex}
+#result-box{background:var(--surface);border-radius:16px;padding:40px 36px;max-width:460px;width:92%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25)}
+.result-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.result-title{font-size:22px;font-weight:700;margin-bottom:4px;font-family:'Merriweather',serif}
+.result-subtitle{font-size:13px;color:var(--muted);margin-bottom:18px}
+.band-score{font-size:64px;font-weight:700;color:var(--accent);line-height:1;margin:10px 0 6px;font-family:'Merriweather',serif}
+.band-label{font-size:12px;color:var(--muted);margin-bottom:20px}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.score-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 8px}
+.score-card .sc-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px}
+.score-card .sc-val{font-size:22px;font-weight:700;color:var(--text)}
+.result-btns{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.result-btn{padding:11px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border:1px solid var(--border);background:var(--surface2);color:var(--text);transition:all 0.18s}
+.result-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.result-btn:hover{opacity:0.88}
+#pause-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:500;align-items:center;justify-content:center}
+#pause-overlay.show{display:flex}
+#pause-box{background:var(--surface);border-radius:16px;padding:48px 40px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+#pause-box h2{font-size:28px;font-family:'Merriweather',serif;margin-bottom:8px}
+#pause-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
+.q-answer-reveal{font-size:11.5px;padding:6px 10px;border-radius:5px;margin-top:6px;display:none}
+.q-answer-reveal.show{display:block}
+.q-answer-reveal.correct-msg{background:#d4f4e8;color:#1a5c3e;border-left:3px solid #1a5c3e}
+.q-answer-reveal.wrong-msg{background:#fde8e8;color:#922b2b;border-left:3px solid #c0392b}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-tip{position:fixed;background:#1c1c1c;color:#fff;font-size:11px;padding:4px 10px;border-radius:4px;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:300;font-family:'Inter',sans-serif}
+/* Font size & Q-highlight controls */
+.fs-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;width:28px;height:28px;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;transition:background 0.2s;line-height:1}
+.fs-btn:hover{background:rgba(255,255,255,0.32)}
+.fs-group{display:flex;align-items:center;gap:4px;border:1px solid rgba(255,255,255,0.25);border-radius:6px;padding:2px 6px}
+.fs-label{font-size:10px;opacity:0.7;letter-spacing:0.5px;font-weight:600}
+.hl-mode-btn{font-size:11px;font-family:'Inter',sans-serif;background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:4px 9px;cursor:pointer;font-weight:600;color:var(--muted);transition:all 0.15s}
+.hl-mode-btn.qmode-on{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+/* ── TEST NAVIGATOR ── */
+#nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.52);z-index:998}
+#nav-overlay.show{display:flex}
+#nav-panel{background:var(--surface);width:290px;height:100%;overflow-y:auto;display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,0.18)}
+#nav-hd{background:var(--accent);color:#fff;padding:18px 20px}
+#nav-hd h3{font-size:15px;font-weight:700;margin-bottom:2px}
+#nav-hd p{font-size:11px;opacity:0.72}
+.nav-home-lnk{display:flex;align-items:center;gap:8px;padding:11px 20px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;transition:background 0.15s}
+.nav-home-lnk:hover{background:var(--accent-light);color:var(--accent)}
+.ntc{display:block;padding:13px 20px;border-bottom:1px solid var(--border2);text-decoration:none;color:var(--text);transition:background 0.15s;border-left:3px solid transparent}
+.ntc:hover{background:var(--accent-light)}
+.ntc.cur{background:var(--accent-light);border-left-color:var(--accent)}
+.ntc-num{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:2px}
+.ntc-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.ntc-pass{font-size:11px;color:var(--muted);line-height:1.5}
+.ntc-badge{display:inline-block;font-size:10px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:10px;margin-top:5px;font-weight:600}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div id="topbar-left">
+    <span style="opacity:0.3;font-size:16px">|</span>
+    <span id="topbar-title">IELTS Academic Reading — Test 6</span>
+    <button class="topbar-btn" onclick="openNav()">☰ Tests</button>
+  </div>
+  <div id="topbar-right">
+    <div class="fs-group">
+      <span class="fs-label">A</span>
+      <button class="fs-btn" onclick="changeFontSize(-1)" title="Decrease font size">−</button>
+      <button class="fs-btn" onclick="changeFontSize(1)" title="Increase font size">+</button>
+    </div>
+  </div>
+    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" style="opacity:0.7"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span id="timer-display">60:00</span>
+    <button class="topbar-btn" id="pause-btn" onclick="togglePause()">Pause</button>
+    <button class="topbar-btn submit" onclick="submitTest()">Submit Test</button>
+  </div>
+</div>
+<div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
+
+<div id="passage-tabs">
+  <button class="ptab active" onclick="goToPassage(0)" id="tab0">
+    Passage 1 — History of Refrigeration
+    <span class="ptab-badge" id="badge0">0/14</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(1)" id="tab1">
+    Passage 2 — Ancient People in Sahara
+    <span class="ptab-badge" id="badge1">0/13</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(2)" id="tab2">
+    Passage 3 — Texting the Television
+    <span class="ptab-badge" id="badge2">0/13</span>
+  </button>
+</div>
+
+<div style="display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0" id="layout">
+<div id="main">
+  <div id="passage-panel"></div>
+  <div id="resizer"></div>
+  <div id="questions-panel">
+    <div id="hl-bar">
+      <span class="hl-label">Highlight</span>
+      <button class="hl-dot dy active" id="hly" onclick="setHL('y')" title="Yellow"></button>
+      <button class="hl-dot dg" id="hlg" onclick="setHL('g')" title="Green"></button>
+      <button class="hl-dot dp" id="hlp" onclick="setHL('p')" title="Pink"></button>
+      <button class="hl-dot db" id="hlb" onclick="setHL('b')" title="Blue"></button>
+      <div class="hl-sep"></div>
+      <button class="hl-erase" onclick="setHL('e')">✕ Erase</button>
+      <div class="hl-sep"></div>
+      <button class="hl-mode-btn" id="qhl-toggle" onclick="toggleQHL()" title="Toggle question highlighting">Q Highlight</button>
+      <span class="hl-note" id="hl-note-txt">Passage</span>
+    </div>
+    <div id="q-panel"></div>
+  </div>
+</div>
+<div id="bottom-bar">
+  <span id="answered-info">0 / 40 answered</span>
+  <div class="nav-btns">
+    <button class="nav-btn" onclick="goToPassage(currentPassage-1)" id="btn-prev">← Previous</button>
+    <button class="nav-btn primary" onclick="goToPassage(currentPassage+1)" id="btn-next">Next Passage →</button>
+  </div>
+</div>
+</div>
+
+<div id="pause-overlay">
+  <div id="pause-box">
+    <h2>Test Paused</h2>
+    <p>Your progress is saved. Click resume to continue.</p>
+    <button class="nav-btn primary" style="padding:12px 32px;font-size:14px" onclick="togglePause()">▶ Resume</button>
+  </div>
+</div>
+
+<div id="result-overlay">
+  <div id="result-box">
+    <div class="result-tag">Test Complete</div>
+    <div class="result-title">IELTS Academic Reading</div>
+    <div class="result-subtitle">Test 6 — Your Results</div>
+    <div class="band-score" id="r-band">—</div>
+    <div class="band-label">Estimated Band Score</div>
+    <div class="score-grid">
+      <div class="score-card"><div class="sc-label">Correct</div><div class="sc-val" id="r-correct" style="color:#1a5c3e">—</div></div>
+      <div class="score-card"><div class="sc-label">Incorrect</div><div class="sc-val" id="r-wrong" style="color:#c0392b">—</div></div>
+      <div class="score-card"><div class="sc-label">Unanswered</div><div class="sc-val" id="r-blank" style="color:#999">—</div></div>
+    </div>
+    <div class="result-btns">
+      <button class="result-btn primary" onclick="reviewAnswers()">Review All Answers</button>
+      <button class="result-btn" onclick="location.href='index.html'">← All Tests</button>
+      <button class="result-btn" onclick="restartTest()">Restart Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- Test Navigator -->
+<div id="nav-overlay" onclick="closeNav(event)">
+  <div id="nav-panel">
+    <div id="nav-hd"><h3>IELTS Practice Tests</h3><p>Academic Reading</p></div>
+    <a href="index.html" class="nav-home-lnk">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home — All Tests
+    </a>
+    <!-- ADD MORE TESTS BELOW -->
+    <a href="test5.html" class="ntc">
+      <div class="ntc-num">Test 5</div>
+      <div class="ntc-name">Recent Actual Test 6</div>
+      <div class="ntc-pass">The Pearl · History of Automobile · Elephant Communication</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test6.html" class="ntc cur">
+      <div class="ntc-num">Test 6</div>
+      <div class="ntc-name">Academic Reading Test 6</div>
+      <div class="ntc-pass">History of Refrigeration · Ancient People in Sahara · Texting the Television</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+  </div>
+</div>
+
+<div id="hl-tip"></div>
+
+<script>
+const ANSWER_KEY = {
+  q1:'D',q2:'B',q3:'F',q4:'C',q5:'A',
+  q6:'E',q7:'D',q8:'G',q9:'F',q10:'C',
+  q11:'B',q12:'D',q13:'E',q14:'A',
+  q15:'C',q16:'B',q17:'A',q18:'B',
+  q19:'a detailed map',q20:'teeth',q21:'9000',
+  q22:'injuries',q23:'strenuous',q24:'protein',q25:'hunting',q26:'cows',q27:'transitional',
+  q28:'vi',q29:'vii',q30:'i',q31:'v',q32:'viii',
+  q33:'A',q34:'D',q35:'C',
+  q36:'D',q37:'E',q38:'A',q39:'C',q40:'F'
+};
+
+const PASSAGE_REFS = {
+  q1:'Since 1840, cars with the refrigerating system',
+  q2:'In 1799, as a commercial product, ice was first transported',
+  q3:'in 1973 it was discovered to have detrimental effects on the ozone layer',
+  q4:'first introduced by a Maryland farmer Thomas Moore in 1803',
+  q5:'In 1550 when this technique was first recorded',
+  q6:'refrigerated railroad cars were patented to J.B. Sutherland',
+  q7:'Wyeth invented an economical and speedy method to cut the ice',
+  q8:'first refrigerated car to carry fresh fruit was manufactured by Parker Earle',
+  q9:'invented by Fred Jones',
+  q10:"Linde later created a new method",
+  q11:"Consumers' soaring requirement for fresh food, especially for green vegetables",
+  q12:'With the growth of the cities and towns, the distance between the consumer',
+  q13:'water pollution and sewage dumping made clean ice even more unavailable',
+  q14:'Hydrofluorocarbons, with no known harmful effects',
+  q16:'one of the most barren areas on the Earth',
+  q17:'he was shocked by the fact that the dunes were scattered with many bones',
+  q18:'she did not know Sereno before this exploration',
+  q19:'sketched a detailed map of the destined site',
+  q20:'pulled out the teeth of skeletons carefully and sent them',
+  q21:'approximately 9,000 years old',
+  q22:'No injuries in heads or forearms',
+  q23:'this individual lived a strenuous lifestyle',
+  q24:'ate much protein',
+  q25:'dry climate favoured herding rather than hunting',
+  q26:'only three skeletons of cows were found',
+  q27:'the Tenerian in Gobero were a transitional group',
+  q33:"texting has recently surpassed Internet usage across Europe",
+  q34:'viewers get to decide the result through voting',
+  q35:'that method was flawed in many ways',
+  q36:'Han Weegink of CMG, a company that offers the television market text-message infrastructure',
+  q37:'MmO2 (a British operator) reported an unexpectedly satisfactory result',
+  q38:'according to Lars Becker of Flytxt',
+  q39:'Endemol, the Netherlands-based production firm',
+  q40:"it's a supernatural way to interact"
+};
+
+const PASSAGES = [
+  {
+    tag:'Passage 1',
+    title:'History of Refrigeration',
+    instruct:'You should spend about 20 minutes on Questions 1–14, which are based on Reading Passage 1 below.',
+    body:`<p>Refrigeration is a process of removing heat, which means cooling an area or a substance below the environmental temperature. Mechanical refrigeration makes use of the evaporation of a liquid refrigerant, which goes through a cycle so that it can be reused. The main cycles include vapour-compression, absorption, steam-jet or steam-ejector, and airing. The term 'refrigerator' was first introduced by a Maryland farmer Thomas Moore in 1803, but it is in the 20th century that the appliance we know today first appeared.</p>
+<p>People used to find various ways to preserve their food before the advent of mechanical refrigeration systems. Some preferred using cooling systems of ice or snow, which meant that diets would have consisted of very little fresh food or fruits and vegetables, but mostly of bread, cheese and salted meats. For milk and cheeses, it was very difficult to keep them fresh, so such foods were usually stored in a cellar or window box. In spite of those measures, they could not survive rapid spoilage. Later on, people discovered that adding such chemicals as sodium nitrate or potassium nitrate to water could lead to a lower temperature. In 1550 when this technique was first recorded, people used it to cool wine, as was the term 'to refrigerate'. Cooling drinks grew very popular in Europe by 1600, particularly in Spain, France, and Italy. Instead of cooling water at night, people used a new technique: rotating long-necked bottles of water which held dissolved saltpeter. The solution was intended to create very low temperatures and even to make ice. By the end of the 17th century, iced drinks including frozen juices and liquors had become extremely fashionable in France.</p>
+<p>People's demand for ice soon became strong. Consumers' soaring requirement for fresh food, especially for green vegetables, resulted in reform in people's dieting habits between 1830 and the American Civil War, accelerated by a drastic expansion of the urban areas and the rapid amelioration in an economy of the populace. With the growth of the cities and towns, the distance between the consumer and the source of food was enlarged. In 1799, as a commercial product, ice was first transported out of Canal Street in New York City to Charleston, South Carolina.</p>
+<p>Unfortunately, this transportation was not successful because when the ship reached the destination, little ice was left. Frederick Tudor and Nathaniel Wyeth, two New England businessmen, grasped the great potential opportunities for ice business and managed to improve the storage method of ice in the process of shipment. The acknowledged 'Ice King' in that time, Tudor concentrated his efforts on bringing the ice to the tropical areas. He tried many insulating materials in experiments and successfully constructed ice containers, which reduced ice loss from 66 per cent to less than 8 per cent drastically. Wyeth invented an economical and speedy method to cut the ice into uniform blocks, which had a tremendous positive influence on the ice industry. Also, he improved the processing techniques for storing, transporting and distributing ice with less waste.</p>
+<p>When people realised that the ice transported from a distance was not as clean as previously thought and gradually caused many health problems, it became more demanding to seek clean natural sources of ice. To make it worse, by the 1890s water pollution and sewage dumping made clean ice even more unavailable. The adverse effect first appeared in the brewing industry, and then seriously spread to such sectors as meat packing and dairy industries. As a result, clean mechanical refrigeration was considerably in need.</p>
+<p>Many inventors with creative ideas took part in the process of inventing refrigeration, and each version was built on the previous discoveries. Dr William Cullen initiated study of the evaporation of liquid under vacuum conditions in 1720. He soon invented the first man-made refrigerator at the University of Glasgow in 1748, with the employment of ethyl ether boiling into a partial vacuum. American inventor Oliver Evans designed the refrigerator firstly using vapour rather than liquid in 1805. Although his conception was not put into practice in the end, the mechanism was adopted by an American physician John Gorrie, who made one cooling machine similar to Evans' in 1842 with the purpose of reducing the temperature of patients with yellow fever in a Florida hospital. Until 1851, Evans obtained the first patent for mechanical refrigeration in the USA. In 1820, Michael Faraday, a Londoner, first liquefied ammonia to cause cooling. In 1859, Ferdinand Carre from France invented the first version of the ammonia water cooling machine. In 1873, Carl von Linde designed the first practical and portable compressor refrigerator in Munich, and in 1876 he abandoned the methyl ether system and began using ammonia cycle. Linde later created a new method ('Linde technique') for liquefying large amounts of air in 1894. Nearly a decade later, this mechanical refrigerating method was adopted subsequently by the meat packing industry in Chicago.</p>
+<p>Since 1840, cars with the refrigerating system had been utilised to deliver and distribute milk and butter. Until 1860, most seafood and dairy products were transported with cold-chain logistics. In 1867, refrigerated railroad cars were patented to J.B. Sutherland from Detroit, Michigan, who invented insulated cars by installing ice bunkers at the end of the cars: air came in from the top, passed through the bunkers, circulated through the cars by gravity and controlled by different quantities of hanging flaps which caused different air temperatures. In 1867, the first refrigerated car to carry fresh fruit was manufactured by Parker Earle of Illinois, who shipped strawberries on the Illinois Central Railroad. Each chest was freighted with 100 pounds of ice and 200 quarts of strawberries. Until 1949, the trucking industry began to be equipped with the refrigeration system with a roof-mounted cooling device, invented by Fred Jones.</p>
+<p>From the late 1800s to 1929, refrigerators employed toxic gases — methyl chloride, ammonia, and sulfur dioxide — as refrigerants. But in the 1920s, a great number of lethal accidents took place due to the leakage of methyl chloride out of refrigerators. Therefore, some American companies started to seek secure methods of refrigeration. Frigidaire detected a new class of synthetic refrigerants called halocarbons or CFCs (chlorofluorocarbons) in 1928. This research led to the discovery of Freon, which quickly became the prevailing material in compressor refrigerators. Freon was safer for the people in the vicinity, but in 1973 it was discovered to have detrimental effects on the ozone layer. After that, new improvements were made, and Hydrofluorocarbons, with no known harmful effects, was used in the cooling system. Nowadays, Chlorofluorocarbons (CFCs) are no longer used; they are illegal in several places, making refrigeration far safer than before.</p>`
+  },
+  {
+    tag:'Passage 2',
+    title:'Ancient People in Sahara',
+    instruct:'You should spend about 20 minutes on Questions 15–27, which are based on Reading Passage 2 below.',
+    body:`<p>On Oct. 13, 2000, Paul Sereno, a professor from the University of Chicago, guided a team of palaeontologists to climb out of three broken Land Rovers, filled their water bottles and walked across the toffee-coloured desert called Tenere Desert. Tenere, one of the most barren areas on the Earth, is located on the southern flank of Sahara. According to the turbaned nomads Tuareg who have ruled this infertile domain for a few centuries, this California-size ocean of sand and rock is a 'desert within a desert'. In the Tenere Desert, massive dunes might stretch a hundred miles, as far as the eyes can reach. In addition, 120-degree heat waves and inexorable winds can take almost all the water from a human body in less than a day.</p>
+<p>Mike Hettwer, a photographer in the team, was attracted by the amazing scenes and walked to several dunes to take photos of the amazing landscape. When reaching the first slope of the dune, he was shocked by the fact that the dunes were scattered with many bones. He photographed these bones with his digital camera and went to the Land Rover in a hurry. 'I found some bones,' Hettwer said to other group members, 'to my great surprise, they do not belong to the dinosaurs. They are human bones.'</p>
+<p>One day in the spring of 2005, Paul Sereno got in touch with Elena Garcea, a prestigious archaeologist at the University of Cassino in Italy, asking her to return to the site with him together. After spending 30 years in researching the history of Nile in Sudan and of the mountains in the Libyan Desert, Garcea got well acquainted with the life of the ancient people in Sahara. But she did not know Sereno before this exploration, whose claim of having found so many skeletons in Tenere desert was unreliable to some archaeologists, among whom one person considered Sereno just as a 'moonlighting palaeontologist'. However, Garcea was so fascinated with his perspective as to accept his invitation willingly.</p>
+<p>In the following three weeks, Sereno and Garcea (along with five excavators, five Tuareg guides, and five soldiers from Niger's army) sketched a detailed map of the destined site, which was dubbed Gobero after the Tuareg name for the area, a place the ancient Kiffian and Tuareg nomads used to roam. After that, they excavated eight tombs and found twenty pieces of artefacts for the above-mentioned two civilisations. From these artefacts, it is evidently seen that Kiffian fishermen caught not only the small fish, but also some huge ones: the remains of Nile perch, a fierce fish weighing about 300 pounds, along with those of the alligators and hippos, were left in the vicinity of dunes.</p>
+<p>Sereno went back with some essential bones and artefacts, and planned for the next trip to the Sahara area. Meanwhile, he pulled out the teeth of skeletons carefully and sent them to a researching laboratory for radiocarbon dating. The results indicated that while the smaller 'sleeping' bones might date back to 6,000 years ago (well within the Tenerian period), the bigger compactly tied artefacts were approximately 9,000 years old, just in the heyday of Kiffian era. The scientists now can distinguish one culture from the other.</p>
+<p>In the fall of 2006, for the purpose of exhuming another 80 burials, these people had another trip to Gobero, taking more crew members and six extra scientists specialising in different areas. Even at the site, Chris Stojanowski, bio-archaeologist in Arizona State University, found some clues by matching the pieces. Judged from the bones, the Kiffian could be a people of peace and hardworking. 'No injuries in heads or forearms indicate that they did not fight too much,' he said. 'And they had strong bodies.' He pointed at a long narrow femur and continued, 'From this muscle attachment, we could infer the huge leg muscles, which means this individual lived a strenuous lifestyle and ate much protein. Both of these two inferences coincide with the lifestyle of the people living on fishing.' To create a striking contrast, he displayed a femur of a Tenerian male. This ridge was scarcely seen. 'This individual had a less laborious lifestyle, which you might expect of the herder.'</p>
+<p>Stojanowski concluded that the Tenerian were herders, which was consistent with the other scholars' dominant view of the lifestyle in Sahara area 6,000 years ago, when the dry climate favoured herding rather than hunting. But Sereno proposed some confusing points: if the Tenerian were herders, where were the herds? Despite thousands of animal bones excavated in Gobero, only three skeletons of cows were found, and none of goats or sheep. 'It is common for the herding people not to kill the cattle, particularly in a cemetery.' Elena Garcea remarked, 'Even the modern pastoralists such as Niger's Wodaabe are reluctant to slaughter the animals in their herd.' Sereno suggested, 'Perhaps the Tenerian in Gobero were a transitional group that had still relied greatly on hunting and fishing and not adopted herding completely.'</p>`
+  },
+  {
+    tag:'Passage 3',
+    title:'Texting the Television',
+    instruct:'You should spend about 20 minutes on Questions 28–40, which are based on Reading Passage 3 below.',
+    body:`<p><span class="section-letter">A</span> Once upon a time, if a television show with any self-respect wanted to target a young audience, it needed to have an e-mail address. However, in Europe's TV shows, such addresses are gradually substituted by telephone numbers so that audiences can text the show from their mobile phones. Therefore, it comes as no shock that according to Gartner's research, texting has recently surpassed Internet usage across Europe. Besides, among the many uses of text messaging, one of the fastest-growing uses is to interact with television. The statistics provided by Gartner can display that 20% of French teenagers, 11% in Britain and 9% in Germany have responded to TV programmes by sending a text message.</p>
+<p><span class="section-letter">B</span> This phenomenon can be largely attributed to the rapid growth of reality TV shows such as 'Big Brother', where viewers get to decide the result through voting. The majority of reality shows are now open to text-message voting, and in some shows like the latest series of Norway's 'Big Brother', most votes are collected in this manner. But TV-texting isn't just about voting. News shows encourage viewers to comment by texting messages; game shows enable the audience to be part of the competition; music shows answer requests by taking text messages; and broadcasters set up on-screen chatrooms. TV audiences tend to sit on the sofa with their mobile phones right by their sides, and 'it's a supernatural way to interact,' says Adam Daum of Gartner.</p>
+<p><span class="section-letter">C</span> Mobile service providers charge appreciable rates for messages to certain numbers, which is why TV-texting can bring in a lot of cash. Take the latest British series of 'Big Brother' as an example. It brought about 5.4m text-message votes and £1.35m ($2.1m) of profit. In Germany, MTV's 'Videoclash' encourages the audience to vote for one of two rival videos, and induces up to 40,000 texts per hour, and each one of those texts costs €0.30 ($0.29), according to a consultancy based in Amsterdam. The Belgian quiz show '1 Against 100' had an eight-round texting match on the side, which brought in 110,000 participants in one month, and each of them paid €0.50 for each question. In Spain, a cryptic-crossword clue invites the audience to send their answers through text at the expense of €1, so that they can be enrolled in the poll to win a €300 prize. Normally, 6,000 viewers would participate within one day. At the moment, TV-related text messaging takes up a considerable proportion of mobile service providers' data revenues. In July, MmO2 (a British operator) reported an unexpectedly satisfactory result, which could be attributed to the massive text waves created by 'Big Brother'. Providers usually own 40%–50% of the profits from each text, and the rest is divided among the broadcaster, the programme producer and the company which supplies the message-processing technology. Endemol, the Netherlands-based production firm that is responsible for many reality TV shows including 'Big Brother', has begun constructing its own database for mobile-phone users. It plans to set up a direct billing system with the users and bypass the providers.</p>
+<p><span class="section-letter">D</span> How come the joining forces of television and text message turn out to be this successful? One crucial aspect is the emergence of one-of-a-kind four-, five- or six-digit numbers known as 'short codes'. Every provider has control over its own short codes, but not until recently have they come to realise that it would make much more sense to work together to offer short codes compatible with all networks. The emergence of these universal short codes was a game-changer, because short codes are much easier to remember on the screen, according to Lars Becker of Flytxt, a mobile-marketing company.</p>
+<p><span class="section-letter">E</span> Operators' co-operation on enlarging the market is part of a larger trend, observes Katrina Bond of Analysys, a consultancy. When challenged by the dilemma between holding on tight to their margins and permitting the emergence of a new medium, no provider has ever chosen the latter. WAP, a technology for mobile-phone users to read cut-down web pages on their screens, failed because of service providers' reluctance towards revenue-sharing with content providers. Now that they've learnt their lesson, they are altering the way of operating. Orange, a French operator, has come such a long way as to launch a rate card for sharing revenue of text messages, a new level of transparency that used to be unimaginable.</p>
+<p><span class="section-letter">F</span> At a recent conference, Han Weegink of CMG, a company that offers the television market text-message infrastructure, pointed out that the television industry is changing in a subtle yet fundamental way. Instead of the traditional one-way presentation, more and more TV shows are now getting viewers' reactions involved. An interactive TV was originally designed to work with exquisite set-top devices, which could be directly plugged into the TV. However, as Mr Daum points out, that method was flawed in many ways. Developing and testing software for multiple and incompatible types of set-top box could be costly, not to mention that the 40% (or lower) market penetration is below that of mobile phones (around 85%). What's more, it's quicker to develop and set up apps for mobile phones. 'You can approach the market quicker, and you don't have to go through as many greedy middlemen,' Mr Daum says. Providers of set-top box technology are now adding texting function to the design of their products.</p>
+<p><span class="section-letter">G</span> The triumph of TV-related texting reminds everyone in the business of how easily a fancy technology can all of a sudden be replaced by a less complicated, lower-tech method. That being said, the old-fashioned approach to interactive TV is not necessarily over; at least it proves that strong demands for interactive services still exist. It appears that the viewers would sincerely like to do more than simply staring at the TV screen. After all, couch potatoes would love some thumb exercises.</p>`
+  }
+];
+
+const QUESTIONS = [
+  {
+    id:'p1s1', passage:0, type:'section',
+    heading:'Questions 1–5',
+    instruct:'Match each event with the correct date. Write the correct letter (A–F) in the box.\n\nA. 1550  B. 1799  C. 1803  D. 1840  E. 1949  F. 1973',
+    items:[
+      {id:'q1', num:'1', text:'Vehicles with refrigerator were used to transport on the road.', type:'match', options:['A','B','C','D','E','F']},
+      {id:'q2', num:'2', text:'Ice was sold around the United States for the first time.', type:'match', options:['A','B','C','D','E','F']},
+      {id:'q3', num:'3', text:'Some kind of chemical refrigerant was found harmful to the atmosphere.', type:'match', options:['A','B','C','D','E','F']},
+      {id:'q4', num:'4', text:'The term \'refrigerator\' was firstly introduced.', type:'match', options:['A','B','C','D','E','F']},
+      {id:'q5', num:'5', text:'Some chemicals were added to refrigerate wine.', type:'match', options:['A','B','C','D','E','F']},
+    ]
+  },
+  {
+    id:'p1s2', passage:0, type:'section',
+    heading:'Questions 6–10',
+    instruct:'Match each opinion or deed with the correct person. Write the correct letter (A–G) in the box.\n\nA. Thomas Moore  B. Frederick Tudor  C. Carl Von Linde  D. Nathaniel Wyeth  E. J.B. Sutherland  F. Fred Jones  G. Parker Earle',
+    items:[
+      {id:'q6', num:'6', text:'Patented the idea that refrigerating system can be installed on tramcars.', type:'match', options:['A','B','C','D','E','F','G']},
+      {id:'q7', num:'7', text:'Invented an ice-cutting technical method that could save money and time.', type:'match', options:['A','B','C','D','E','F','G']},
+      {id:'q8', num:'8', text:'Enabled the cold storage technology to be applied in fruit.', type:'match', options:['A','B','C','D','E','F','G']},
+      {id:'q9', num:'9', text:'Invented a cooling device applied into the trucking industry.', type:'match', options:['A','B','C','D','E','F','G']},
+      {id:'q10', num:'10', text:'Created a new technique to liquefy the air.', type:'match', options:['A','B','C','D','E','F','G']},
+    ]
+  },
+  {
+    id:'p1s3', passage:0, type:'section',
+    heading:'Questions 11–14',
+    instruct:'Complete each sentence with the correct ending (A–E).\n\nA. new developments, such as the application of Hydrofluorocarbons.\nB. consumers\' demand for fresh food, especially for vegetables.\nC. the discovery of chlorofluorocarbons (Freon).\nD. regional transportation system for refrigeration for a long distance.\nE. extensive spread of the refrigeration method.',
+    items:[
+      {id:'q11', num:'11', text:'A healthy dietary change between 1830 and the American Civil War was greatly associated with ___', type:'match', options:['A','B','C','D','E']},
+      {id:'q12', num:'12', text:'The development of urbanisation was likely to cause ___', type:'match', options:['A','B','C','D','E']},
+      {id:'q13', num:'13', text:'Problems due to water treatment contributed to ___', type:'match', options:['A','B','C','D','E']},
+      {id:'q14', num:'14', text:'The risk of the environmental devastation from the refrigeration led to ___', type:'match', options:['A','B','C','D','E']},
+    ]
+  },
+  {
+    id:'p2s1', passage:1, type:'section',
+    heading:'Questions 15–18',
+    instruct:'Do the following statements agree with the information given in Reading Passage 2?\nA = TRUE   B = FALSE   C = NOT GIVEN',
+    items:[
+      {id:'q15', num:'15', text:'The pictures of rock engravings found in Green Sahara is similar to those in other places.', type:'mcq', options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+      {id:'q16', num:'16', text:'Tenere Desert was quite a fertile area in Sahara Desert.', type:'mcq', options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+      {id:'q17', num:'17', text:'Hettwer found human remains in the desert by chance.', type:'mcq', options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+      {id:'q18', num:'18', text:'Sereno and Garcea have cooperated in some archaeological activities before studying ancient Sahara people.', type:'mcq', options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    ]
+  },
+  {
+    id:'p2s2', passage:1, type:'section',
+    heading:'Questions 19–21',
+    instruct:'Answer the questions below. Choose NO MORE THAN THREE WORDS AND/OR A NUMBER from the passage.',
+    items:[
+      {id:'q19', num:'19', text:'What did Sereno and Garcea produce in the initial weeks before digging work?', type:'fill'},
+      {id:'q20', num:'20', text:'What did Sereno send to the research centre?', type:'fill'},
+      {id:'q21', num:'21', text:'How old were the bigger tightly bundled burials estimated to be?', type:'fill'},
+    ]
+  },
+  {
+    id:'p2s3', passage:1, type:'section',
+    heading:'Questions 22–27',
+    instruct:'Complete the notes below. Choose ONE WORD ONLY from the passage for each answer.',
+    items:[
+      {id:'q22', num:'22', text:'The Kiffian: The researcher did not find ___ on their heads and forearms.', type:'fill'},
+      {id:'q23', num:'23', text:'The Kiffian: Their lifestyle was ___.', type:'fill'},
+      {id:'q24', num:'24', text:'The Kiffian: Their diet had plenty of ___.', type:'fill'},
+      {id:'q25', num:'25', text:'The Tenerian: Stojanowski presumed they preferred herding to ___.', type:'fill'},
+      {id:'q26', num:'26', text:'The Tenerian: Only the bones of individual animals such as ___ were found.', type:'fill'},
+      {id:'q27', num:'27', text:'Sereno supposed the Tenerian in Gobero lived in a ___ group.', type:'fill'},
+    ]
+  },
+  {
+    id:'p3s1', passage:2, type:'section',
+    heading:'Questions 28–32',
+    instruct:'Choose the correct heading for sections B–E and G from the list below.\n\ni. An application of short codes on the TV screen\nii. An overview of a fast-growing business\niii. The trend that profitable games are gaining more concerns\niv. Why Netherlands takes the leading role\nv. A new perspective towards sharing the business opportunities\nvi. Factors relevant to the rapid increase in interactive TV\nvii. The revenue gains and bonus share\nviii. The possibility of the complex technology replaced by the simpler ones',
+    items:[
+      {id:'q28', num:'28', text:'Section B', type:'match', options:['i','ii','iii','iv','v','vi','vii','viii']},
+      {id:'q29', num:'29', text:'Section C', type:'match', options:['i','ii','iii','iv','v','vi','vii','viii']},
+      {id:'q30', num:'30', text:'Section D', type:'match', options:['i','ii','iii','iv','v','vi','vii','viii']},
+      {id:'q31', num:'31', text:'Section E', type:'match', options:['i','ii','iii','iv','v','vi','vii','viii']},
+      {id:'q32', num:'32', text:'Section G', type:'match', options:['i','ii','iii','iv','v','vi','vii','viii']},
+    ]
+  },
+  {
+    id:'p3s2', passage:2, type:'section',
+    heading:'Questions 33–35',
+    instruct:'Choose the correct letter A, B, C or D.',
+    items:[
+      {id:'q33', num:'33', text:'In Europe, research hints that young audiences spend more money on:', type:'mcq', options:['A — Thumbing text messages.','B — Writing e-mails.','C — Watching TV programmes.','D — Talking through mobile phones.']},
+      {id:'q34', num:'34', text:'What would happen when reality TV shows invite the audience to vote?', type:'mcq', options:['A — Viewers would get attractive bonus.','B — They would be part of the competition.','C — Their questions would be replied.','D — Their participation could change the result.']},
+      {id:'q35', num:'35', text:'Interactive TV will change from concentrating on set-top devices to:', type:'mcq', options:['A — Increasing their share in the market.','B — Setting up a modified set-top box.','C — Building an embedded message platform.','D — Marching into the European market.']},
+    ]
+  },
+  {
+    id:'p3s3', passage:2, type:'section',
+    heading:'Questions 36–40',
+    instruct:'Match each description with the correct company (A–F).\n\nA. Flytxt  B. Analysys  C. Endemol  D. CMG  E. MmO2  F. Gartner',
+    items:[
+      {id:'q36', num:'36', text:'Offered mobile phone message technology.', type:'match', options:['A','B','C','D','E','F']},
+      {id:'q37', num:'37', text:'Earned considerable amount of money through a famous programme.', type:'match', options:['A','B','C','D','E','F']},
+      {id:'q38', num:'38', text:'Expressed the view that short codes are convenient to remember.', type:'match', options:['A','B','C','D','E','F']},
+      {id:'q39', num:'39', text:'Built their own mobile phone operating applications.', type:'match', options:['A','B','C','D','E','F']},
+      {id:'q40', num:'40', text:'Indicated that it is easy for people to send messages in an interactive TV.', type:'match', options:['A','B','C','D','E','F']},
+    ]
+  },
+];
+
+let currentPassage=0,timeLeft=3600,timerInterval=null,paused=false,userAnswers={},isReviewing=false,hlMode='y',qhlMode=false;
+let passageFontSize=14.5,questionFontSize=12.5;
+const FS_MIN=10,FS_MAX=22;
+function changeFontSize(delta){passageFontSize=Math.min(FS_MAX,Math.max(FS_MIN,passageFontSize+delta));questionFontSize=Math.min(FS_MAX,Math.max(FS_MIN,questionFontSize+delta));document.documentElement.style.setProperty('--passage-fs',passageFontSize+'px');document.documentElement.style.setProperty('--question-fs',questionFontSize+'px');}
+function toggleQHL(){qhlMode=!qhlMode;const btn=document.getElementById('qhl-toggle'),note=document.getElementById('hl-note-txt');btn.classList.toggle('qmode-on',qhlMode);note.textContent=qhlMode?'Questions':'Passage';}
+
+function init(){
+  renderPassage(0);renderQuestions(0);updateProgress();updateNavBtns();startTimer();
+  document.getElementById('passage-panel').addEventListener('mouseup',handleHighlight);
+  document.getElementById('questions-panel').addEventListener('mouseup',handleHighlight);
+  initResizer();
+}
+function initResizer(){
+  const resizer=document.getElementById('resizer'),qPanel=document.getElementById('questions-panel'),main=document.getElementById('main');
+  let startX,startW;
+  resizer.addEventListener('mousedown',e=>{
+    startX=e.clientX;startW=qPanel.offsetWidth;resizer.classList.add('dragging');
+    document.body.style.cursor='col-resize';document.body.style.userSelect='none';
+    function onMove(e){const delta=startX-e.clientX;const newW=Math.min(Math.max(startW+delta,260),main.offsetWidth-300);qPanel.style.width=newW+'px';}
+    function onUp(){resizer.classList.remove('dragging');document.body.style.cursor='';document.body.style.userSelect='';document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);}
+    document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
+  });
+}
+function startTimer(){timerInterval=setInterval(()=>{if(paused)return;timeLeft--;renderTimer();if(timeLeft<=0){clearInterval(timerInterval);submitTest();}},1000);}
+function renderTimer(){const el=document.getElementById('timer-display'),m=Math.floor(timeLeft/60),s=timeLeft%60;el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');el.className=timeLeft<=300?'danger':timeLeft<=600?'warn':'';}
+function togglePause(){paused=!paused;document.getElementById('pause-btn').textContent=paused?'Resume':'Pause';document.getElementById('pause-overlay').className=paused?'show':'';}
+function renderPassage(idx){const p=PASSAGES[idx];document.getElementById('passage-panel').innerHTML=`<div class="passage-header"><div class="passage-tag">${p.tag}</div><div class="passage-title">${p.title}</div><div class="passage-instruct">${p.instruct}</div></div><div class="passage-body" id="passage-body">${p.body}</div>`;}
+function renderQuestions(pIdx){
+  const sections=QUESTIONS.filter(s=>s.passage===pIdx);let html='';
+  sections.forEach(sec=>{
+    html+=`<div class="q-section"><div class="q-section-hd">${sec.heading}</div><div class="q-section-instruct">${sec.instruct.replace(/\n/g,'<br>')}</div>`;
+    sec.items.forEach(q=>{
+      html+=`<div class="q-item" id="item-${q.id}"><div class="q-num">Question ${q.num}</div><div class="q-text">${q.text}</div>`;
+      if(q.type==='mcq'){html+=`<div class="q-opts">`;q.options.forEach(opt=>{const letter=opt[0],checked=userAnswers[q.id]===letter;html+=`<label class="q-opt${checked?' selected':''}" id="opt-${q.id}-${letter}"><input type="radio" name="${q.id}" value="${letter}" onchange="saveAnswer('${q.id}','${letter}')" ${checked?'checked':''}>${opt}</label>`;});html+=`</div>`;}
+      else if(q.type==='match'){html+=`<div class="q-match-row"><select class="q-match-sel" id="sel-${q.id}" onchange="saveAnswer('${q.id}',this.value)"><option value="">—</option>`;q.options.forEach(o=>{html+=`<option value="${o}" ${userAnswers[q.id]===o?'selected':''}>${o}</option>`;});html+=`</select></div>`;}
+      else if(q.type==='fill'){html+=`<input class="q-fill" type="text" id="fill-${q.id}" value="${userAnswers[q.id]||''}" placeholder="Type your answer…" oninput="saveAnswer('${q.id}',this.value)">`;}
+      html+=`<div class="q-answer-reveal" id="reveal-${q.id}"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  document.getElementById('q-panel').innerHTML=html;
+}
+function saveAnswer(qid,val){userAnswers[qid]=val;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(l=>{l.className=`q-opt${l.id===`opt-${qid}-${val}`?' selected':''}`});updateProgress();}
+function updateProgress(){
+  const total=40,answered=Object.values(userAnswers).filter(v=>v&&v.trim()!=='').length;
+  document.getElementById('answered-info').textContent=`${answered} / ${total} answered`;
+  document.getElementById('prog-fill').style.width=(answered/total*100)+'%';
+  [0,1,2].forEach(pi=>{const qs=QUESTIONS.filter(s=>s.passage===pi).flatMap(s=>s.items),done=qs.filter(q=>userAnswers[q.id]&&userAnswers[q.id].trim()!=='').length;document.getElementById(`badge${pi}`).textContent=`${done}/${qs.length}`;});
+}
+function goToPassage(idx){
+  if(idx<0||idx>2)return;currentPassage=idx;
+  [0,1,2].forEach(i=>document.getElementById(`tab${i}`).className=`ptab${i===idx?' active':''}`);
+  renderPassage(idx);renderQuestions(idx);
+  if(isReviewing){showReview();highlightPassageRefs(idx);}
+  updateNavBtns();document.getElementById('passage-panel').scrollTop=0;document.getElementById('questions-panel').scrollTop=0;
+}
+function highlightPassageRefs(pIdx){
+  const body=document.getElementById('passage-body');if(!body)return;
+  const qs=QUESTIONS.filter(s=>s.passage===pIdx).flatMap(s=>s.items);let html=body.innerHTML;
+  qs.forEach(q=>{const ref=PASSAGE_REFS[q.id];if(!ref)return;const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans,cls=isBlank?'ref-blank':isCorrect?'ref-correct':'ref-wrong',rbCls=isBlank?'rb-blank':isCorrect?'rb-correct':'rb-wrong',escaped=ref.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),re=new RegExp(escaped);if(re.test(html))html=html.replace(re,`<span class="passage-ref ${cls}"><span class="ref-badge ${rbCls}">${q.num}</span>${ref}</span>`);});
+  body.innerHTML=html;
+}
+function updateNavBtns(){
+  document.getElementById('btn-prev').disabled=currentPassage===0;document.getElementById('btn-prev').style.opacity=currentPassage===0?'0.4':'1';
+  const nxt=document.getElementById('btn-next');
+  if(currentPassage===2){nxt.textContent='Submit Test';nxt.onclick=submitTest;}else{nxt.textContent='Next Passage →';nxt.onclick=()=>goToPassage(currentPassage+1);}
+}
+function setHL(mode){hlMode=mode;['y','g','p','b'].forEach(m=>{const btn=document.getElementById('hl'+m);if(btn)btn.classList.toggle('active',m===mode)});if(mode!=='e'){qhlMode=false;document.getElementById('qhl-toggle').classList.remove('qmode-on');document.getElementById('hl-note-txt').textContent='Passage';}}
+function handleHighlight(e){
+  const sel=window.getSelection();if(!sel||sel.isCollapsed)return;
+  const range=sel.getRangeAt(0);
+  const passageBody=document.getElementById('passage-body'),qPanel=document.getElementById('q-panel');
+  const inPassage=passageBody&&passageBody.contains(range.commonAncestorContainer);
+  const inQuestions=qPanel&&qPanel.contains(range.commonAncestorContainer);
+  if(qhlMode&&inQuestions)applyHighlight(range,qPanel);
+  else if(!qhlMode&&inPassage)applyHighlight(range,passageBody);
+}
+function applyHighlight(range,container){
+  if(hlMode==='e'){const sel=window.getSelection();container.querySelectorAll('mark').forEach(m=>{if(sel.containsNode(m,true)){const parent=m.parentNode;while(m.firstChild)parent.insertBefore(m.firstChild,m);parent.removeChild(m);}});container.normalize();}
+  else{const mark=document.createElement('mark');mark.className='h'+hlMode;try{range.surroundContents(mark);}catch(e){const frag=range.extractContents();mark.appendChild(frag);range.insertNode(mark);}}
+  window.getSelection()&&window.getSelection().removeAllRanges();
+}
+function submitTest(){
+  clearInterval(timerInterval);let correct=0,wrong=0,blank=0;
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{const ans=(userAnswers[q.id]||'').trim();if(!ans){blank++;return;}checkAnswer(ans,ANSWER_KEY[q.id])?correct++:wrong++;});
+  document.getElementById('r-band').textContent=calcBand(correct);document.getElementById('r-correct').textContent=correct;document.getElementById('r-wrong').textContent=wrong;document.getElementById('r-blank').textContent=blank;document.getElementById('result-overlay').className='show';
+}
+function checkAnswer(given,key){
+  const g=given.toLowerCase().trim(),k=key.toLowerCase().trim();if(g===k)return true;
+  if(k==='9000'||k==='9,000 years old')return g.replace(/[,\s]/g,'').includes('9000');
+  if(k==='a detailed map')return g.includes('detailed map');
+  if(k==='teeth')return g.includes('teeth');
+  return false;
+}
+function calcBand(c){if(c>=39)return'9.0';if(c>=37)return'8.5';if(c>=35)return'8.0';if(c>=33)return'7.5';if(c>=30)return'7.0';if(c>=27)return'6.5';if(c>=23)return'6.0';if(c>=19)return'5.5';if(c>=15)return'5.0';if(c>=13)return'4.5';return'4.0';}
+function reviewAnswers(){document.getElementById('result-overlay').className='';isReviewing=true;goToPassage(0);showReview();}
+function showReview(){
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{
+    const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],reveal=document.getElementById(`reveal-${q.id}`),item=document.getElementById(`item-${q.id}`);
+    if(!reveal)return;const isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans;
+    if(item){item.classList.remove('review-correct','review-wrong','review-blank');item.classList.add(isBlank?'review-blank':isCorrect?'review-correct':'review-wrong');}
+    reveal.className=`q-answer-reveal show ${isCorrect?'correct-msg':'wrong-msg'}`;
+    reveal.innerHTML=isBlank?`<strong>Correct answer:</strong> ${key}`:isCorrect?`✓ Correct!`:`✗ Your answer: <strong>${ans}</strong> — Correct: <strong>${key}</strong>`;
+    if(q.type==='fill'){const inp=document.getElementById(`fill-${q.id}`);if(inp)inp.className=`q-fill ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='match'){const sel=document.getElementById(`sel-${q.id}`);if(sel)sel.className=`q-match-sel ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='mcq'){document.querySelectorAll(`[id^="opt-${q.id}-"]`).forEach(l=>{const letter=l.id.split('-').pop();if(letter===key)l.className='q-opt correct-ans';else if(letter===ans&&!isCorrect)l.className='q-opt wrong-ans';});}
+  });
+}
+function restartTest(){userAnswers={};isReviewing=false;timeLeft=3600;paused=false;document.getElementById('result-overlay').className='';clearInterval(timerInterval);goToPassage(0);renderTimer();updateProgress();startTimer();}
+function openNav(){document.getElementById('nav-overlay').className='show';}
+function closeNav(e){if(e.target===document.getElementById('nav-overlay'))document.getElementById('nav-overlay').className='';}
+init();
+</script>
+</body>
+</html>
