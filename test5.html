@@ -683,35 +683,25 @@
   }
   function initMobileHighlight(){
     const bar=document.getElementById('mobile-hl-bar');
-    bar.addEventListener('mousedown',e=>e.preventDefault());
-    bar.addEventListener('touchstart',e=>e.stopPropagation(),{passive:true});
-    document.getElementById('mhl-y').addEventListener('click',()=>applyMobileHL('y'));
-    document.getElementById('mhl-g').addEventListener('click',()=>applyMobileHL('g'));
-    document.getElementById('mhl-p').addEventListener('click',()=>applyMobileHL('p'));
-    document.getElementById('mhl-b').addEventListener('click',()=>applyMobileHL('b'));
-    document.getElementById('mhl-e').addEventListener('click',()=>applyMobileHL('e'));
-    document.getElementById('mhl-close').addEventListener('click',()=>hideMobileHlBar());
+    if(bar)bar.style.display='none';
     if(!('ontouchstart' in window)&&navigator.maxTouchPoints===0)return;
     document.addEventListener('selectionchange',()=>{
-      if(ignoreSelChange)return;
+      if(ignoreSelChange||touchPending)return;
       clearTimeout(selTimer);
       selTimer=setTimeout(()=>{
         const sel=window.getSelection();
-        if(!sel||sel.isCollapsed||sel.rangeCount===0){hideMobileHlBar();return;}
-        const r=sel.getRangeAt(0);
+        if(!sel||sel.isCollapsed||sel.rangeCount===0)return;
+        const r=sel.getRangeAt(0).cloneRange();
         const pb=document.getElementById('passage-body'),qp=document.getElementById('q-panel');
         const inP=pb&&pb.contains(r.commonAncestorContainer);
         const inQ=qp&&qp.contains(r.commonAncestorContainer);
-        if(inP||inQ)showMobileHlBar(r);else hideMobileHlBar();
-      },350);
+        if((!qhlMode&&inP)||(qhlMode&&inQ)){
+          touchPending=true;
+          applyHighlight(r,(!qhlMode&&inP)?pb:qp);
+          setTimeout(()=>{touchPending=false;},160);
+        }
+      },160);
     });
-    document.addEventListener('touchend',e=>{
-      if(bar.contains(e.target))return;
-      touchPending=true;setTimeout(()=>{touchPending=false;},300);
-      const sel=window.getSelection();
-      const hasSelection=!!(sel&&sel.rangeCount>0&&!sel.isCollapsed);
-      if(!hasSelection&&bar.classList.contains('show'))hideMobileHlBar();
-    },{passive:true});
   }
   init();
   </script>
