@@ -195,7 +195,6 @@ mark.hb{background:var(--hl-b);border-radius:2px;padding:0 1px}
       <button class="fs-btn" onclick="changeFontSize(-1)" title="Decrease font size">−</button>
       <button class="fs-btn" onclick="changeFontSize(1)" title="Increase font size">+</button>
     </div>
-  </div>
     <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" style="opacity:0.7"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
     <span id="timer-display">60:00</span>
     <button class="topbar-btn" id="pause-btn" onclick="togglePause()">Pause</button>
@@ -597,9 +596,52 @@ function handleHighlight(e){
   if(qhlMode&&inQuestions)applyHighlight(range,qPanel);
   else if(!qhlMode&&inPassage)applyHighlight(range,passageBody);
 }
+function getSelectedTextNodes(range,container){
+  const walker=document.createTreeWalker(container,NodeFilter.SHOW_TEXT,{
+    acceptNode(node){
+      if(!node.nodeValue||!node.nodeValue.trim())return NodeFilter.FILTER_REJECT;
+      return range.intersectsNode(node)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT;
+    }
+  });
+  const nodes=[];
+  let n=walker.nextNode();
+  while(n){nodes.push(n);n=walker.nextNode();}
+  return nodes;
+}
+function unwrapMark(mark){
+  const parent=mark.parentNode;
+  if(!parent)return;
+  while(mark.firstChild)parent.insertBefore(mark.firstChild,mark);
+  parent.removeChild(mark);
+}
+function eraseHighlight(range,container){
+  const marks=[...container.querySelectorAll('mark')].filter(m=>range.intersectsNode(m));
+  marks.forEach(unwrapMark);
+  container.normalize();
+}
+function paintHighlight(range,container){
+  const selectedNodes=getSelectedTextNodes(range,container);
+  selectedNodes.forEach(node=>{
+    const text=node.nodeValue;
+    let start=0,end=text.length;
+    if(node===range.startContainer)start=range.startOffset;
+    if(node===range.endContainer)end=range.endOffset;
+    if(end<=start)return;
+    const before=text.slice(0,start),mid=text.slice(start,end),after=text.slice(end);
+    const frag=document.createDocumentFragment();
+    if(before)frag.appendChild(document.createTextNode(before));
+    const mark=document.createElement('mark');
+    mark.className='h'+hlMode;
+    mark.textContent=mid;
+    frag.appendChild(mark);
+    if(after)frag.appendChild(document.createTextNode(after));
+    node.parentNode.replaceChild(frag,node);
+  });
+  container.normalize();
+}
 function applyHighlight(range,container){
-  if(hlMode==='e'){const sel=window.getSelection();container.querySelectorAll('mark').forEach(m=>{if(sel.containsNode(m,true)){const parent=m.parentNode;while(m.firstChild)parent.insertBefore(m.firstChild,m);parent.removeChild(m);}});container.normalize();}
-  else{const mark=document.createElement('mark');mark.className='h'+hlMode;try{range.surroundContents(mark);}catch(e){const frag=range.extractContents();mark.appendChild(frag);range.insertNode(mark);}}
+  if(hlMode==='e')eraseHighlight(range,container);
+  else paintHighlight(range,container);
   window.getSelection()&&window.getSelection().removeAllRanges();
 }
 function submitTest(){
@@ -651,14 +693,15 @@ function showMobileHlBar(range){
   clearTimeout(selTimer);selTimer=null;
   mobileSelRange=range.cloneRange();
   const rect=range.getBoundingClientRect();
-  ignoreSelChange=true;
-  window.getSelection()?.removeAllRanges(); /* clears native copy/paste bar */
-  setTimeout(()=>{ignoreSelChange=false;},300);
   positionMobileBar(rect);
   document.getElementById('mobile-hl-bar').classList.add('show');
 }
 function hideMobileHlBar(){document.getElementById('mobile-hl-bar').classList.remove('show');mobileSelRange=null;}
 function applyMobileHL(color){
+  if(!mobileSelRange){
+    const sel=window.getSelection();
+    if(sel&&sel.rangeCount>0&&!sel.isCollapsed)mobileSelRange=sel.getRangeAt(0).cloneRange();
+  }
   if(!mobileSelRange){hideMobileHlBar();return;}
   const pb=document.getElementById('passage-body'),qp=document.getElementById('q-panel');
   const inP=pb&&pb.contains(mobileSelRange.commonAncestorContainer);
@@ -673,6 +716,7 @@ function applyMobileHL(color){
 function initMobileHighlight(){
   const bar=document.getElementById('mobile-hl-bar');
   bar.addEventListener('mousedown',e=>e.preventDefault());
+  bar.addEventListener('touchstart',e=>e.stopPropagation(),{passive:true});
   document.getElementById('mhl-y').addEventListener('click',()=>applyMobileHL('y'));
   document.getElementById('mhl-g').addEventListener('click',()=>applyMobileHL('g'));
   document.getElementById('mhl-p').addEventListener('click',()=>applyMobileHL('p'));
@@ -696,7 +740,9 @@ function initMobileHighlight(){
   document.addEventListener('touchend',e=>{
     if(bar.contains(e.target))return;
     touchPending=true;setTimeout(()=>{touchPending=false;},300);
-    if(bar.classList.contains('show'))hideMobileHlBar();
+    const sel=window.getSelection();
+    const hasSelection=!!(sel&&sel.rangeCount>0&&!sel.isCollapsed);
+    if(!hasSelection&&bar.classList.contains('show'))hideMobileHlBar();
   },{passive:true});
 }
 init();
