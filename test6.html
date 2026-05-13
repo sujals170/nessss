@@ -651,14 +651,15 @@ function showMobileHlBar(range){
   clearTimeout(selTimer);selTimer=null;
   mobileSelRange=range.cloneRange();
   const rect=range.getBoundingClientRect();
-  ignoreSelChange=true;
-  window.getSelection()?.removeAllRanges(); /* clears native copy/paste bar */
-  setTimeout(()=>{ignoreSelChange=false;},300);
   positionMobileBar(rect);
   document.getElementById('mobile-hl-bar').classList.add('show');
 }
 function hideMobileHlBar(){document.getElementById('mobile-hl-bar').classList.remove('show');mobileSelRange=null;}
 function applyMobileHL(color){
+  if(!mobileSelRange){
+    const sel=window.getSelection();
+    if(sel&&sel.rangeCount>0&&!sel.isCollapsed)mobileSelRange=sel.getRangeAt(0).cloneRange();
+  }
   if(!mobileSelRange){hideMobileHlBar();return;}
   const pb=document.getElementById('passage-body'),qp=document.getElementById('q-panel');
   const inP=pb&&pb.contains(mobileSelRange.commonAncestorContainer);
@@ -673,6 +674,7 @@ function applyMobileHL(color){
 function initMobileHighlight(){
   const bar=document.getElementById('mobile-hl-bar');
   bar.addEventListener('mousedown',e=>e.preventDefault());
+  bar.addEventListener('touchstart',e=>e.stopPropagation(),{passive:true});
   document.getElementById('mhl-y').addEventListener('click',()=>applyMobileHL('y'));
   document.getElementById('mhl-g').addEventListener('click',()=>applyMobileHL('g'));
   document.getElementById('mhl-p').addEventListener('click',()=>applyMobileHL('p'));
@@ -696,7 +698,9 @@ function initMobileHighlight(){
   document.addEventListener('touchend',e=>{
     if(bar.contains(e.target))return;
     touchPending=true;setTimeout(()=>{touchPending=false;},300);
-    if(bar.classList.contains('show'))hideMobileHlBar();
+    const sel=window.getSelection();
+    const hasSelection=!!(sel&&sel.rangeCount>0&&!sel.isCollapsed);
+    if(!hasSelection&&bar.classList.contains('show'))hideMobileHlBar();
   },{passive:true});
 }
 init();
