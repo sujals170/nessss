@@ -534,6 +534,13 @@ function initResizer(){
     function onUp(){resizer.classList.remove('dragging');document.body.style.cursor='';document.body.style.userSelect='';document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);}
     document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
   });
+  resizer.addEventListener('touchstart',e=>{
+    const touch=e.touches[0];startX=touch.clientX;startW=qPanel.offsetWidth;resizer.classList.add('dragging');document.body.style.userSelect='none';
+    function onMove(e){e.preventDefault();const t=e.touches[0];const delta=startX-t.clientX;const newW=Math.min(Math.max(startW+delta,260),main.offsetWidth-300);qPanel.style.width=newW+'px';}
+    function onUp(){resizer.classList.remove('dragging');document.body.style.userSelect='';document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onUp);}
+    document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('touchend',onUp);
+    e.preventDefault();
+  },{passive:false});
 }
 function startTimer(){timerInterval=setInterval(()=>{if(paused)return;timeLeft--;renderTimer();if(timeLeft<=0){clearInterval(timerInterval);submitTest();}},1000);}
 function renderTimer(){const el=document.getElementById('timer-display'),m=Math.floor(timeLeft/60),s=timeLeft%60;el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');el.className=timeLeft<=300?'danger':timeLeft<=600?'warn':'';}
@@ -630,7 +637,7 @@ function restartTest(){userAnswers={};isReviewing=false;timeLeft=3600;paused=fal
 function openNav(){document.getElementById('nav-overlay').className='show';}
 function closeNav(e){if(e.target===document.getElementById('nav-overlay'))document.getElementById('nav-overlay').className='';}
 /* ═══ MOBILE / TOUCH HIGHLIGHT ═══ */
-let mobileSelRange=null,ignoreSelChange=false;
+let mobileSelRange=null,ignoreSelChange=false,selTimer=null;
 function positionMobileBar(rect){
   const bar=document.getElementById('mobile-hl-bar'),bW=268,bH=50,mg=10;
   let cx=rect.left+rect.width/2,topY=rect.top-bH-14,botY=rect.bottom+14;
@@ -641,11 +648,12 @@ function positionMobileBar(rect){
   else{bar.style.top=botY+'px';bar.classList.remove('arr-down');bar.classList.add('arr-up');}
 }
 function showMobileHlBar(range){
+  clearTimeout(selTimer);selTimer=null;
   mobileSelRange=range.cloneRange();
   const rect=range.getBoundingClientRect();
   ignoreSelChange=true;
   window.getSelection()?.removeAllRanges(); /* clears native copy/paste bar */
-  setTimeout(()=>{ignoreSelChange=false;},120);
+  setTimeout(()=>{ignoreSelChange=false;},300);
   positionMobileBar(rect);
   document.getElementById('mobile-hl-bar').classList.add('show');
 }
@@ -665,7 +673,6 @@ function applyMobileHL(color){
 function initMobileHighlight(){
   const bar=document.getElementById('mobile-hl-bar');
   bar.addEventListener('mousedown',e=>e.preventDefault());
-  bar.addEventListener('touchstart',e=>e.preventDefault(),{passive:false});
   document.getElementById('mhl-y').addEventListener('click',()=>applyMobileHL('y'));
   document.getElementById('mhl-g').addEventListener('click',()=>applyMobileHL('g'));
   document.getElementById('mhl-p').addEventListener('click',()=>applyMobileHL('p'));
@@ -673,7 +680,6 @@ function initMobileHighlight(){
   document.getElementById('mhl-e').addEventListener('click',()=>applyMobileHL('e'));
   document.getElementById('mhl-close').addEventListener('click',()=>hideMobileHlBar());
   if(!('ontouchstart' in window)&&navigator.maxTouchPoints===0)return;
-  let selTimer=null;
   document.addEventListener('selectionchange',()=>{
     if(ignoreSelChange)return;
     clearTimeout(selTimer);
@@ -690,9 +696,7 @@ function initMobileHighlight(){
   document.addEventListener('touchend',e=>{
     if(bar.contains(e.target))return;
     touchPending=true;setTimeout(()=>{touchPending=false;},300);
-  });
-  document.addEventListener('touchstart',e=>{
-    if(!bar.contains(e.target))hideMobileHlBar();
+    if(bar.classList.contains('show'))hideMobileHlBar();
   },{passive:true});
 }
 init();
