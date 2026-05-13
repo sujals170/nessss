@@ -522,11 +522,20 @@ let passageFontSize=14.5,questionFontSize=12.5;
 const FS_MIN=10,FS_MAX=22;
 function changeFontSize(delta){passageFontSize=Math.min(FS_MAX,Math.max(FS_MIN,passageFontSize+delta));questionFontSize=Math.min(FS_MAX,Math.max(FS_MIN,questionFontSize+delta));document.documentElement.style.setProperty('--passage-fs',passageFontSize+'px');document.documentElement.style.setProperty('--question-fs',questionFontSize+'px');}
 function toggleQHL(){qhlMode=!qhlMode;const btn=document.getElementById('qhl-toggle'),note=document.getElementById('hl-note-txt');btn.classList.toggle('qmode-on',qhlMode);note.textContent=qhlMode?'Questions':'Passage';}
+function suppressNativeSelectionUI(){
+  const blocked=['contextmenu','copy','cut','paste'];
+  const targets=[document.getElementById('passage-panel'),document.getElementById('questions-panel')];
+  targets.forEach(t=>{
+    if(!t)return;
+    blocked.forEach(evt=>t.addEventListener(evt,e=>e.preventDefault()));
+  });
+}
 
 function init(){
   renderPassage(0);renderQuestions(0);updateProgress();updateNavBtns();startTimer();
   document.getElementById('passage-panel').addEventListener('mouseup',handleHighlight);
   document.getElementById('questions-panel').addEventListener('mouseup',handleHighlight);
+  suppressNativeSelectionUI();
   initResizer();initMobileHighlight();
 }
 function initResizer(){
@@ -651,6 +660,9 @@ function showMobileHlBar(range){
   clearTimeout(selTimer);selTimer=null;
   mobileSelRange=range.cloneRange();
   const rect=range.getBoundingClientRect();
+  ignoreSelChange=true;
+  window.getSelection()?.removeAllRanges();
+  setTimeout(()=>{ignoreSelChange=false;},300);
   positionMobileBar(rect);
   document.getElementById('mobile-hl-bar').classList.add('show');
 }
