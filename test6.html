@@ -168,6 +168,8 @@ mark.hb{background:var(--hl-b);border-radius:2px;padding:0 1px}
 .ntc-name{font-size:13px;font-weight:600;margin-bottom:3px}
 .ntc-pass{font-size:11px;color:var(--muted);line-height:1.5}
 .ntc-badge{display:inline-block;font-size:10px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:10px;margin-top:5px;font-weight:600}
+/* suppress iOS long-press callout on text panels */
+#passage-panel,#questions-panel{-webkit-touch-callout:none}
 /* ── MOBILE TOUCH HIGHLIGHT TOOLBAR ── */
 #mobile-hl-bar{display:none;position:fixed;background:#1c1c1c;border-radius:12px;padding:9px 13px;gap:9px;align-items:center;z-index:9999;box-shadow:0 6px 28px rgba(0,0,0,0.45);pointer-events:auto;white-space:nowrap}
 #mobile-hl-bar.show{display:flex}
@@ -628,7 +630,7 @@ function restartTest(){userAnswers={};isReviewing=false;timeLeft=3600;paused=fal
 function openNav(){document.getElementById('nav-overlay').className='show';}
 function closeNav(e){if(e.target===document.getElementById('nav-overlay'))document.getElementById('nav-overlay').className='';}
 /* ═══ MOBILE / TOUCH HIGHLIGHT ═══ */
-let mobileSelRange=null;
+let mobileSelRange=null,ignoreSelChange=false;
 function positionMobileBar(rect){
   const bar=document.getElementById('mobile-hl-bar'),bW=268,bH=50,mg=10;
   let cx=rect.left+rect.width/2,topY=rect.top-bH-14,botY=rect.bottom+14;
@@ -640,7 +642,11 @@ function positionMobileBar(rect){
 }
 function showMobileHlBar(range){
   mobileSelRange=range.cloneRange();
-  positionMobileBar(range.getBoundingClientRect());
+  const rect=range.getBoundingClientRect();
+  ignoreSelChange=true;
+  window.getSelection()?.removeAllRanges(); /* clears native copy/paste bar */
+  setTimeout(()=>{ignoreSelChange=false;},120);
+  positionMobileBar(rect);
   document.getElementById('mobile-hl-bar').classList.add('show');
 }
 function hideMobileHlBar(){document.getElementById('mobile-hl-bar').classList.remove('show');mobileSelRange=null;}
@@ -650,8 +656,10 @@ function applyMobileHL(color){
   const inP=pb&&pb.contains(mobileSelRange.commonAncestorContainer);
   const inQ=qp&&qp.contains(mobileSelRange.commonAncestorContainer);
   const cont=inP?pb:inQ?qp:null;if(!cont){hideMobileHlBar();return;}
+  ignoreSelChange=true;
   const sel=window.getSelection();sel.removeAllRanges();sel.addRange(mobileSelRange);
   const prev=hlMode;hlMode=color;applyHighlight(mobileSelRange,cont);hlMode=prev;
+  setTimeout(()=>{ignoreSelChange=false;},120);
   hideMobileHlBar();
 }
 function initMobileHighlight(){
@@ -663,23 +671,28 @@ function initMobileHighlight(){
   document.getElementById('mhl-p').addEventListener('click',()=>applyMobileHL('p'));
   document.getElementById('mhl-b').addEventListener('click',()=>applyMobileHL('b'));
   document.getElementById('mhl-e').addEventListener('click',()=>applyMobileHL('e'));
-  document.getElementById('mhl-close').addEventListener('click',()=>{hideMobileHlBar();window.getSelection()?.removeAllRanges();});
-  document.addEventListener('touchend',e=>{
-    if(bar.contains(e.target))return;
-    touchPending=true;
-    setTimeout(()=>{
-      touchPending=false;
+  document.getElementById('mhl-close').addEventListener('click',()=>hideMobileHlBar());
+  if(!('ontouchstart' in window)&&navigator.maxTouchPoints===0)return;
+  let selTimer=null;
+  document.addEventListener('selectionchange',()=>{
+    if(ignoreSelChange)return;
+    clearTimeout(selTimer);
+    selTimer=setTimeout(()=>{
       const sel=window.getSelection();
       if(!sel||sel.isCollapsed||sel.rangeCount===0){hideMobileHlBar();return;}
       const r=sel.getRangeAt(0);
       const pb=document.getElementById('passage-body'),qp=document.getElementById('q-panel');
       const inP=pb&&pb.contains(r.commonAncestorContainer);
       const inQ=qp&&qp.contains(r.commonAncestorContainer);
-      if(inP||inQ)showMobileHlBar(r);
-    },180);
+      if(inP||inQ)showMobileHlBar(r);else hideMobileHlBar();
+    },350);
+  });
+  document.addEventListener('touchend',e=>{
+    if(bar.contains(e.target))return;
+    touchPending=true;setTimeout(()=>{touchPending=false;},300);
   });
   document.addEventListener('touchstart',e=>{
-    if(!bar.contains(e.target)){const sel=window.getSelection();if(!sel||sel.isCollapsed)hideMobileHlBar();}
+    if(!bar.contains(e.target))hideMobileHlBar();
   },{passive:true});
 }
 init();
