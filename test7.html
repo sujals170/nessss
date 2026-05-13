@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IELTS Academic Reading — Test 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f2eb;--surface:#ffffff;--surface2:#f9f7f2;--surface3:#f0ede4;
+  --accent:#1a5c3e;--accent-light:#e8f5ee;--accent2:#2a7a54;
+  --text:#1c1c1c;--muted:#6b6b6b;--muted2:#999;
+  --border:#ddd8cc;--border2:#e8e4da;
+  --hl-y:rgba(255,220,0,0.5);--hl-g:rgba(80,200,120,0.45);
+  --hl-p:rgba(255,100,160,0.45);--hl-b:rgba(60,150,255,0.45);
+  --shadow:0 2px 12px rgba(0,0,0,0.08);
+  --radius:8px;
+  --passage-fs:14.5px;--question-fs:12.5px;
+}
+html{height:100%;overflow:hidden}
+body{height:100%;overflow:hidden;display:flex;flex-direction:column;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+#topbar{height:52px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;position:relative;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+#topbar-left{display:flex;align-items:center;gap:10px}
+#topbar-logo{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:0.7}
+#topbar-title{font-size:14px;font-weight:600}
+#topbar-right{display:flex;align-items:center;gap:10px}
+#timer-display{font-size:20px;font-weight:700;font-family:'Courier New',monospace;letter-spacing:3px;min-width:70px;text-align:center}
+#timer-display.warn{color:#ffd080}
+#timer-display.danger{color:#ff8888;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.5}}
+.topbar-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s}
+.topbar-btn:hover{background:rgba(255,255,255,0.28)}
+.topbar-btn.submit{background:#fff;color:var(--accent);border-color:#fff}
+.topbar-btn.submit:hover{background:#e8f5ee}
+#prog-bar{height:4px;background:rgba(255,255,255,0.2);flex-shrink:0}
+#prog-fill{height:100%;background:#6ee7b7;transition:width 0.4s ease}
+#passage-tabs{background:var(--surface);border-bottom:2px solid var(--border);display:flex;flex-shrink:0;overflow-x:auto}
+.ptab{padding:11px 18px;font-size:12px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all 0.18s;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:7px}
+.ptab:hover{color:var(--accent);background:var(--accent-light)}
+.ptab.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-light)}
+.ptab-badge{font-size:10px;background:var(--border);color:var(--muted);padding:2px 7px;border-radius:10px;font-weight:700}
+.ptab.active .ptab-badge{background:var(--accent);color:#fff}
+#main{display:flex;flex:1;overflow:hidden;min-height:0}
+#passage-panel{flex:1;overflow-y:auto;padding:28px 36px;background:var(--surface);border-right:1px solid var(--border);min-width:0}
+#passage-panel::-webkit-scrollbar{width:6px}
+#passage-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.passage-header{margin-bottom:22px}
+.passage-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.passage-title{font-size:22px;font-weight:700;font-family:'Merriweather',serif;color:var(--text);margin-bottom:6px}
+.passage-instruct{font-size:12px;color:var(--muted);font-style:italic;padding:8px 12px;background:var(--surface3);border-radius:6px;border-left:3px solid var(--accent)}
+.passage-body p{font-family:'Merriweather',serif;font-size:var(--passage-fs);line-height:1.9;margin-bottom:16px;text-align:justify;color:#222}
+.passage-body .section-letter{font-size:12px;font-weight:700;color:var(--accent);font-family:'Inter',sans-serif;border:2px solid var(--accent);border-radius:4px;padding:1px 7px;display:inline-block;margin-right:8px;vertical-align:middle}
+.passage-ref{border-radius:3px;padding:1px 3px;display:inline}
+.passage-ref.ref-correct{background:rgba(26,92,62,0.13);border-bottom:2px solid #1a5c3e}
+.passage-ref.ref-wrong{background:rgba(192,57,43,0.12);border-bottom:2px solid #c0392b}
+.passage-ref.ref-blank{background:rgba(224,160,32,0.13);border-bottom:2px solid #e0a020}
+.ref-badge{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;font-size:9px;font-weight:700;font-family:'Inter',sans-serif;color:#fff;vertical-align:middle;margin-right:2px;flex-shrink:0;line-height:1}
+.ref-badge.rb-correct{background:#1a5c3e}
+.ref-badge.rb-wrong{background:#c0392b}
+.ref-badge.rb-blank{background:#e0a020}
+mark.hy{background:var(--hl-y);border-radius:2px;padding:0 1px}
+mark.hg{background:var(--hl-g);border-radius:2px;padding:0 1px}
+mark.hp{background:var(--hl-p);border-radius:2px;padding:0 1px}
+mark.hb{background:var(--hl-b);border-radius:2px;padding:0 1px}
+#resizer{width:6px;background:var(--border);cursor:col-resize;flex-shrink:0;transition:background 0.2s;position:relative}
+#resizer:hover,#resizer.dragging{background:var(--accent)}
+#resizer::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:32px;background:var(--muted2);border-radius:2px}
+#questions-panel{width:400px;overflow-y:auto;background:var(--surface2);padding:16px;flex-shrink:0;min-width:260px}
+#questions-panel::-webkit-scrollbar{width:5px}
+#questions-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-bar{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 12px;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;box-shadow:var(--shadow)}
+.hl-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted)}
+.hl-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:transform 0.15s,border-color 0.15s;flex-shrink:0}
+.hl-dot:hover{transform:scale(1.2)}
+.hl-dot.active{border-color:#333;transform:scale(1.15)}
+.hl-dot.dy{background:#ffd800}
+.hl-dot.dg{background:#50c878}
+.hl-dot.dp{background:#ff64a0}
+.hl-dot.db{background:#3c96ff}
+.hl-sep{width:1px;height:20px;background:var(--border)}
+.hl-erase{font-size:11px;font-family:'Inter',sans-serif;color:var(--muted);background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:4px 9px;cursor:pointer;font-weight:600}
+.hl-erase:hover{background:var(--border)}
+.hl-note{font-size:10px;color:var(--muted2);font-style:italic}
+.q-section{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow)}
+.q-section-hd{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+.q-section-instruct{font-size:11.5px;color:var(--muted);font-style:italic;line-height:1.5;margin-bottom:12px;padding:7px 10px;background:var(--surface3);border-radius:5px}
+.q-item{border-bottom:1px solid var(--border2);padding-bottom:10px;margin-bottom:10px;border-radius:6px;padding:8px;transition:background 0.2s,border-left 0.2s}
+.q-item.review-correct{background:#edfaf3;border-left:4px solid #1a5c3e}
+.q-item.review-wrong{background:#fdf0f0;border-left:4px solid #c0392b}
+.q-item.review-blank{background:#fdf6e8;border-left:4px solid #e0a020}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-num{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px}
+.q-text{font-size:var(--question-fs);color:var(--text);line-height:1.5;margin-bottom:7px}
+.q-opts{display:flex;flex-direction:column;gap:4px}
+.q-opt{display:flex;align-items:flex-start;gap:7px;font-size:var(--question-fs);padding:5px 7px;border-radius:5px;cursor:pointer;transition:background 0.15s;line-height:1.45;border:1px solid transparent}
+.q-opt:hover{background:var(--accent-light);border-color:var(--border)}
+.q-opt input[type=radio]{accent-color:var(--accent);margin-top:2px;flex-shrink:0}
+.q-opt.selected{background:var(--accent-light);border-color:var(--accent)}
+.q-opt.correct-ans{background:#d4f4e8;border-color:#1a5c3e}
+.q-opt.wrong-ans{background:#fde8e8;border-color:#c0392b}
+.q-fill{width:100%;border:none;border-bottom:2px solid var(--border);background:transparent;font-size:var(--question-fs);font-family:'Inter',sans-serif;padding:4px 2px;outline:none;color:var(--text);transition:border-color 0.2s}
+.q-fill:focus{border-bottom-color:var(--accent)}
+.q-fill.correct{border-bottom-color:#1a5c3e;background:rgba(80,200,130,0.1)}
+.q-fill.wrong{border-bottom-color:#c0392b;background:rgba(200,60,60,0.08)}
+.q-match-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:var(--question-fs)}
+.q-match-sel{border:1px solid var(--border);border-radius:5px;padding:4px 7px;font-size:11.5px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;min-width:52px}
+.q-match-sel:focus{border-color:var(--accent)}
+.q-match-sel.correct{border-color:#1a5c3e;background:#d4f4e8}
+.q-match-sel.wrong{border-color:#c0392b;background:#fde8e8}
+#bottom-bar{height:48px;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+#answered-info{font-size:12px;color:var(--muted);font-weight:500}
+.nav-btns{display:flex;gap:8px}
+.nav-btn{padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.18s;border:1px solid var(--border);background:var(--surface2);color:var(--text)}
+.nav-btn:hover{background:var(--border)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-btn.primary:hover{background:var(--accent2)}
+#result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999;align-items:center;justify-content:center}
+#result-overlay.show{display:flex}
+#result-box{background:var(--surface);border-radius:16px;padding:40px 36px;max-width:460px;width:92%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25)}
+.result-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.result-title{font-size:22px;font-weight:700;margin-bottom:4px;font-family:'Merriweather',serif}
+.result-subtitle{font-size:13px;color:var(--muted);margin-bottom:18px}
+.band-score{font-size:64px;font-weight:700;color:var(--accent);line-height:1;margin:10px 0 6px;font-family:'Merriweather',serif}
+.band-label{font-size:12px;color:var(--muted);margin-bottom:20px}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.score-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 8px}
+.score-card .sc-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px}
+.score-card .sc-val{font-size:22px;font-weight:700;color:var(--text)}
+.result-btns{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.result-btn{padding:11px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border:1px solid var(--border);background:var(--surface2);color:var(--text);transition:all 0.18s}
+.result-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.result-btn:hover{opacity:0.88}
+#pause-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:500;align-items:center;justify-content:center}
+#pause-overlay.show{display:flex}
+#pause-box{background:var(--surface);border-radius:16px;padding:48px 40px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+#pause-box h2{font-size:28px;font-family:'Merriweather',serif;margin-bottom:8px}
+#pause-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
+.q-answer-reveal{font-size:11.5px;padding:6px 10px;border-radius:5px;margin-top:6px;display:none}
+.q-answer-reveal.show{display:block}
+.q-answer-reveal.correct-msg{background:#d4f4e8;color:#1a5c3e;border-left:3px solid #1a5c3e}
+.q-answer-reveal.wrong-msg{background:#fde8e8;color:#922b2b;border-left:3px solid #c0392b}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-tip{position:fixed;background:#1c1c1c;color:#fff;font-size:11px;padding:4px 10px;border-radius:4px;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:300;font-family:'Inter',sans-serif}
+.fs-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;width:28px;height:28px;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;transition:background 0.2s;line-height:1}
+.fs-btn:hover{background:rgba(255,255,255,0.32)}
+.fs-group{display:flex;align-items:center;gap:4px;border:1px solid rgba(255,255,255,0.25);border-radius:6px;padding:2px 6px}
+.fs-label{font-size:10px;opacity:0.7;letter-spacing:0.5px;font-weight:600}
+.hl-mode-btn{font-size:11px;font-family:'Inter',sans-serif;background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:4px 9px;cursor:pointer;font-weight:600;color:var(--muted);transition:all 0.15s}
+.hl-mode-btn.qmode-on{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+#nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.52);z-index:998}
+#nav-overlay.show{display:flex}
+#nav-panel{background:var(--surface);width:290px;height:100%;overflow-y:auto;display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,0.18)}
+#nav-hd{background:var(--accent);color:#fff;padding:18px 20px}
+#nav-hd h3{font-size:15px;font-weight:700;margin-bottom:2px}
+#nav-hd p{font-size:11px;opacity:0.72}
+.nav-home-lnk{display:flex;align-items:center;gap:8px;padding:11px 20px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;transition:background 0.15s}
+.nav-home-lnk:hover{background:var(--accent-light);color:var(--accent)}
+.ntc{display:block;padding:13px 20px;border-bottom:1px solid var(--border2);text-decoration:none;color:var(--text);transition:background 0.15s;border-left:3px solid transparent}
+.ntc:hover{background:var(--accent-light)}
+.ntc.cur{background:var(--accent-light);border-left-color:var(--accent)}
+.ntc-num{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:2px}
+.ntc-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.ntc-pass{font-size:11px;color:var(--muted);line-height:1.5}
+.ntc-badge{display:inline-block;font-size:10px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:10px;margin-top:5px;font-weight:600}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div id="topbar-left">
+    <span style="opacity:0.3;font-size:16px">|</span>
+    <span id="topbar-title">IELTS Academic Reading — Test 7</span>
+    <button class="topbar-btn" onclick="openNav()">☰ Tests</button>
+  </div>
+  <div id="topbar-right">
+    <div class="fs-group">
+      <span class="fs-label">A</span>
+      <button class="fs-btn" onclick="changeFontSize(-1)" title="Decrease font size">−</button>
+      <button class="fs-btn" onclick="changeFontSize(1)" title="Increase font size">+</button>
+    </div>
+  </div>
+    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" style="opacity:0.7"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span id="timer-display">60:00</span>
+    <button class="topbar-btn" id="pause-btn" onclick="togglePause()">Pause</button>
+    <button class="topbar-btn submit" onclick="submitTest()">Submit Test</button>
+  </div>
+</div>
+<div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
+
+<div id="passage-tabs">
+  <button class="ptab active" onclick="goToPassage(0)" id="tab0">
+    Passage 1 — Education Philosophy
+    <span class="ptab-badge" id="badge0">0/13</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(1)" id="tab1">
+    Passage 2 — How Deserts Are Formed
+    <span class="ptab-badge" id="badge1">0/13</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(2)" id="tab2">
+    Passage 3 — The Olympic Torch
+    <span class="ptab-badge" id="badge2">0/14</span>
+  </button>
+</div>
+
+<div style="display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0" id="layout">
+<div id="main">
+  <div id="passage-panel"></div>
+  <div id="resizer"></div>
+  <div id="questions-panel">
+    <div id="hl-bar">
+      <span class="hl-label">Highlight</span>
+      <button class="hl-dot dy active" id="hly" onclick="setHL('y')" title="Yellow"></button>
+      <button class="hl-dot dg" id="hlg" onclick="setHL('g')" title="Green"></button>
+      <button class="hl-dot dp" id="hlp" onclick="setHL('p')" title="Pink"></button>
+      <button class="hl-dot db" id="hlb" onclick="setHL('b')" title="Blue"></button>
+      <div class="hl-sep"></div>
+      <button class="hl-erase" onclick="setHL('e')">✕ Erase</button>
+      <div class="hl-sep"></div>
+      <button class="hl-mode-btn" id="qhl-toggle" onclick="toggleQHL()" title="Toggle question highlighting">Q Highlight</button>
+      <span class="hl-note" id="hl-note-txt">Passage</span>
+    </div>
+    <div id="q-panel"></div>
+  </div>
+</div>
+<div id="bottom-bar">
+  <span id="answered-info">0 / 40 answered</span>
+  <div class="nav-btns">
+    <button class="nav-btn" onclick="goToPassage(currentPassage-1)" id="btn-prev">← Previous</button>
+    <button class="nav-btn primary" onclick="goToPassage(currentPassage+1)" id="btn-next">Next Passage →</button>
+  </div>
+</div>
+</div>
+
+<div id="pause-overlay">
+  <div id="pause-box">
+    <h2>Test Paused</h2>
+    <p>Your progress is saved. Click resume to continue.</p>
+    <button class="nav-btn primary" style="padding:12px 32px;font-size:14px" onclick="togglePause()">▶ Resume</button>
+  </div>
+</div>
+
+<div id="result-overlay">
+  <div id="result-box">
+    <div class="result-tag">Test Complete</div>
+    <div class="result-title">IELTS Academic Reading</div>
+    <div class="result-subtitle">Test 7 — Your Results</div>
+    <div class="band-score" id="r-band">—</div>
+    <div class="band-label">Estimated Band Score</div>
+    <div class="score-grid">
+      <div class="score-card"><div class="sc-label">Correct</div><div class="sc-val" id="r-correct" style="color:#1a5c3e">—</div></div>
+      <div class="score-card"><div class="sc-label">Incorrect</div><div class="sc-val" id="r-wrong" style="color:#c0392b">—</div></div>
+      <div class="score-card"><div class="sc-label">Unanswered</div><div class="sc-val" id="r-blank" style="color:#999">—</div></div>
+    </div>
+    <div class="result-btns">
+      <button class="result-btn primary" onclick="reviewAnswers()">Review All Answers</button>
+      <button class="result-btn" onclick="location.href='index.html'">← All Tests</button>
+      <button class="result-btn" onclick="restartTest()">Restart Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- Test Navigator -->
+<div id="nav-overlay" onclick="closeNav(event)">
+  <div id="nav-panel">
+    <div id="nav-hd"><h3>IELTS Practice Tests</h3><p>Academic Reading</p></div>
+    <a href="index.html" class="nav-home-lnk">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home — All Tests
+    </a>
+    <a href="test5.html" class="ntc">
+      <div class="ntc-num">Test 5</div>
+      <div class="ntc-name">Recent Actual Test 6</div>
+      <div class="ntc-pass">The Pearl · History of Automobile · Elephant Communication</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test6.html" class="ntc">
+      <div class="ntc-num">Test 6</div>
+      <div class="ntc-name">Academic Reading Test 6</div>
+      <div class="ntc-pass">History of Refrigeration · Ancient People in Sahara · Texting the Television</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test7.html" class="ntc cur">
+      <div class="ntc-num">Test 7</div>
+      <div class="ntc-name">Recent Actual Test 6 — Test 4</div>
+      <div class="ntc-pass">Education Philosophy · How Deserts Are Formed · The Olympic Torch</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+  </div>
+</div>
+
+<div id="hl-tip"></div>
+
+<script>
+const ANSWER_KEY = {
+  q1:'iii',q2:'v',q3:'i',q4:'vi',
+  q5:'A',q6:'B',q7:'B',q8:'C',
+  q9:'C',q10:'A',q11:'B',q12:'A',q13:'D',
+  q14:'B',q15:'G',q16:'A',q17:'H',q18:'D',q19:'C',q20:'C',
+  q21:'A',q22:'B',q23:'B',q24:'A',q25:'C',q26:'B',
+  q27:'severe weather conditions',q28:'aesthetic and practical',q29:'treasurable souvenir',
+  q30:'E',q31:'F',q32:'B',q33:'D',q34:'H',q35:'C',
+  q36:'fuel tank',q37:'openings',q38:'handle',q39:'propane and butane',q40:'double flame'
+};
+
+const PASSAGE_REFS = {
+  q1:'they found it difficult to invest in their newborn children',
+  q2:'John Locke, one of the most influential writers of his period',
+  q3:'He agreed with Rousseau that humans are naturally good but were spoiled by a corrupt society',
+  q4:'A young physician Jean Marc Gaspard Itard was optimistic about the future of Victor',
+  q5:'young children from the poorest families were forced into early employment',
+  q6:'coupled with the rise of the middle class and redefinition of roles of family members',
+  q7:'the invention of kindergarten, which was a word and a movement created by a German-born educator, Friedrich Froebel in 1840',
+  q8:'the movement eventually reached and flourished in the United States in the 20th century',
+  q9:"Itard's goal to teach Victor the basics of speech could never be fully achieved",
+  q10:'This work was based on his extensive observation of children and adolescents',
+  q11:'his theory was based upon establishing an emotionally healthy homelike learning environment',
+  q12:"people were 'noble savages' in the original state of nature, meaning they are innocent, free and uncorrupted",
+  q13:'dozens of kindergartens had been created in Germany',
+  q14:'they hit other particles which will then be jerked into the air in their turn, initiating a chain reaction',
+  q15:'one of the states of America had a large section of farmland that had turned into desert',
+  q16:'Deserts have been classified in a number of ways',
+  q17:'Satellites have been utilised to investigate the influence',
+  q18:'wherever they move to, the desert follows',
+  q19:'the academic circle has never agreed on the causes of desertification',
+  q20:'when crop failures occur, extensive tracts of land are devoid of a plant cover',
+  q21:'there are no clear-cut borders between desert and other landscape features',
+  q22:'There has been a tremendous deal of publicity on how severe desertification can be',
+  q23:'A common misunderstanding is that a shortage of precipitation causes the desertification',
+  q24:'Livestock farming in semi-arid areas accelerates the erosion of soil',
+  q26:'Satellites have been utilised to investigate the influence that people and livestock have on our planet Earth',
+  q27:'it has to succeed in going through all sorts of severe weather conditions',
+  q28:'a torch that has both aesthetic and practical value',
+  q29:'choose to buy his or her torch as a treasurable souvenir',
+  q30:'liquid fuels made its first appearance at the 1972 Munich Games',
+  q31:'propylene was loaded with carbon, it would produce plenty of smoke which was detrimental to the environment',
+  q32:'The name of the runner was also inscribed on the platform as a token of thanks',
+  q33:"some flaming pieces fell off and seared the runner's arms",
+  q34:"for the purpose of echoing the theme of 'Light the Fire Within'",
+  q35:'the torch was lit not in Olympia, Greece, but in Norway',
+  q36:'accommodates a tiny fuel tank',
+  q37:'squeezed through a brass valve that has thousands of little openings',
+  q38:'As the fuel ascends through the modified handle',
+  q39:'a combination of 35 per cent propane',
+  q40:'Both the 1996 and 2000 torches adopted a double flame burning system'
+};
+
+const PASSAGES = [
+  {
+    tag:'Passage 1',
+    title:'Education Philosophy',
+    instruct:'You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.',
+    body:`<p><span class="section-letter">A</span> Although we lack accurate statistics about child mortality in the pre-industrial period, we do have evidence that in the 1660s, the mortality rate for children who died within 14 days of birth was as much as 30 per cent. Nearly all families suffered some premature death. Since all parents expected to bury some of their children, they found it difficult to invest in their newborn children. Moreover, to protect themselves from the emotional consequences of children's death, parents avoided making any emotional commitment to an infant. It is no wonder that we find mothers leave their babies in gutters or refer to the death in the same paragraph with reference to pickles.</p>
+<p><span class="section-letter">B</span> The 18th century witnessed the transformation from an agrarian economy to an industrial one, one of the vital social changes taking place in the Western world. An increasing number of people moved from their villages and small towns to big cities where life was quite different. Social supports which had previously existed in smaller communities were replaced by ruthless problems such as poverty, crime, substandard housing and disease. Due to the need for additional income to support the family, young children from the poorest families were forced into early employment and thus their childhood became painfully short. Children as young as 7 might be required to work full-time, subjected to unpleasant and unhealthy circumstances, from factories to prostitution. Although such a role has disappeared in most wealthy countries, the practice of childhood employment still remains a staple in underdeveloped countries and rarely disappeared entirely.</p>
+<p><span class="section-letter">C</span> The lives of children underwent a drastic change during the 1800s in the United States. Previously, children from both rural and urban families were expected to participate in everyday labour due to the bulk of manual hard working. Nevertheless, thanks to the technological advances of the mid-1800s, coupled with the rise of the middle class and redefinition of roles of family members, work and home became less synonymous over time. People began to purchase toys and books for their children. When the country depended more upon machines, children in rural and urban areas, were less likely to be required to work at home. Beginning from the Industrial Revolution and rising slowly over the course of the 19th century, this trend increased exponentially after civil war. John Locke, one of the most influential writers of his period, created the first clear and comprehensive statement of the 'environmental position' that family education determines a child's life, and via this, he became the father of modern learning theory. During the colonial period, his teachings about child care gained a lot of recognition in America.</p>
+<p><span class="section-letter">D</span> According to Jean Jacques Rousseau, who lived in an era of the American and French Revolution, people were 'noble savages' in the original state of nature, meaning they are innocent, free and uncorrupted. In 1762, Rousseau wrote a famous novel Emile to convey his educational philosophy through a story of a boy's education from infancy to adulthood. This work was based on his extensive observation of children and adolescents, their individuality, his developmental theory and on the memories of his own childhood. He contrasts children with adults and describes their age-specific characteristics in terms of historical perspective and developmental psychology. Johan Heinrich Pestalozzi, living during the early stages of the Industrial Revolution, sought to develop schools to nurture children's all-round development. He agreed with Rousseau that humans are naturally good but were spoiled by a corrupt society. His approach to teaching consists of the general and special methods, and his theory was based upon establishing an emotionally healthy homelike learning environment, which had to be in place before more specific instructions occurred.</p>
+<p><span class="section-letter">E</span> One of the best-documented cases of Pestalozzi's theory concerned a so-called feral child named Victor, who was captured in a small town in the south of France in 1800. Prepubescent, mute, naked, and perhaps 11 or 12 years old, Victor had been seen foraging for food in the gardens of the locals in the area and sometimes accepted people's direct offers of food before his final capture. Eventually, he was brought to Paris and expected to answer some profound questions about the nature of human, but that goal was quashed very soon. A young physician Jean Marc Gaspard Itard was optimistic about the future of Victor and initiated a five-year education plan to civilise him and teach him to speak. With a subsidy from the government, Itard recruited a local woman Madame Guerin to assist him to provide a semblance of a home for Victor, and he spent an enormous amount of time and effort working with Victor. Itard's goal to teach Victor the basics of speech could never be fully achieved, but Victor had learnt some elementary forms of communication.</p>
+<p><span class="section-letter">F</span> Although other educators were beginning to recognise the simple truth embedded in Rousseau's philosophy, it is not enough to identify the stages of children's development alone. There must be certain education which had to be geared towards those stages. One of the early examples was the invention of kindergarten, which was a word and a movement created by a German-born educator, Friedrich Froebel in 1840. Froebel placed a high value on the importance of play in children's learning. His invention would spread around the world eventually in a variety of forms. Froebel's ideas were inspired through his cooperation with Johann Heinrich Pestalozzi. Froebel didn't introduce the notion of kindergarten until 58 years old, and he had been a teacher for four decades. The notion was a haven and a preparation for children who were about to enter the regimented educational system. The use of guided or structured play was a cornerstone of his kindergarten education because he believed that play was the most significant aspect of development at this time of life. Play served as a mechanism for a child to grow emotionally and to achieve a sense of self-worth. Meanwhile, teachers served to organise materials and a structured environment in which each child, as an individual, could achieve these goals. When Froebel died in 1852, dozens of kindergartens had been created in Germany. Kindergartens began to increase in Europe, and the movement eventually reached and flourished in the United States in the 20th century.</p>`
+  },
+  {
+    tag:'Passage 2',
+    title:'How Deserts Are Formed',
+    instruct:'You should spend about 20 minutes on Questions 14–26, which are based on Reading Passage 2 below.',
+    body:`<p><span class="section-letter">A</span> A desert refers to a barren section of land, mainly in arid and semi-arid areas, where there is almost no precipitation, and the environment is hostile for any creature to inhabit. Deserts have been classified in a number of ways, generally combining total precipitation, how many days the rainfall occurs, temperature, humidity, and sometimes additional factors. In some places, deserts have clear boundaries marked by rivers, mountains or other landforms, while in other places, there are no clear-cut borders between desert and other landscape features.</p>
+<p><span class="section-letter">B</span> In arid areas where there is not any covering of vegetation protecting the land, sand and dust storms will frequently take place. This phenomenon often occurs along the desert margins instead of within the deserts, where there are already no finer materials left. When a steady wind starts to blow, fine particles on the open ground will begin vibrating. As the wind picks up, some of the particles are lifted into the air. When they fall onto the ground, they hit other particles which will then be jerked into the air in their turn, initiating a chain reaction.</p>
+<p><span class="section-letter">C</span> There has been a tremendous deal of publicity on how severe desertification can be, but the academic circle has never agreed on the causes of desertification. A common misunderstanding is that a shortage of precipitation causes the desertification — even the land in some barren areas will soon recover after the rain falls. In fact, more often than not, human activities are responsible for desertification. It might be true that the explosion in world population, especially in developing countries, is the primary cause of soil degradation and desertification. Since the population has become denser, the cultivation of crops has gone into progressively drier areas. It's especially possible for these regions to go through periods of severe drought, which explains why crop failures are common. The raising of most crops requires the natural vegetation cover to be removed first; when crop failures occur, extensive tracts of land are devoid of a plant cover and thus susceptible to wind and water erosion. All through the 1990s, dryland areas went through a population growth of 18.5 per cent, mostly in severely impoverished developing countries.</p>
+<p><span class="section-letter">D</span> Livestock farming in semi-arid areas accelerates the erosion of soil and becomes one of the reasons for advancing desertification. In such areas where the vegetation is dominated by grasses, the breeding of livestock is a major economic activity. Grasses are necessary for anchoring barren topsoil in a dryland area. When a specific field is used to graze an excessive herd, it will experience a loss in vegetation coverage, and the soil will be trampled as well as be pulverised, leaving the topsoil exposed to destructive erosion elements such as winds and unexpected thunderstorms. For centuries, nomads have grazed their flocks and herds to any place where pasture can be found, and oases have offered chances for a more settled way of living. For some nomads, wherever they move to, the desert follows.</p>
+<p><span class="section-letter">E</span> Trees are of great importance when it comes to maintaining topsoil and slowing down the wind speed. In many Asian countries, firewood is the chief fuel used for cooking and heating, which has caused uncontrolled clear-cutting of forests in dryland ecosystems. When too many trees are cut down, windstorms and dust storms tend to occur.</p>
+<p><span class="section-letter">F</span> What's worse, even political conflicts and wars can also contribute to desertification. To escape from the invading enemies, the refugees will move altogether into some of the most vulnerable ecosystems on the planet. They bring along their cultivation traditions, which might not be the right kind of practice for their new settlement.</p>
+<p><span class="section-letter">G</span> In the 20th century, one of the states of America had a large section of farmland that had turned into desert. Since then, actions have been enforced so that such a phenomenon of desertification will not happen again. To avoid the reoccurring of desertification, people shall find other livelihoods which do not rely on traditional land uses, are not as demanding on local land and natural resource, but can still generate viable income. Such livelihoods include but are not limited to dryland aquaculture for the raising of fish, crustaceans and industrial compounds derived from microalgae, greenhouse agriculture, and activities that are related to tourism. Another way to prevent the reoccurring of desertification is bringing about economic prospects in the city centres of drylands and places outside drylands. Changing the general economic and institutional structures that generate new chances for people to support themselves would alleviate the current pressures accompanying the desertification processes.</p>
+<p><span class="section-letter">H</span> In nowadays society, new technologies are serving as a method to resolve the problems brought by desertification. Satellites have been utilised to investigate the influence that people and livestock have on our planet Earth. Nevertheless, it doesn't mean that alternative technologies are not needed to help with the problems and process of desertification.</p>`
+  },
+  {
+    tag:'Passage 3',
+    title:'The Olympic Torch',
+    instruct:'You should spend about 20 minutes on Questions 27–40, which are based on Reading Passage 3 below.',
+    body:`<p>Since 776 B.C., when the Greek people held their first-ever Olympic Games, the Games were hosted every four years at the Olympia city. Back then, a long journey for the Olympic torch was made before the opening ceremony of each Olympic Games. The Greek people would light a cauldron of flames on the altar, a ritual devoted to Hera, the Greek Goddess of birth and marriage.</p>
+<p>The reintroduction of flame to the Olympics occurred at the Amsterdam 1928 Games, for which a cauldron was lit yet without a torch relay. The 1936 Berlin Summer Games held the first Olympic torch relay, which was not resumed in the Winter Olympics until in 1952. However, in that year the torch was lit not in Olympia, Greece, but in Norway, which was considered as the birthplace of skiing. Until the Innsbruck 1964 Winter Olympics in Austria, the Olympic flame was reignited at Olympia.</p>
+<p>The torch is originally an abstract concept of a designer or groups of designers. A couple of design groups hand in their drafts to the Olympic Committee in the hope that they would get the chance to create the torch. The group that wins the competition will come up with a design for a torch that has both aesthetic and practical value. After the torch is completed, it has to succeed in going through all sorts of severe weather conditions. The appearance of the modern Olympic torch is attributed to a Disney artist John Hench, who designed the torch for the 1960 Winter Olympics in Squaw Valley, California. His design laid a solid foundation for all the torches in the future.</p>
+<p>The long trip to the Olympic area is not completed by one single torch, but by thousands of them, so the torch has to be replicated many times. Approximately 10,000 to 15,000 torches are built to fit thousands of runners who take the torches through every section of the Olympic relay. Every single runner can choose to buy his or her torch as a treasurable souvenir when he or she finishes his or her part of the relay.</p>
+<p>The first torch in the modern Olympics (the 1936 Berlin Games) was made from a slender steel rod with a circular platform at the top and a circular hole in the middle to jet flames. The name of the runner was also inscribed on the platform as a token of thanks. In the earlier days, torches used everything from gunpowder to olive oil as fuels. Some torches adopted a combination of hexamine and naphthalene with a flammable fluid. However, these materials weren't exactly the ideal fuel sources, and they could be quite hazardous sometimes. In the 1956 Olympics, the torch in the final relay was ignited by magnesium and aluminium, but some flaming pieces fell off and seared the runner's arms.</p>
+<p>To promote the security rate, liquid fuels made its first appearance at the 1972 Munich Games. Since then, torches have been using fuels which are pressurised into the form of a liquid. When the fuels are burnt, they turn into gas to produce a flame. Liquid fuel becomes safer for the runner and can be stored in a light container. The torch at the 1996 Atlanta Summer Olympics is equipped with an aluminium base that accommodates a tiny fuel tank. As the fuel ascends through the modified handle, it is squeezed through a brass valve that has thousands of little openings. As the fuel passes through the tiny openings, it accumulates pressure. Once it makes its way through the openings, the pressure decreases and the liquid becomes gas so it can burn up.</p>
+<p>The torch in 1996 was fuelled by propylene, a type of substance that could give out a bright flame. However, since propylene was loaded with carbon, it would produce plenty of smoke which was detrimental to the environment. In 2000, the designers of the Sydney Olympic torch proposed a lighter and cheaper design, which was harmless to the environment. For the fuel, they decided to go with a combination of 35 per cent propane (a gas that is used for cooking and heating) and 65 per cent butane (a gas that is obtained from petroleum), thus creating a powerful flame without generating much smoke.</p>
+<p>Both the 1996 and 2000 torches adopted a double flame burning system, enabling the flames to stay lit even in severe weather conditions. The exterior flame burns at a slower rate and at a lower temperature. It can be perceived easily with its big orange flame, but it is unstable. On the other hand, the interior flame burns faster and hotter, generating a small blue flame with great stability, due to the internal site offering protection of it from the wind. Accordingly, the interior flame would serve as a pilot light, which could relight the external flame if it should go out.</p>
+<p>As for the torch of 2002 Olympics in Salt Lake City, the top section was made of glass in which the flame burned, for the purpose of echoing the theme of 'Light the Fire Within' of that Olympics. This torch was of great significance for the following designs of the torches.</p>`
+  }
+];
+
+const QUESTIONS = [
+  {
+    id:'p1s1', passage:0, type:'section',
+    heading:'Questions 1–4',
+    instruct:'Reading Passage 1 has six paragraphs, A–F.\nChoose the correct heading for paragraphs A and C–E from the list of headings below.\n\ni. The inheritance and development of educational concepts of different thinkers\nii. Why children had to work to alleviate the burden on family\niii. Why children are not highly valued\niv. The explanation for children dying in hospital at their early age\nv. The first appearance of modern educational philosophy\nvi. The application of a creative learning method on a wild kid\nvii. The emergence and spread of the notion of kindergarten',
+    items:[
+      {id:'q1', num:'1', text:'Paragraph A', type:'match', options:['i','ii','iii','iv','v','vi','vii']},
+      {id:'q2', num:'2', text:'Paragraph C', type:'match', options:['i','ii','iii','iv','v','vi','vii']},
+      {id:'q3', num:'3', text:'Paragraph D', type:'match', options:['i','ii','iii','iv','v','vi','vii']},
+      {id:'q4', num:'4', text:'Paragraph E', type:'match', options:['i','ii','iii','iv','v','vi','vii']},
+    ]
+  },
+  {
+    id:'p1s2', passage:0, type:'section',
+    heading:'Questions 5–8',
+    instruct:'Look at the following events and the list of dates below.\nMatch each event with the correct date, A, B or C.\nNB You may use any letter more than once.\n\nA. the 18th century (1700–1799)\nB. the 19th century (1800–1899)\nC. the 20th century (1900–1999)',
+    items:[
+      {id:'q5', num:'5', text:'The need for children to work', type:'match', options:['A','B','C']},
+      {id:'q6', num:'6', text:'The rise of the middle class', type:'match', options:['A','B','C']},
+      {id:'q7', num:'7', text:'The emergence of a kindergarten', type:'match', options:['A','B','C']},
+      {id:'q8', num:'8', text:'The spread of kindergartens around the U.S.', type:'match', options:['A','B','C']},
+    ]
+  },
+  {
+    id:'p1s3', passage:0, type:'section',
+    heading:'Questions 9–13',
+    instruct:'Look at the following opinions or deeds and the list of people below.\nMatch each opinion or deed with the correct person, A, B, C or D.\nNB You may use any letter more than once.\n\nA. Jean Jacques Rousseau\nB. Johan Heinrich Pestalozzi\nC. Jean Marc Gaspard Itard\nD. Friedrich Froebel',
+    items:[
+      {id:'q9',  num:'9',  text:'Was not successful in proving the theory', type:'match', options:['A','B','C','D']},
+      {id:'q10', num:'10', text:'Observed and recorded children\'s development extensively', type:'match', options:['A','B','C','D']},
+      {id:'q11', num:'11', text:'Required an emotionally comfortable setting to be established before specific teaching', type:'match', options:['A','B','C','D']},
+      {id:'q12', num:'12', text:'Proposed that corruption was not a characteristic in people\'s nature', type:'match', options:['A','B','C','D']},
+      {id:'q13', num:'13', text:'Was responsible for an increase in the number of a particular type of school', type:'match', options:['A','B','C','D']},
+    ]
+  },
+  {
+    id:'p2s1', passage:1, type:'section',
+    heading:'Questions 14–20',
+    instruct:'Reading Passage 2 has eight paragraphs, A–H.\nWhich paragraph contains the following information?\nNB You may use any letter more than once.',
+    items:[
+      {id:'q14', num:'14', text:'A reference to the irregular movement of particles', type:'match', options:['A','B','C','D','E','F','G','H']},
+      {id:'q15', num:'15', text:'Mention of a productive land turning into a desert in the 20th century', type:'match', options:['A','B','C','D','E','F','G','H']},
+      {id:'q16', num:'16', text:'Types of deserts', type:'match', options:['A','B','C','D','E','F','G','H']},
+      {id:'q17', num:'17', text:'Mention of technical methods used to tackle the problems of deserts', type:'match', options:['A','B','C','D','E','F','G','H']},
+      {id:'q18', num:'18', text:'The influence of migration on desertification', type:'match', options:['A','B','C','D','E','F','G','H']},
+      {id:'q19', num:'19', text:'Lack of agreement among scientists about the causes of desertification', type:'match', options:['A','B','C','D','E','F','G','H']},
+      {id:'q20', num:'20', text:'A description of the fatal effects of farming practice', type:'match', options:['A','B','C','D','E','F','G','H']},
+    ]
+  },
+  {
+    id:'p2s2', passage:1, type:'section',
+    heading:'Questions 21–26',
+    instruct:'Do the following statements agree with the information given in Reading Passage 2?\n\nA = TRUE   B = FALSE   C = NOT GIVEN',
+    items:[
+      {id:'q21', num:'21', text:'It is difficult to ascertain where the deserts end in some areas.', type:'mcq', options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+      {id:'q22', num:'22', text:'Media is uninterested in the problems of desertification.', type:'mcq', options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+      {id:'q23', num:'23', text:'The most common cause of desertification is the lack of rainfall.', type:'mcq', options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+      {id:'q24', num:'24', text:'Farming animals in semi-arid areas will increase soil erosion.', type:'mcq', options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+      {id:'q25', num:'25', text:'People in Asian countries no longer use firewood as the chief fuel.', type:'mcq', options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+      {id:'q26', num:'26', text:'Technology studying the relationship of people, livestock and desertification has not yet been invented.', type:'mcq', options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    ]
+  },
+  {
+    id:'p3s1', passage:2, type:'section',
+    heading:'Questions 27–29',
+    instruct:'Complete the summary below.\nChoose NO MORE THAN THREE WORDS from the passage for each answer.\n\nThe Olympic torch will be carefully designed so that it is capable of withstanding all kinds of [27]. The design must have both [28] value. Thousands of torches are built for runners to carry through each leg of the relay. Each runner may purchase the torch as a [29] after completing their leg.',
+    items:[
+      {id:'q27', num:'27', text:'…capable of withstanding all kinds of ___ (weather conditions)', type:'fill'},
+      {id:'q28', num:'28', text:'…a torch that has both ___ value', type:'fill'},
+      {id:'q29', num:'29', text:'…purchase the torch as a(n) ___', type:'fill'},
+    ]
+  },
+  {
+    id:'p3s2', passage:2, type:'section',
+    heading:'Questions 30–35',
+    instruct:'Look at the following statements and the list of Olympic torches below.\nMatch each statement with the correct Olympic torch, A–H.\n\nA. Ancient Greek Olympic flames\nB. Berlin Games torch (1936)\nC. 1952 Winter Games flame\nD. 1956 Games torch\nE. Munich Games torch (1972)\nF. 1996 torch (Atlanta)\nG. 2000 torch (Sydney)\nH. 2002 torch (Salt Lake City)',
+    items:[
+      {id:'q30', num:'30', text:'First use of liquid fuel', type:'match', options:['A','B','C','D','E','F','G','H']},
+      {id:'q31', num:'31', text:'Not environmentally friendly', type:'match', options:['A','B','C','D','E','F','G','H']},
+      {id:'q32', num:'32', text:'First to record the runners\' names', type:'match', options:['A','B','C','D','E','F','G','H']},
+      {id:'q33', num:'33', text:'Potentially risky as it burned the runner\'s arms', type:'match', options:['A','B','C','D','E','F','G','H']},
+      {id:'q34', num:'34', text:'Special for the theme of \'Light\'', type:'match', options:['A','B','C','D','E','F','G','H']},
+      {id:'q35', num:'35', text:'Not lit in Greece', type:'match', options:['A','B','C','D','E','F','G','H']},
+    ]
+  },
+  {
+    id:'p3s3', passage:2, type:'section',
+    heading:'Questions 36–40',
+    instruct:'Label the diagram of the 1996/2000 Olympic torch below.\nChoose NO MORE THAN THREE WORDS from the passage for each answer.',
+    items:[
+      {id:'q36', num:'36', text:'The aluminium base of the 1996 torch accommodates a tiny ___.', type:'fill'},
+      {id:'q37', num:'37', text:'The brass valve contains thousands of little ___ through which fuel is squeezed.', type:'fill'},
+      {id:'q38', num:'38', text:'The fuel ascends through the modified ___ before reaching the valve.', type:'fill'},
+      {id:'q39', num:'39', text:'The 2000 Sydney torch used a combination of ___ as fuel.', type:'fill'},
+      {id:'q40', num:'40', text:'Both the 1996 and 2000 torches adopted a ___ burning system.', type:'fill'},
+    ]
+  },
+];
+
+let currentPassage=0,timeLeft=3600,timerInterval=null,paused=false,userAnswers={},isReviewing=false,hlMode='y',qhlMode=false;
+let passageFontSize=14.5,questionFontSize=12.5;
+const FS_MIN=10,FS_MAX=22;
+function changeFontSize(delta){passageFontSize=Math.min(FS_MAX,Math.max(FS_MIN,passageFontSize+delta));questionFontSize=Math.min(FS_MAX,Math.max(FS_MIN,questionFontSize+delta));document.documentElement.style.setProperty('--passage-fs',passageFontSize+'px');document.documentElement.style.setProperty('--question-fs',questionFontSize+'px');}
+function toggleQHL(){qhlMode=!qhlMode;const btn=document.getElementById('qhl-toggle'),note=document.getElementById('hl-note-txt');btn.classList.toggle('qmode-on',qhlMode);note.textContent=qhlMode?'Questions':'Passage';}
+
+function init(){
+  renderPassage(0);renderQuestions(0);updateProgress();updateNavBtns();startTimer();
+  document.getElementById('passage-panel').addEventListener('mouseup',handleHighlight);
+  document.getElementById('questions-panel').addEventListener('mouseup',handleHighlight);
+  initResizer();
+}
+function initResizer(){
+  const resizer=document.getElementById('resizer'),qPanel=document.getElementById('questions-panel'),main=document.getElementById('main');
+  let startX,startW;
+  resizer.addEventListener('mousedown',e=>{
+    startX=e.clientX;startW=qPanel.offsetWidth;resizer.classList.add('dragging');
+    document.body.style.cursor='col-resize';document.body.style.userSelect='none';
+    function onMove(e){const delta=startX-e.clientX;const newW=Math.min(Math.max(startW+delta,260),main.offsetWidth-300);qPanel.style.width=newW+'px';}
+    function onUp(){resizer.classList.remove('dragging');document.body.style.cursor='';document.body.style.userSelect='';document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);}
+    document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
+  });
+}
+function startTimer(){timerInterval=setInterval(()=>{if(paused)return;timeLeft--;renderTimer();if(timeLeft<=0){clearInterval(timerInterval);submitTest();}},1000);}
+function renderTimer(){const el=document.getElementById('timer-display'),m=Math.floor(timeLeft/60),s=timeLeft%60;el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');el.className=timeLeft<=300?'danger':timeLeft<=600?'warn':'';}
+function togglePause(){paused=!paused;document.getElementById('pause-btn').textContent=paused?'Resume':'Pause';document.getElementById('pause-overlay').className=paused?'show':'';}
+function renderPassage(idx){const p=PASSAGES[idx];document.getElementById('passage-panel').innerHTML=`<div class="passage-header"><div class="passage-tag">${p.tag}</div><div class="passage-title">${p.title}</div><div class="passage-instruct">${p.instruct}</div></div><div class="passage-body" id="passage-body">${p.body}</div>`;}
+function renderQuestions(pIdx){
+  const sections=QUESTIONS.filter(s=>s.passage===pIdx);let html='';
+  sections.forEach(sec=>{
+    html+=`<div class="q-section"><div class="q-section-hd">${sec.heading}</div><div class="q-section-instruct">${sec.instruct.replace(/\n/g,'<br>')}</div>`;
+    sec.items.forEach(q=>{
+      html+=`<div class="q-item" id="item-${q.id}"><div class="q-num">Question ${q.num}</div><div class="q-text">${q.text}</div>`;
+      if(q.type==='mcq'){html+=`<div class="q-opts">`;q.options.forEach(opt=>{const letter=opt[0],checked=userAnswers[q.id]===letter;html+=`<label class="q-opt${checked?' selected':''}" id="opt-${q.id}-${letter}"><input type="radio" name="${q.id}" value="${letter}" onchange="saveAnswer('${q.id}','${letter}')" ${checked?'checked':''}>${opt}</label>`;});html+=`</div>`;}
+      else if(q.type==='match'){html+=`<div class="q-match-row"><select class="q-match-sel" id="sel-${q.id}" onchange="saveAnswer('${q.id}',this.value)"><option value="">—</option>`;q.options.forEach(o=>{html+=`<option value="${o}" ${userAnswers[q.id]===o?'selected':''}>${o}</option>`;});html+=`</select></div>`;}
+      else if(q.type==='fill'){html+=`<input class="q-fill" type="text" id="fill-${q.id}" value="${userAnswers[q.id]||''}" placeholder="Type your answer…" oninput="saveAnswer('${q.id}',this.value)">`;}
+      html+=`<div class="q-answer-reveal" id="reveal-${q.id}"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  document.getElementById('q-panel').innerHTML=html;
+}
+function saveAnswer(qid,val){userAnswers[qid]=val;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(l=>{l.className=`q-opt${l.id===`opt-${qid}-${val}`?' selected':''}`});updateProgress();}
+function updateProgress(){
+  const total=40,answered=Object.values(userAnswers).filter(v=>v&&v.trim()!=='').length;
+  document.getElementById('answered-info').textContent=`${answered} / ${total} answered`;
+  document.getElementById('prog-fill').style.width=(answered/total*100)+'%';
+  [0,1,2].forEach(pi=>{const qs=QUESTIONS.filter(s=>s.passage===pi).flatMap(s=>s.items),done=qs.filter(q=>userAnswers[q.id]&&userAnswers[q.id].trim()!=='').length;document.getElementById(`badge${pi}`).textContent=`${done}/${qs.length}`;});
+}
+function goToPassage(idx){
+  if(idx<0||idx>2)return;currentPassage=idx;
+  [0,1,2].forEach(i=>document.getElementById(`tab${i}`).className=`ptab${i===idx?' active':''}`);
+  renderPassage(idx);renderQuestions(idx);
+  if(isReviewing){showReview();highlightPassageRefs(idx);}
+  updateNavBtns();document.getElementById('passage-panel').scrollTop=0;document.getElementById('questions-panel').scrollTop=0;
+}
+function highlightPassageRefs(pIdx){
+  const body=document.getElementById('passage-body');if(!body)return;
+  const qs=QUESTIONS.filter(s=>s.passage===pIdx).flatMap(s=>s.items);let html=body.innerHTML;
+  qs.forEach(q=>{const ref=PASSAGE_REFS[q.id];if(!ref)return;const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans,cls=isBlank?'ref-blank':isCorrect?'ref-correct':'ref-wrong',rbCls=isBlank?'rb-blank':isCorrect?'rb-correct':'rb-wrong',escaped=ref.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),re=new RegExp(escaped);if(re.test(html))html=html.replace(re,`<span class="passage-ref ${cls}"><span class="ref-badge ${rbCls}">${q.num}</span>${ref}</span>`);});
+  body.innerHTML=html;
+}
+function updateNavBtns(){
+  document.getElementById('btn-prev').disabled=currentPassage===0;document.getElementById('btn-prev').style.opacity=currentPassage===0?'0.4':'1';
+  const nxt=document.getElementById('btn-next');
+  if(currentPassage===2){nxt.textContent='Submit Test';nxt.onclick=submitTest;}else{nxt.textContent='Next Passage →';nxt.onclick=()=>goToPassage(currentPassage+1);}
+}
+function setHL(mode){hlMode=mode;['y','g','p','b'].forEach(m=>{const btn=document.getElementById('hl'+m);if(btn)btn.classList.toggle('active',m===mode)});if(mode!=='e'){qhlMode=false;document.getElementById('qhl-toggle').classList.remove('qmode-on');document.getElementById('hl-note-txt').textContent='Passage';}}
+function handleHighlight(e){
+  const sel=window.getSelection();if(!sel||sel.isCollapsed)return;
+  const range=sel.getRangeAt(0);
+  const passageBody=document.getElementById('passage-body'),qPanel=document.getElementById('q-panel');
+  const inPassage=passageBody&&passageBody.contains(range.commonAncestorContainer);
+  const inQuestions=qPanel&&qPanel.contains(range.commonAncestorContainer);
+  if(qhlMode&&inQuestions)applyHighlight(range,qPanel);
+  else if(!qhlMode&&inPassage)applyHighlight(range,passageBody);
+}
+function applyHighlight(range,container){
+  if(hlMode==='e'){const sel=window.getSelection();container.querySelectorAll('mark').forEach(m=>{if(sel.containsNode(m,true)){const parent=m.parentNode;while(m.firstChild)parent.insertBefore(m.firstChild,m);parent.removeChild(m);}});container.normalize();}
+  else{const mark=document.createElement('mark');mark.className='h'+hlMode;try{range.surroundContents(mark);}catch(e){const frag=range.extractContents();mark.appendChild(frag);range.insertNode(mark);}}
+  window.getSelection()&&window.getSelection().removeAllRanges();
+}
+function submitTest(){
+  clearInterval(timerInterval);let correct=0,wrong=0,blank=0;
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{const ans=(userAnswers[q.id]||'').trim();if(!ans){blank++;return;}checkAnswer(ans,ANSWER_KEY[q.id])?correct++:wrong++;});
+  document.getElementById('r-band').textContent=calcBand(correct);document.getElementById('r-correct').textContent=correct;document.getElementById('r-wrong').textContent=wrong;document.getElementById('r-blank').textContent=blank;document.getElementById('result-overlay').className='show';
+}
+function checkAnswer(given,key){
+  const g=given.toLowerCase().trim(),k=key.toLowerCase().trim();
+  if(g===k)return true;
+  if(k==='severe weather conditions')return g.includes('severe weather');
+  if(k==='aesthetic and practical')return g.includes('aesthetic')&&g.includes('practical');
+  if(k==='treasurable souvenir')return g.includes('souvenir');
+  if(k==='fuel tank')return g.includes('fuel tank');
+  if(k==='handle')return g.includes('handle');
+  if(k==='propane and butane')return g.includes('propane')&&g.includes('butane');
+  if(k==='double flame')return g.includes('double flame');
+  return false;
+}
+function calcBand(c){if(c>=39)return'9.0';if(c>=37)return'8.5';if(c>=35)return'8.0';if(c>=33)return'7.5';if(c>=30)return'7.0';if(c>=27)return'6.5';if(c>=23)return'6.0';if(c>=19)return'5.5';if(c>=15)return'5.0';if(c>=13)return'4.5';return'4.0';}
+function reviewAnswers(){document.getElementById('result-overlay').className='';isReviewing=true;goToPassage(0);showReview();}
+function showReview(){
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{
+    const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],reveal=document.getElementById(`reveal-${q.id}`),item=document.getElementById(`item-${q.id}`);
+    if(!reveal)return;const isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans;
+    if(item){item.classList.remove('review-correct','review-wrong','review-blank');item.classList.add(isBlank?'review-blank':isCorrect?'review-correct':'review-wrong');}
+    reveal.className=`q-answer-reveal show ${isCorrect?'correct-msg':'wrong-msg'}`;
+    reveal.innerHTML=isBlank?`<strong>Correct answer:</strong> ${key}`:isCorrect?`✓ Correct!`:`✗ Your answer: <strong>${ans}</strong> — Correct: <strong>${key}</strong>`;
+    if(q.type==='fill'){const inp=document.getElementById(`fill-${q.id}`);if(inp)inp.className=`q-fill ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='match'){const sel=document.getElementById(`sel-${q.id}`);if(sel)sel.className=`q-match-sel ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='mcq'){document.querySelectorAll(`[id^="opt-${q.id}-"]`).forEach(l=>{const letter=l.id.split('-').pop();if(letter===key)l.className='q-opt correct-ans';else if(letter===ans&&!isCorrect)l.className='q-opt wrong-ans';});}
+  });
+}
+function restartTest(){userAnswers={};isReviewing=false;timeLeft=3600;paused=false;document.getElementById('result-overlay').className='';clearInterval(timerInterval);goToPassage(0);renderTimer();updateProgress();startTimer();}
+function openNav(){document.getElementById('nav-overlay').className='show';}
+function closeNav(e){if(e.target===document.getElementById('nav-overlay'))document.getElementById('nav-overlay').className='';}
+init();
+</script>
+</body>
+</html>
