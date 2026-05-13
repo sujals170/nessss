@@ -495,12 +495,21 @@
     btn.classList.toggle('qmode-on',qhlMode);
     note.textContent=qhlMode?'Questions':'Passage';
   }
+  function suppressNativeSelectionUI(){
+    const blocked=['contextmenu','copy','cut','paste'];
+    const targets=[document.getElementById('passage-panel'),document.getElementById('questions-panel')];
+    targets.forEach(t=>{
+      if(!t)return;
+      blocked.forEach(evt=>t.addEventListener(evt,e=>e.preventDefault()));
+    });
+  }
 
   /* ═══ INIT ═══ */
   function init(){
     renderPassage(0);renderQuestions(0);updateProgress();updateNavBtns();startTimer();
     document.getElementById('passage-panel').addEventListener('mouseup',handleHighlight);
     document.getElementById('questions-panel').addEventListener('mouseup',handleHighlight);
+    suppressNativeSelectionUI();
     initResizer();initMobileHighlight();
   }
   function initResizer(){
@@ -649,6 +658,9 @@
     clearTimeout(selTimer);selTimer=null;
     mobileSelRange=range.cloneRange();
     const rect=range.getBoundingClientRect();
+    ignoreSelChange=true;
+    window.getSelection()?.removeAllRanges();
+    setTimeout(()=>{ignoreSelChange=false;},300);
     positionMobileBar(rect);
     document.getElementById('mobile-hl-bar').classList.add('show');
   }
