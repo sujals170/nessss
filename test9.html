@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IELTS Academic Reading — Recent Actual Test 6, Test 2 (Test 9)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f2eb;--surface:#ffffff;--surface2:#f9f7f2;--surface3:#f0ede4;
+  --accent:#1a5c3e;--accent-light:#e8f5ee;--accent2:#2a7a54;
+  --text:#1c1c1c;--muted:#6b6b6b;--muted2:#999;
+  --border:#ddd8cc;--border2:#e8e4da;
+  --hl-y:rgba(255,220,0,0.5);--hl-g:rgba(80,200,120,0.45);
+  --hl-p:rgba(255,100,160,0.45);--hl-b:rgba(60,150,255,0.45);
+  --shadow:0 2px 12px rgba(0,0,0,0.08);
+  --passage-fs:14.5px;--question-fs:12.5px;
+}
+html{height:100%;overflow:hidden}
+body{height:100%;overflow:hidden;display:flex;flex-direction:column;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+#topbar{height:52px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;position:relative;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+#topbar-left{display:flex;align-items:center;gap:10px}
+#topbar-title{font-size:14px;font-weight:600}
+#topbar-right{display:flex;align-items:center;gap:8px}
+#timer-display{font-size:20px;font-weight:700;font-family:'Courier New',monospace;letter-spacing:3px;min-width:70px;text-align:center}
+#timer-display.warn{color:#ffd080}
+#timer-display.danger{color:#ff8888;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.5}}
+.topbar-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s}
+.topbar-btn:hover{background:rgba(255,255,255,0.28)}
+.topbar-btn.submit{background:#fff;color:var(--accent);border-color:#fff}
+.topbar-btn.submit:hover{background:#e8f5ee}
+.fs-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;width:28px;height:28px;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;transition:background 0.2s;line-height:1}
+.fs-btn:hover{background:rgba(255,255,255,0.32)}
+.fs-group{display:flex;align-items:center;gap:3px;border:1px solid rgba(255,255,255,0.25);border-radius:6px;padding:2px 5px;gap:4px}
+.fs-label{font-size:10px;opacity:0.7;letter-spacing:0.5px;font-weight:600}
+#prog-bar{height:4px;background:rgba(255,255,255,0.2);flex-shrink:0}
+#prog-fill{height:100%;background:#6ee7b7;transition:width 0.4s ease}
+#passage-tabs{background:var(--surface);border-bottom:2px solid var(--border);display:flex;flex-shrink:0;overflow-x:auto}
+.ptab{padding:11px 18px;font-size:12px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all 0.18s;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:7px}
+.ptab:hover{color:var(--accent);background:var(--accent-light)}
+.ptab.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-light)}
+.ptab-badge{font-size:10px;background:var(--border);color:var(--muted);padding:2px 7px;border-radius:10px;font-weight:700}
+.ptab.active .ptab-badge{background:var(--accent);color:#fff}
+#main{display:flex;flex:1;overflow:hidden;min-height:0}
+#passage-panel{flex:1;overflow-y:auto;padding:28px 36px;background:var(--surface);border-right:1px solid var(--border);min-width:0}
+#passage-panel::-webkit-scrollbar{width:6px}
+#passage-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.passage-header{margin-bottom:22px}
+.passage-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.passage-title{font-size:22px;font-weight:700;font-family:'Merriweather',serif;color:var(--text);margin-bottom:6px}
+.passage-instruct{font-size:12px;color:var(--muted);font-style:italic;padding:8px 12px;background:var(--surface3);border-radius:6px;border-left:3px solid var(--accent)}
+.passage-body p{font-family:'Merriweather',serif;font-size:var(--passage-fs);line-height:1.9;margin-bottom:16px;text-align:justify;color:#222}
+.passage-body .section-letter{font-size:12px;font-weight:700;color:var(--accent);font-family:'Inter',sans-serif;border:2px solid var(--accent);border-radius:4px;padding:1px 7px;display:inline-block;margin-right:8px;vertical-align:middle}
+.passage-ref{border-radius:3px;padding:1px 3px;display:inline}
+.passage-ref.ref-correct{background:rgba(26,92,62,0.13);border-bottom:2px solid #1a5c3e}
+.passage-ref.ref-wrong{background:rgba(192,57,43,0.12);border-bottom:2px solid #c0392b}
+.passage-ref.ref-blank{background:rgba(224,160,32,0.13);border-bottom:2px solid #e0a020}
+.ref-badge{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;font-size:9px;font-weight:700;font-family:'Inter',sans-serif;color:#fff;vertical-align:middle;margin-right:2px;flex-shrink:0;line-height:1}
+.ref-badge.rb-correct{background:#1a5c3e}
+.ref-badge.rb-wrong{background:#c0392b}
+.ref-badge.rb-blank{background:#e0a020}
+mark.hy{background:var(--hl-y);border-radius:2px;padding:0 1px}
+mark.hg{background:var(--hl-g);border-radius:2px;padding:0 1px}
+mark.hp{background:var(--hl-p);border-radius:2px;padding:0 1px}
+mark.hb{background:var(--hl-b);border-radius:2px;padding:0 1px}
+#resizer{width:6px;background:var(--border);cursor:col-resize;flex-shrink:0;transition:background 0.2s;position:relative}
+#resizer:hover,#resizer.dragging{background:var(--accent)}
+#resizer::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:32px;background:var(--muted2);border-radius:2px}
+#questions-panel{width:400px;overflow-y:auto;background:var(--surface2);padding:16px;flex-shrink:0;min-width:260px}
+#questions-panel::-webkit-scrollbar{width:5px}
+#questions-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-bar{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 12px;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;box-shadow:var(--shadow)}
+.hl-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted)}
+.hl-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:transform 0.15s,border-color 0.15s;flex-shrink:0}
+.hl-dot:hover{transform:scale(1.2)}
+.hl-dot.active{border-color:#333;transform:scale(1.15)}
+.hl-dot.dy{background:#ffd800}
+.hl-dot.dg{background:#50c878}
+.hl-dot.dp{background:#ff64a0}
+.hl-dot.db{background:#3c96ff}
+.hl-sep{width:1px;height:20px;background:var(--border)}
+.hl-erase{font-size:11px;font-family:'Inter',sans-serif;color:var(--muted);background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:4px 9px;cursor:pointer;font-weight:600}
+.hl-erase:hover{background:var(--border)}
+.hl-note{font-size:10px;color:var(--muted2);font-style:italic}
+.hl-mode-btn{font-size:11px;font-family:'Inter',sans-serif;background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:4px 9px;cursor:pointer;font-weight:600;color:var(--muted);transition:all 0.15s}
+.hl-mode-btn.qmode-on{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.q-section{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow)}
+.q-section-hd{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+.q-section-instruct{font-size:11.5px;color:var(--muted);font-style:italic;line-height:1.5;margin-bottom:12px;padding:7px 10px;background:var(--surface3);border-radius:5px}
+.q-item{border-bottom:1px solid var(--border2);padding-bottom:10px;margin-bottom:10px;border-radius:6px;padding:8px;transition:background 0.2s,border-left 0.2s;user-select:text}
+.q-item.review-correct{background:#edfaf3;border-left:4px solid #1a5c3e}
+.q-item.review-wrong{background:#fdf0f0;border-left:4px solid #c0392b}
+.q-item.review-blank{background:#fdf6e8;border-left:4px solid #e0a020}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-num{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px}
+.q-text{font-size:var(--question-fs);color:var(--text);line-height:1.5;margin-bottom:7px}
+.q-opts{display:flex;flex-direction:column;gap:4px}
+.q-opt{display:flex;align-items:flex-start;gap:7px;font-size:var(--question-fs);padding:5px 7px;border-radius:5px;cursor:pointer;transition:background 0.15s;line-height:1.45;border:1px solid transparent}
+.q-opt:hover{background:var(--accent-light);border-color:var(--border)}
+.q-opt input[type=radio]{accent-color:var(--accent);margin-top:2px;flex-shrink:0}
+.q-opt.selected{background:var(--accent-light);border-color:var(--accent)}
+.q-opt.correct-ans{background:#d4f4e8;border-color:#1a5c3e}
+.q-opt.wrong-ans{background:#fde8e8;border-color:#c0392b}
+.q-fill{width:100%;border:none;border-bottom:2px solid var(--border);background:transparent;font-size:var(--question-fs);font-family:'Inter',sans-serif;padding:4px 2px;outline:none;color:var(--text);transition:border-color 0.2s}
+.q-fill:focus{border-bottom-color:var(--accent)}
+.q-fill.correct{border-bottom-color:#1a5c3e;background:rgba(80,200,130,0.1)}
+.q-fill.wrong{border-bottom-color:#c0392b;background:rgba(200,60,60,0.08)}
+.q-match-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:var(--question-fs)}
+.q-match-sel{border:1px solid var(--border);border-radius:5px;padding:4px 7px;font-size:11.5px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;min-width:52px}
+.q-match-sel:focus{border-color:var(--accent)}
+.q-match-sel.correct{border-color:#1a5c3e;background:#d4f4e8}
+.q-match-sel.wrong{border-color:#c0392b;background:#fde8e8}
+#bottom-bar{height:48px;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+#answered-info{font-size:12px;color:var(--muted);font-weight:500}
+.nav-btns{display:flex;gap:8px}
+.nav-btn{padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.18s;border:1px solid var(--border);background:var(--surface2);color:var(--text)}
+.nav-btn:hover{background:var(--border)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-btn.primary:hover{background:var(--accent2)}
+#result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999;align-items:center;justify-content:center}
+#result-overlay.show{display:flex}
+#result-box{background:var(--surface);border-radius:16px;padding:40px 36px;max-width:460px;width:92%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25)}
+.result-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.result-title{font-size:22px;font-weight:700;margin-bottom:4px;font-family:'Merriweather',serif}
+.result-subtitle{font-size:13px;color:var(--muted);margin-bottom:18px}
+.band-score{font-size:64px;font-weight:700;color:var(--accent);line-height:1;margin:10px 0 6px;font-family:'Merriweather',serif}
+.band-label{font-size:12px;color:var(--muted);margin-bottom:20px}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.score-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 8px}
+.score-card .sc-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px}
+.score-card .sc-val{font-size:22px;font-weight:700;color:var(--text)}
+.result-btns{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.result-btn{padding:11px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border:1px solid var(--border);background:var(--surface2);color:var(--text);transition:all 0.18s}
+.result-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.result-btn:hover{opacity:0.88}
+#pause-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:500;align-items:center;justify-content:center}
+#pause-overlay.show{display:flex}
+#pause-box{background:var(--surface);border-radius:16px;padding:48px 40px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+#pause-box h2{font-size:28px;font-family:'Merriweather',serif;margin-bottom:8px}
+#pause-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
+.q-answer-reveal{font-size:11.5px;padding:6px 10px;border-radius:5px;margin-top:6px;display:none}
+.q-answer-reveal.show{display:block}
+.q-answer-reveal.correct-msg{background:#d4f4e8;color:#1a5c3e;border-left:3px solid #1a5c3e}
+.q-answer-reveal.wrong-msg{background:#fde8e8;color:#922b2b;border-left:3px solid #c0392b}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-tip{position:fixed;background:#1c1c1c;color:#fff;font-size:11px;padding:4px 10px;border-radius:4px;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:300;font-family:'Inter',sans-serif}
+#nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.52);z-index:998}
+#nav-overlay.show{display:flex}
+#nav-panel{background:var(--surface);width:290px;height:100%;overflow-y:auto;display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,0.18)}
+#nav-hd{background:var(--accent);color:#fff;padding:18px 20px}
+#nav-hd h3{font-size:15px;font-weight:700;margin-bottom:2px}
+#nav-hd p{font-size:11px;opacity:0.72}
+.nav-home-lnk{display:flex;align-items:center;gap:8px;padding:11px 20px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;transition:background 0.15s}
+.nav-home-lnk:hover{background:var(--accent-light);color:var(--accent)}
+.ntc{display:block;padding:13px 20px;border-bottom:1px solid var(--border2);text-decoration:none;color:var(--text);transition:background 0.15s;border-left:3px solid transparent}
+.ntc:hover{background:var(--accent-light)}
+.ntc.cur{background:var(--accent-light);border-left-color:var(--accent)}
+.ntc-num{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:2px}
+.ntc-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.ntc-pass{font-size:11px;color:var(--muted);line-height:1.5}
+.ntc-badge{display:inline-block;font-size:10px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:10px;margin-top:5px;font-weight:600}
+#passage-panel,#questions-panel{-webkit-touch-callout:none}
+#mobile-hl-bar{display:none;position:fixed;background:#1c1c1c;border-radius:12px;padding:9px 13px;gap:9px;align-items:center;z-index:9999;box-shadow:0 6px 28px rgba(0,0,0,0.45);pointer-events:auto;white-space:nowrap}
+#mobile-hl-bar.show{display:flex}
+#mobile-hl-bar.arr-down::after{content:'';position:absolute;top:100%;left:var(--arr,50%);transform:translateX(-50%);border:7px solid transparent;border-top-color:#1c1c1c}
+#mobile-hl-bar.arr-up::before{content:'';position:absolute;bottom:100%;left:var(--arr,50%);transform:translateX(-50%);border:7px solid transparent;border-bottom-color:#1c1c1c}
+.mhl-dot{width:30px;height:30px;border-radius:50%;border:2.5px solid rgba(255,255,255,0.2);cursor:pointer;flex-shrink:0;transition:transform 0.12s}
+.mhl-dot:active{transform:scale(0.88)}
+.mdy{background:#ffd800}.mdg{background:#50c878}.mdp{background:#ff64a0}.mdb{background:#3c96ff}
+.mhl-sep{width:1px;height:22px;background:rgba(255,255,255,0.18);flex-shrink:0}
+.mhl-erase{font-size:11px;color:#fff;background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.22);border-radius:5px;padding:5px 9px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600}
+.mhl-close{font-size:17px;color:rgba(255,255,255,0.4);background:none;border:none;cursor:pointer;padding:2px 3px;line-height:1;font-family:'Inter',sans-serif}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div id="topbar-left">
+    <span style="opacity:0.3;font-size:16px">|</span>
+    <span id="topbar-title">IELTS Academic — Test 9</span>
+    <button class="topbar-btn" onclick="openNav()">☰ Tests</button>
+  </div>
+  <div id="topbar-right">
+    <div class="fs-group">
+      <span class="fs-label">A</span>
+      <button class="fs-btn" onclick="changeFontSize(-1)" title="Decrease font size">−</button>
+      <button class="fs-btn" onclick="changeFontSize(1)" title="Increase font size">+</button>
+    </div>
+    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" style="opacity:0.7"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span id="timer-display">60:00</span>
+    <button class="topbar-btn" id="pause-btn" onclick="togglePause()">Pause</button>
+    <button class="topbar-btn submit" onclick="submitTest()">Submit Test</button>
+  </div>
+</div>
+<div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
+
+<div id="passage-tabs">
+  <button class="ptab active" onclick="goToPassage(0)" id="tab0">
+    Passage 1 — Grocery Stores
+    <span class="ptab-badge" id="badge0">0/13</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(1)" id="tab1">
+    Passage 2 — Chimpanzee Culture
+    <span class="ptab-badge" id="badge1">0/14</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(2)" id="tab2">
+    Passage 3 — Quantitative Research
+    <span class="ptab-badge" id="badge2">0/13</span>
+  </button>
+</div>
+
+<div style="display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0" id="layout">
+<div id="main">
+  <div id="passage-panel"></div>
+  <div id="resizer"></div>
+  <div id="questions-panel">
+    <div id="hl-bar">
+      <span class="hl-label">Highlight</span>
+      <button class="hl-dot dy active" id="hly" onclick="setHL('y')" title="Yellow"></button>
+      <button class="hl-dot dg" id="hlg" onclick="setHL('g')" title="Green"></button>
+      <button class="hl-dot dp" id="hlp" onclick="setHL('p')" title="Pink"></button>
+      <button class="hl-dot db" id="hlb" onclick="setHL('b')" title="Blue"></button>
+      <div class="hl-sep"></div>
+      <button class="hl-erase" onclick="setHL('e')">✕ Erase</button>
+      <div class="hl-sep"></div>
+      <button class="hl-mode-btn" id="qhl-toggle" onclick="toggleQHL()" title="Toggle question highlighting">Q Highlight</button>
+      <span class="hl-note" id="hl-note-txt">Passage</span>
+    </div>
+    <div id="q-panel"></div>
+  </div>
+</div>
+<div id="bottom-bar">
+  <span id="answered-info">0 / 40 answered</span>
+  <div class="nav-btns">
+    <button class="nav-btn" onclick="goToPassage(currentPassage-1)" id="btn-prev">← Previous</button>
+    <button class="nav-btn primary" onclick="goToPassage(currentPassage+1)" id="btn-next">Next Passage →</button>
+  </div>
+</div>
+</div>
+
+<div id="pause-overlay">
+  <div id="pause-box">
+    <h2>Test Paused</h2>
+    <p>Your progress is saved. Click resume to continue.</p>
+    <button class="nav-btn primary" style="padding:12px 32px;font-size:14px" onclick="togglePause()">▶ Resume</button>
+  </div>
+</div>
+
+<div id="result-overlay">
+  <div id="result-box">
+    <div class="result-tag">Test Complete</div>
+    <div class="result-title">IELTS Academic Reading</div>
+    <div class="result-subtitle">Recent Actual Test 6, Test 2 — Your Results</div>
+    <div class="band-score" id="r-band">—</div>
+    <div class="band-label">Estimated Band Score</div>
+    <div class="score-grid">
+      <div class="score-card"><div class="sc-label">Correct</div><div class="sc-val" id="r-correct" style="color:#1a5c3e">—</div></div>
+      <div class="score-card"><div class="sc-label">Incorrect</div><div class="sc-val" id="r-wrong" style="color:#c0392b">—</div></div>
+      <div class="score-card"><div class="sc-label">Unanswered</div><div class="sc-val" id="r-blank" style="color:#999">—</div></div>
+    </div>
+    <div class="result-btns">
+      <button class="result-btn primary" onclick="reviewAnswers()">Review All Answers</button>
+      <button class="result-btn" onclick="location.href='index.html'">← All Tests</button>
+      <button class="result-btn" onclick="restartTest()">Restart Test</button>
+    </div>
+  </div>
+</div>
+
+<div id="nav-overlay" onclick="closeNav(event)">
+  <div id="nav-panel">
+    <div id="nav-hd"><h3>IELTS Practice Tests</h3><p>Academic Reading</p></div>
+    <a href="index.html" class="nav-home-lnk">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home — All Tests
+    </a>
+    <a href="test5.html" class="ntc">
+      <div class="ntc-num">Test 5</div>
+      <div class="ntc-name">Recent Actual Test 6</div>
+      <div class="ntc-pass">The Pearl · History of Automobile · Elephant Communication</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test6.html" class="ntc">
+      <div class="ntc-num">Test 6</div>
+      <div class="ntc-name">Academic Reading Test 6</div>
+      <div class="ntc-pass">History of Refrigeration · Ancient People in Sahara · Texting the Television</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test7.html" class="ntc">
+      <div class="ntc-num">Test 7</div>
+      <div class="ntc-name">Recent Actual Test 6 — Test 4</div>
+      <div class="ntc-pass">Education Philosophy · How Deserts Are Formed · The Olympic Torch</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test8.html" class="ntc">
+      <div class="ntc-num">Test 8</div>
+      <div class="ntc-name">Recent Actual Test 6 — Test 3</div>
+      <div class="ntc-pass">Marine Chronometer · Crocodile Survives · Company Innovation</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test9.html" class="ntc cur">
+      <div class="ntc-num">Test 9</div>
+      <div class="ntc-name">Recent Actual Test 6 — Test 2</div>
+      <div class="ntc-pass">Grocery Stores · Chimpanzee Culture · Quantitative Research</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+  </div>
+</div>
+
+<div id="mobile-hl-bar">
+  <button class="mhl-dot mdy" id="mhl-y" title="Yellow"></button>
+  <button class="mhl-dot mdg" id="mhl-g" title="Green"></button>
+  <button class="mhl-dot mdp" id="mhl-p" title="Pink"></button>
+  <button class="mhl-dot mdb" id="mhl-b" title="Blue"></button>
+  <div class="mhl-sep"></div>
+  <button class="mhl-erase" id="mhl-e">✕ Erase</button>
+  <div class="mhl-sep"></div>
+  <button class="mhl-close" id="mhl-close">✕</button>
+</div>
+<div id="hl-tip"></div>
+
+<script>
+const ANSWER_KEY = {
+  q1:'C', q2:'D', q3:'C', q4:'A', q5:'E',
+  q6:'clerk', q7:'front lobby', q8:'gallery', q9:'stockroom', q10:'customers',
+  q11:'C', q12:'B', q13:'C',
+  q14:'H', q15:'J', q16:'I', q17:'K', q18:'G',
+  q19:'C', q20:'A', q21:'A', q22:'B', q23:'B',
+  q24:'the 1960s', q25:'Tanzania', q26:'close observation', q27:'cultural origin',
+  q28:'B', q29:'A', q30:'C', q31:'D', q32:'B',
+  q33:'liquid', q34:'Disneyland', q35:'rigorous experimentation', q36:'grammar school',
+  q37:'B', q38:'D', q39:'E',
+  q40:'C'
+};
+
+const PASSAGE_REFS = {
+  q1:'he divided the store into three different areas',
+  q2:"labour is a major expense.' Fortunately, the chain stores such as Piggly Wiggly cut the fat",
+  q3:'In 1902, Saunders moved to Memphis to put his perspective into practice',
+  q4:'At the very beginning of the 20th century, the American grocery stores offered comprehensive services',
+  q5:'Piggly Wiggly and this kind of self-service stores soared at that time',
+  q6:'to work first as a clerk in a grocery store',
+  q7:"'A front lobby' served as an entrance, an exit, as well as the checkouts at the front",
+  q8:'In the gallery above the sales department, supervisors can monitor the customers',
+  q9:"'Stockroom', where large fridges were placed to maintain fresh products",
+  q10:'customers in Piggly Wiggly chose the goods on the shelves and paid the items all by themselves',
+  q11:'this inconvenient shopping mode could lead to tremendous consumption of time and money',
+  q12:'featured by the turnstile at the entrance store at 79 Jefferson Street in Memphis, Tennessee',
+  q13:'Clarence Saunders died in 1953, leaving abundant legacies mainly symbolised by Piggly Wiggly',
+  q14:'solely relied upon officially published accounts of the behaviours reported at each research site',
+  q15:'To tackle these problems, my colleague and I determined to take a new approach',
+  q16:"scientists normally don't publish an extensive list of all the activities they do not see",
+  q17:'classified each behaviour regarding its occurrence or absence in the chimpanzee community',
+  q18:"one Zairian viewer was heard to exclaim, 'Ah, this ape is so like me, I can no longer eat him.'",
+  q20:'Homo sapiens and Pan Troglodytes have coexisted for hundreds of millennia and their genetic similarities surpass 98 per cent',
+  q21:'Researchers witnessed a variety of unexpected behaviours, ranging from fashioning and using tools',
+  q22:'they do share the capacity to pass on behavioural traits from one generation to another, not through their genes but via learning',
+  q23:'most attempts to document cultural diversity among chimpanzees have solely relied upon officially published accounts',
+  q24:'All this began to change in the 1960s',
+  q25:'launched their studies of wild chimpanzees at two field sites in Tanzania',
+  q26:'as the chimpanzees became more and more accustomed to close observation',
+  q27:"She speculated that some variations shared what she referred to as a 'cultural origin'",
+  q28:'The score sheet with the wrong answers does not include in it a child\'s lack of reasoning capacity',
+  q29:'Piaget concluded that the children were incapable of performing the logical task',
+  q30:'the children were just unwilling to play the experimenter\'s game',
+  q31:'Researchers employed an ethnographic or participant observation approach',
+  q32:'Mehan argues that the subjects might interpret the test questions in a way different',
+  q33:'he asked the children to compare the amount of liquid in containers',
+  q34:"the children responded 'Disneyland'",
+  q35:'can be resolved through more rigorous experimentation',
+  q36:"in a boys' grammar school",
+  q37:'qualitative interviews are often designed to resemble casual conversations',
+  q38:'write in detail open-ended field-notes',
+  q39:'interviewers will ask open-ended questions',
+  q40:'Here we are constantly getting questions about how valid the measures are'
+};
+
+const PASSAGES = [
+  {
+    tag:'Passage 1', title:'The Innovation of Grocery Stores',
+    instruct:'You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.',
+    body:`<p><span class="section-letter">A</span> At the very beginning of the 20th century, the American grocery stores offered comprehensive services: the customers would ask help from the people behind the counters (called clerks) for the items they liked, and then the clerks would wrap the items up. For the purpose of saving time, customers had to ask delivery boys or go in person to send the lists of what they intended to buy to the stores in advance and then went to pay for the goods later. Generally speaking, these grocery stores sold only one brand for each item. Such early chain stores as A&amp;P stores, although containing full services, were very time-consuming and inefficient for the purchase.</p>
+<p><span class="section-letter">B</span> Born in Virginia, Clarence Saunders left school at the age of 14 in 1895 to work first as a clerk in a grocery store. During his working in the store, he found that it was very inefficient for people to buy things there. Without the assistance of computers at that time, shopping was performed in a quite backward way. Having noticed that this inconvenient shopping mode could lead to tremendous consumption of time and money, Saunders, with great enthusiasm and innovation, proposed an unprecedented solution—let the consumers do self-service in the process of shopping—which might bring a thorough revolution to the whole industry.</p>
+<p><span class="section-letter">C</span> In 1902, Saunders moved to Memphis to put his perspective into practice, that is, to establish a grocery wholesale cooperative. In his newly designed grocery store, he divided the store into three different areas: 'A front lobby' served as an entrance, an exit, as well as the checkouts at the front. 'A sales department' was deliberately designed to allow customers to wander around the aisle and select their needed groceries. In this way, the clerks would not do the unnecessary work but arrange more delicate aisle and shelves to display the goods and enable the customers to browse through all the items. In the gallery above the sales department, supervisors can monitor the customers without disturbing them. 'Stockroom', where large fridges were placed to maintain fresh products, is another section of his grocery store only for the staff to enter. Also, this new shopping design and layout could accommodate more customers to go shopping simultaneously and even lead to some unimaginable phenomena: impulse buying and later supermarket.</p>
+<p><span class="section-letter">D</span> On September 6, 1916, Saunders performed the self-service revolution in the USA by opening the first Piggly Wiggly featured by the turnstile at the entrance store at 79 Jefferson Street in Memphis, Tennessee. Quite distinct from those in other grocery stores, customers in Piggly Wiggly chose the goods on the shelves and paid the items all by themselves. Inside the Piggly Wiggly, shoppers were not at the mercy of staff. They were free to roam the store, check out the products and get what they needed by their own hands. There, the items were clearly priced, and no one forced customers to buy the things they did not need. As a matter of fact, the biggest benefit that the Piggly Wiggly brought to customers was the money-saving effect. Self-service was optimistic for the improvement. 'It is good for both the consumer and retailer because it cuts costs,' noted George T. Haley, a professor at the University of New Haven and director of the Centre for International Industry Competitiveness, 'If you look at the way in which grocery stores (previous to Piggly Wiggly and Alpha Beta) were operated, what you can find is that there are a great number of workers involved, and labour is a major expense.' Fortunately, the chain stores such as Piggly Wiggly cut the fat.</p>
+<p><span class="section-letter">E</span> Piggly Wiggly and this kind of self-service stores soared at that time. In the first year, Saunders opened nine branches in Memphis. Meanwhile, Saunders immediately applied a patent for the self-service concept and began franchising Piggly Wiggly stores. Thanks to the employment of self-service and franchising, the number of Piggly Wiggly had increased to nearly 1,300 by 1923. Piggly Wiggly sold $100 million (worth $1.3 billion today) in groceries, which made it the third-biggest grocery retailer in the nation. After that, this chain store experienced company listing on the New York Stock Exchange, with the stocks doubling from late 1922 to March 1923. Saunders contributed significantly to the perfect design and layout of grocery stores. In order to keep the flow rate smooth, Saunders even invented the turnstile to replace the common entrance mode.</p>
+<p><span class="section-letter">F</span> Clarence Saunders died in 1953, leaving abundant legacies mainly symbolised by Piggly Wiggly, the pattern of which spread extensively and lasted permanently.</p>`
+  },
+  {
+    tag:'Passage 2', title:'The Study of Chimpanzee Culture',
+    instruct:'You should spend about 20 minutes on Questions 14–27, which are based on Reading Passage 2 below.',
+    body:`<p><span class="section-letter">A</span> After studying the similarities between chimpanzees and humans for years, researchers have recognised these resemblances run much deeper than anyone first thought in the latest decade. For instance, the nut cracking observed in the Tai Forest is not a simple chimpanzee behaviour, but a separate adaptation found only in that particular part of Africa, as well as a trait which is considered to be an expression of chimpanzee culture by biologists. These researchers frequently quote the word 'culture' to describe elementary animal behaviours, like the regional dialects of different species of songbirds, but it turns out that the rich and varied cultural traditions chimpanzees enjoyed rank secondly in complexity only to human traditions.</p>
+<p><span class="section-letter">B</span> During the past two years, the major research group which studies chimpanzees collaborated unprecedentedly and documented some distinct cultural patterns, ranging from animals' use of tools to their forms of communication and social customs. This emerging picture of chimpanzees affects how human beings ponder upon these amazing creatures. Also, it alters our conception of human uniqueness and shows us the extraordinary ability of our ancient ancestors to create cultures.</p>
+<p><span class="section-letter">C</span> Although we know that Homo sapiens and Pan Troglodytes have coexisted for hundreds of millennia and their genetic similarities surpass 98 per cent, we still knew next to nothing about chimpanzee behaviour in the wild until 40 years ago. All this began to change in the 1960s when Toshisada Nishida of Kyoto University in Japan and renowned British primatologist Jane Goodall launched their studies of wild chimpanzees at two field sites in Tanzania. (Goodall's research station at Gombe—the first of its kind—is more famous, but Nishida's site at Mahale is the second oldest chimpanzee research site in the world.)</p>
+<p><span class="section-letter">D</span> During these primary studies, as the chimpanzees became more and more accustomed to close observation, the remarkable discoveries emerged. Researchers witnessed a variety of unexpected behaviours, ranging from fashioning and using tools, hunting, meat eating, food sharing to lethal fights between members of neighbouring communities.</p>
+<p><span class="section-letter">E</span> In 1973, 13 forms of tool use and 8 social activities which appeared to differ between the Gombe chimpanzees and chimpanzee species elsewhere were recorded by Goodall. She speculated that some variations shared what she referred to as a 'cultural origin'. But what exactly did Goodall mean by 'culture'? According to the Oxford Encyclopedic English Dictionary, culture is defined as 'the customs...and achievements of a particular time or people.' The diversity of human cultures extends from technological variations to marriage rituals, from culinary habits to myths and legends. Of course, animals do not have myths and legends, but they do share the capacity to pass on behavioural traits from one generation to another, not through their genes but via learning. From biologists' view, this is the fundamental criterion for a cultural trait something can be learnt by observing the established skills of others and then passed on to following generations.</p>
+<p><span class="section-letter">F</span> What are the implications for chimpanzees themselves? We must place a high value upon the tragic loss of chimpanzees, who are decimated just when finally we are coming to appreciate these astonishing animals more completely. The population of chimpanzees has plummeted and continued to fall due to illegal trapping, logging and, most recently, the bushmeat trade within the past century. The latter is particularly alarming because logging has driven roadways, which are now used to ship wild animal meat—including chimpanzee meat to consumers as far afield as Europe, into forests. Such destruction threatens not only the animals themselves but also a host of fascinatingly different ape cultures.</p>
+<p><span class="section-letter">G</span> However, the cultural richness of the ape may contribute to its salvation. For example, the conservation efforts have already altered the attitudes of some local people. After several organisations showed videotapes illustrating the cognitive prowess of chimpanzees, one Zairian viewer was heard to exclaim, 'Ah, this ape is so like me, I can no longer eat him.'</p>
+<p><span class="section-letter">H</span> How did an international team of chimpanzee experts perform the most comprehensive survey of the animals ever attempted? Although scientists have been delving into chimpanzee culture for several decades, sometimes their studies contained a fatal defect. So far, most attempts to document cultural diversity among chimpanzees have solely relied upon officially published accounts of the behaviours reported at each research site. But this approach probably neglects a good deal of cultural variation for three reasons.</p>
+<p><span class="section-letter">I</span> First, scientists normally don't publish an extensive list of all the activities they do not see at a particular location. Yet this is the very information we need to know—which behaviours were and were not observed at each site. Second, there are many reports describing chimpanzee behaviours without expressing how common they are; without this information, we can't determine whether a particular action was a transient phenomenon or a routine event that should be considered part of its culture. Finally, researchers' description of potentially significant chimpanzee behaviours often lacks sufficient detail, which makes it difficult for scientists from other spots to report the presence or absence of the activities.</p>
+<p><span class="section-letter">J</span> To tackle these problems, my colleague and I determined to take a new approach. We asked field researchers at each site to list all the behaviours which they suspected were local traditions. With this information, we assembled a comprehensive list of 65 candidates for cultural behaviours.</p>
+<p><span class="section-letter">K</span> Then we distributed our list to team leaders at each site. They consulted with their colleagues and classified each behaviour regarding its occurrence or absence in the chimpanzee community. The major brackets contained customary behaviour (occurs in most or all of the able-bodied members of at least one age or sex class, such as all adult males), habitual (less common than customary but occurs repeatedly in several individuals), present (observed at the site but not habitual), absent (never seen), and unknown.</p>`
+  },
+  {
+    tag:'Passage 3', title:'Quantitative Research in Education',
+    instruct:'You should spend about 20 minutes on Questions 28–40, which are based on Reading Passage 3 below.',
+    body:`<p>Many education researchers used to work on the assumption that children experience different phases of development, and that they cannot execute the most advanced level of cognitive operation until they have reached the most advanced forms of cognitive process. For example, one researcher Piaget had a well-known experiment in which he asked the children to compare the amount of liquid in containers with different shapes. Those containers had the same capacity, but even when the young children were demonstrated that the same amount of fluid could be poured between the containers, many of them still believed one was larger than the other. Piaget concluded that the children were incapable of performing the logical task in figuring out that the two containers were the same size even though they had different shapes, because their cognitive development had not reached the necessary phase. Critics on his work, such as Donaldson, have questioned this interpretation. They point out the possibility that the children were just unwilling to play the experimenter's game, or that they did not quite understand the question asked by the experimenter. These criticisms surely do state the facts, but more importantly, it suggests that experiments are social situations where interpersonal interactions take place. The implication here is that Piaget's investigation and his attempts to replicate it are not solely about measuring the children's capabilities of logical thinking, but also the degree to which they could understand the directions for them, their willingness to comply with these requirements, how well the experimenters did in communicating the requirements and in motivating those children, etc.</p>
+<p>The same kinds of criticisms have been targeted to psychological and educational tests. For instance, Mehan argues that the subjects might interpret the test questions in a way different from that meant by the experimenter. In a language development test, researchers show children a picture of a medieval fortress, complete with moat, drawbridge, parapets and three initial consonants in it: D, C, and G. The children are required to circle the correct initial consonant for 'castle'. The answer is C, but many kids choose D. When asked what the name of the building was, the children responded 'Disneyland'. They adopted the reasoning line expected by the experimenter but got to the wrong substantive answer. The score sheet with the wrong answers does not include in it a child's lack of reasoning capacity; it only records that the children gave a different answer rather than the one the tester expected.</p>
+<p>Here we are constantly getting questions about how valid the measures are where the findings of the quantitative research are usually based. Some scholars such as Donaldson consider these as technical issues, which can be resolved through more rigorous experimentation. In contrast, others like Mehan reckon that the problems are not merely with particular experiments or tests, but they might legitimately jeopardise the validity of all researches of this type.</p>
+<p>Meanwhile, there are also questions regarding the assumption in the logic of quantitative educational research that causes can be identified through physical and/or statistical manipulation of the variables. Critics argue that this does not take into consideration the nature of human social life by assuming it to be made up of static, mechanical causal relationships, while in reality, it includes complicated procedures of interpretation and negotiation, which do not come with determinate results. From this perspective, it is not clear that we can understand the pattern and mechanism behind people's behaviours simply in terms of the casual relationships, which are the focuses of quantitative research. It is implied that social life is much more contextually variable and complex.</p>
+<p>Such criticisms of quantitative educational research have also inspired more and more educational researchers to adopt qualitative methodologies during the last three or four decades. These researchers have steered away from measuring and manipulating variables experimentally or statistically. There are many forms of qualitative research, which is loosely illustrated by terms like 'ethnography', 'case study', 'participant observation', 'life history', 'unstructured interviewing', 'discourse analysis' and so on. Generally speaking, though, it has characteristics as follows: Qualitative researches have an intensive focus on exploring the nature of certain phenomena in the field of education, instead of setting out to test hypotheses about them. It also inclines to deal with 'unstructured data', which refers to the kind of data that have not been coded during the collection process regarding a closed set of analytical categories. As a result, when engaging in observation, qualitative researchers use audio or video devices to record what happens or write in detail open-ended field-notes, instead of coding behaviour concerning a pre-determined set of categories, which is what quantitative researchers typically would do when conducting 'systematic observation'. Similarly, in an interview, interviewers will ask open-ended questions instead of ones that require specific predefined answers of the kind typical, like in a postal questionnaire. Actually, qualitative interviews are often designed to resemble casual conversations.</p>
+<p>The primary forms of data analysis include verbal description and explanations and involve explicit interpretations of both the meanings and functions of human behaviours. At most, quantification and statistical analysis only play a subordinate role. The sociology of education and evaluation studies were the two areas of educational research where criticism of quantitative research and the development of qualitative methodologies initially emerged in the most intense way. A series of studies conducted by Lacey, Hargreaves and Lambert in a boys' grammar school, a boys' secondary modern school, and a girls' grammar school in Britain in the 1960s marked the beginning of the trend towards qualitative research in the sociology of education. Researchers employed an ethnographic or participant observation approach, although they did also collect some quantitative data, for instance on friendship patterns among the students. These researchers observed lessons, interviewed both the teachers and the students, and made the most of school records. They studied the schools for a considerable amount of time and spent plenty of months gathering data and tracking changes over all these years.</p>`
+  }
+];
+
+const QUESTIONS = [
+  {id:'p1s1',passage:0,type:'section',heading:'Questions 1–5',instruct:'Reading Passage 1 has six paragraphs, A–F.\nWhich paragraph contains the following information?\nNB You may use any letter more than once.',items:[
+    {id:'q1',num:'1',text:'Layout of Clarence Saunders\' store.',type:'match',options:['A','B','C','D','E','F']},
+    {id:'q2',num:'2',text:'A reference to a reduction by chain stores in labour costs.',type:'match',options:['A','B','C','D','E','F']},
+    {id:'q3',num:'3',text:'How Clarence Saunders\' idea had been carried out.',type:'match',options:['A','B','C','D','E','F']},
+    {id:'q4',num:'4',text:'How people used to shop before Clarence Saunders\' stores opened.',type:'match',options:['A','B','C','D','E','F']},
+    {id:'q5',num:'5',text:'A description of economic success brought by Clarence Saunders\'s stores.',type:'match',options:['A','B','C','D','E','F']},
+  ]},
+  {id:'p1s2',passage:0,type:'section',heading:'Questions 6–10',instruct:'Complete the sentences below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.',items:[
+    {id:'q6',num:'6',text:'Clarence Saunders\' first job was as ___ in a grocery store.',type:'fill'},
+    {id:'q7',num:'7',text:'In Clarence Saunders\' store, people should pay for goods at a ___.',type:'fill'},
+    {id:'q8',num:'8',text:'Customers would be under surveillance at the ___.',type:'fill'},
+    {id:'q9',num:'9',text:'Another area in his store was called ___, which was only accessible to the internal staff.',type:'fill'},
+    {id:'q10',num:'10',text:'In Clarence Saunders\' shopping design, much work was done by ___.',type:'fill'},
+  ]},
+  {id:'p1s3',passage:0,type:'section',heading:'Questions 11–13',instruct:'Choose the correct letter, A, B, C or D.',items:[
+    {id:'q11',num:'11',text:'Why did Clarence Saunders want to propel the improvement of grocery stores at his age?',type:'mcq',options:['A — He wanted to transfer business to retailing.','B — He thought it was profitable.','C — He thought this could enable customers\' life to be more convenient.','D — He wanted to create a new shop by himself.']},
+    {id:'q12',num:'12',text:'The Piggly Wiggly store was',type:'mcq',options:['A — located in Memphis Tennessee.','B — mainly featured in self-service.','C — initially very unpopular with customers.','D — developed with a pessimistic future.']},
+    {id:'q13',num:'13',text:'Today, the main thing associated with Clarence Saunders is that',type:'mcq',options:['A — a fully automatic store system opened soon near his first store.','B — his Piggly Wiggly store was very popular at that time.','C — his name was usually connected with Piggly Wiggly stores.','D — his name was printed together with that of his famous store.']},
+  ]},
+  {id:'p2s1',passage:1,type:'section',heading:'Questions 14–18',instruct:'Reading Passage 2 has eleven paragraphs, A–K.\nWhich paragraph contains the following information?',items:[
+    {id:'q14',num:'14',text:'An approach to research on chimpanzees culture that is only based on official sources.',type:'match',options:['A','B','C','D','E','F','G','H','I','J','K']},
+    {id:'q15',num:'15',text:'Mention of a new system designed by two scientists who aim to solve the problem.',type:'match',options:['A','B','C','D','E','F','G','H','I','J','K']},
+    {id:'q16',num:'16',text:'Reasons why previous research on ape culture is problematic.',type:'match',options:['A','B','C','D','E','F','G','H','I','J','K']},
+    {id:'q17',num:'17',text:'New classification of data observed or collected.',type:'match',options:['A','B','C','D','E','F','G','H','I','J','K']},
+    {id:'q18',num:'18',text:'An example showing that the tragic outcome of animals leads to an indication of a change in local people\'s attitude in the preservation.',type:'match',options:['A','B','C','D','E','F','G','H','I','J','K']},
+  ]},
+  {id:'p2s2',passage:1,type:'section',heading:'Questions 19–23',instruct:'Do the following statements agree with the information given in Reading Passage 2?\nA — TRUE   B — FALSE   C — NOT GIVEN',items:[
+    {id:'q19',num:'19',text:'The research found that scientists can make chimpanzees possess the same complex culture as human beings.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q20',num:'20',text:'Humans and apes lived together long time ago and shared most of their genetic substance.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q21',num:'21',text:'Even Toshisada Nishida and Jane Goodall\'s beginning studies observed many surprising features of civilised behaviours among chimpanzees.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q22',num:'22',text:'Chimpanzees, like humans, have the ability to deliver cultural behaviours mostly from genetic inheritance.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q23',num:'23',text:'For decades, researchers have investigated chimpanzees by data obtained from both unobserved and observed approaches.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+  ]},
+  {id:'p2s3',passage:1,type:'section',heading:'Questions 24–27',instruct:'Answer the questions below.\nChoose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.',items:[
+    {id:'q24',num:'24',text:'When did the unexpected discoveries of chimpanzee behaviour start?',type:'fill'},
+    {id:'q25',num:'25',text:'Which country is the researching site of Toshisada Nishida and Jane Goodall?',type:'fill'},
+    {id:'q26',num:'26',text:'What did the chimpanzee have to get used to in the initial study?',type:'fill'},
+    {id:'q27',num:'27',text:'What term can be used to depict that Jane Goodall found the chimpanzees in different regions used the different tools in 1973?',type:'fill'},
+  ]},
+  {id:'p3s1',passage:2,type:'section',heading:'Questions 28–32',instruct:'Match each statement or description with the correct person or people.\n\nA — Piaget\nB — Mehan\nC — Donaldson\nD — Lacey, Hargreaves and Lambert\n\nNB You may use any letter more than once.',items:[
+    {id:'q28',num:'28',text:'A wrong answer indicates more of a child\'s different perspective than incompetence in reasoning.',type:'match',options:['A','B','C','D']},
+    {id:'q29',num:'29',text:'Logical reasoning involving in the experiment is beyond children\'s cognitive development.',type:'match',options:['A','B','C','D']},
+    {id:'q30',num:'30',text:'Children\'s reluctance to comply with the game rules or miscommunication may be another explanation.',type:'match',options:['A','B','C','D']},
+    {id:'q31',num:'31',text:'There is an indication of a scientific observation approach in research.',type:'match',options:['A','B','C','D']},
+    {id:'q32',num:'32',text:'There is a detail of flaw in experiments on children\'s language development.',type:'match',options:['A','B','C','D']},
+  ]},
+  {id:'p3s2',passage:2,type:'section',heading:'Questions 33–36',instruct:'Complete the sentences below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.',items:[
+    {id:'q33',num:'33',text:'In Piaget\'s experiment, he asked the children to distinguish the amount of ___ in different containers.',type:'fill'},
+    {id:'q34',num:'34',text:'Subjects with the wrong answer more inclined to answer ___ instead of the correct answer in Mehan\'s question.',type:'fill'},
+    {id:'q35',num:'35',text:'Some people criticised the result of Piaget experiment, but Donaldson thought the flaw could be rectified by ___.',type:'fill'},
+    {id:'q36',num:'36',text:'Most qualitative researches conducted by Lacey, Hargreaves and Lambert were done in a ___.',type:'fill'},
+  ]},
+  {id:'p3s3',passage:2,type:'section',heading:'Questions 37–39',instruct:'Choose THREE letters, A–F. Which THREE of the following are characteristics of qualitative research mentioned in the passage?\n\nA — Coding behaviour in terms of a predefined set of categories\nB — Designing an interview as an easy conversation\nC — Working with well-organised data in a closed set of analytical categories\nD — Full of details instead of loads of data in questionnaires\nE — Asking to give open-ended answers in questionnaires\nF — Recording the researching situation and applying note-taking\n\nSelect one letter per box (choose three different letters from B, D, E, or F):',items:[
+    {id:'q37',num:'37',text:'First selection (A–F):',type:'match',options:['A','B','C','D','E','F']},
+    {id:'q38',num:'38',text:'Second selection (A–F):',type:'match',options:['A','B','C','D','E','F']},
+    {id:'q39',num:'39',text:'Third selection (A–F):',type:'match',options:['A','B','C','D','E','F']},
+  ]},
+  {id:'p3s4',passage:2,type:'section',heading:'Question 40',instruct:'Choose the correct letter, A, B, C or D.',items:[
+    {id:'q40',num:'40',text:'What is the main idea of the passage?',type:'mcq',options:['A — To prove that quantitative research is most applicable to children\'s education.','B — To illustrate the society lacks of deep comprehension of educational approach.','C — To explain the ideas of quantitative research and the characteristics of the related criticisms.','D — To imply qualitative research is a flawless method compared with quantitative one.']},
+  ]},
+];
+
+/* ═══ STATE ═══ */
+let currentPassage=0,timeLeft=3600,timerInterval=null,paused=false,userAnswers={},isReviewing=false,hlMode='y',qhlMode=false,touchPending=false;
+let passageFontSize=14.5,questionFontSize=12.5;
+const FS_MIN=10,FS_MAX=22;
+
+function changeFontSize(delta){
+  passageFontSize=Math.min(FS_MAX,Math.max(FS_MIN,passageFontSize+delta));
+  questionFontSize=Math.min(FS_MAX,Math.max(FS_MIN,questionFontSize+delta));
+  document.documentElement.style.setProperty('--passage-fs',passageFontSize+'px');
+  document.documentElement.style.setProperty('--question-fs',questionFontSize+'px');
+}
+function toggleQHL(){
+  qhlMode=!qhlMode;
+  const btn=document.getElementById('qhl-toggle'),note=document.getElementById('hl-note-txt');
+  btn.classList.toggle('qmode-on',qhlMode);
+  note.textContent=qhlMode?'Questions':'Passage';
+}
+function suppressNativeSelectionUI(){
+  const blocked=['contextmenu','copy','cut','paste'];
+  const targets=[document.getElementById('passage-panel'),document.getElementById('questions-panel')];
+  targets.forEach(t=>{if(!t)return;blocked.forEach(evt=>t.addEventListener(evt,e=>e.preventDefault()));});
+}
+function init(){
+  renderPassage(0);renderQuestions(0);updateProgress();updateNavBtns();startTimer();
+  document.getElementById('passage-panel').addEventListener('mouseup',handleHighlight);
+  document.getElementById('questions-panel').addEventListener('mouseup',handleHighlight);
+  suppressNativeSelectionUI();
+  initResizer();initMobileHighlight();
+}
+function initResizer(){
+  const resizer=document.getElementById('resizer'),qPanel=document.getElementById('questions-panel'),main=document.getElementById('main');
+  let startX,startW;
+  resizer.addEventListener('mousedown',e=>{
+    startX=e.clientX;startW=qPanel.offsetWidth;resizer.classList.add('dragging');
+    document.body.style.cursor='col-resize';document.body.style.userSelect='none';
+    function onMove(e){const delta=startX-e.clientX;const newW=Math.min(Math.max(startW+delta,260),main.offsetWidth-300);qPanel.style.width=newW+'px';}
+    function onUp(){resizer.classList.remove('dragging');document.body.style.cursor='';document.body.style.userSelect='';document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);}
+    document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
+  });
+  resizer.addEventListener('touchstart',e=>{
+    const touch=e.touches[0];startX=touch.clientX;startW=qPanel.offsetWidth;resizer.classList.add('dragging');document.body.style.userSelect='none';
+    function onMove(e){e.preventDefault();const t=e.touches[0];const delta=startX-t.clientX;const newW=Math.min(Math.max(startW+delta,260),main.offsetWidth-300);qPanel.style.width=newW+'px';}
+    function onUp(){resizer.classList.remove('dragging');document.body.style.userSelect='';document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onUp);}
+    document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('touchend',onUp);
+    e.preventDefault();
+  },{passive:false});
+}
+function startTimer(){timerInterval=setInterval(()=>{if(paused)return;timeLeft--;renderTimer();if(timeLeft<=0){clearInterval(timerInterval);submitTest();}},1000);}
+function renderTimer(){const el=document.getElementById('timer-display'),m=Math.floor(timeLeft/60),s=timeLeft%60;el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');el.className=timeLeft<=300?'danger':timeLeft<=600?'warn':'';}
+function togglePause(){paused=!paused;document.getElementById('pause-btn').textContent=paused?'Resume':'Pause';document.getElementById('pause-overlay').className=paused?'show':'';}
+function renderPassage(idx){const p=PASSAGES[idx];document.getElementById('passage-panel').innerHTML=`<div class="passage-header"><div class="passage-tag">${p.tag}</div><div class="passage-title">${p.title}</div><div class="passage-instruct">${p.instruct}</div></div><div class="passage-body" id="passage-body">${p.body}</div>`;}
+function renderQuestions(pIdx){
+  const sections=QUESTIONS.filter(s=>s.passage===pIdx);let html='';
+  sections.forEach(sec=>{
+    html+=`<div class="q-section"><div class="q-section-hd">${sec.heading}</div><div class="q-section-instruct">${sec.instruct.replace(/\n/g,'<br>')}</div>`;
+    sec.items.forEach(q=>{
+      html+=`<div class="q-item" id="item-${q.id}"><div class="q-num">Question ${q.num}</div><div class="q-text">${q.text}</div>`;
+      if(q.type==='mcq'){html+=`<div class="q-opts">`;q.options.forEach(opt=>{const letter=opt[0],checked=userAnswers[q.id]===letter;html+=`<label class="q-opt${checked?' selected':''}" id="opt-${q.id}-${letter}"><input type="radio" name="${q.id}" value="${letter}" onchange="saveAnswer('${q.id}','${letter}')" ${checked?'checked':''}>${opt}</label>`;});html+=`</div>`;}
+      else if(q.type==='match'){html+=`<div class="q-match-row"><select class="q-match-sel" id="sel-${q.id}" onchange="saveAnswer('${q.id}',this.value)"><option value="">—</option>`;q.options.forEach(o=>{html+=`<option value="${o}" ${userAnswers[q.id]===o?'selected':''}>${o}</option>`;});html+=`</select></div>`;}
+      else if(q.type==='fill'){html+=`<input class="q-fill" type="text" id="fill-${q.id}" value="${userAnswers[q.id]||''}" placeholder="Type your answer…" oninput="saveAnswer('${q.id}',this.value)">`;}
+      html+=`<div class="q-answer-reveal" id="reveal-${q.id}"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  document.getElementById('q-panel').innerHTML=html;
+}
+function saveAnswer(qid,val){userAnswers[qid]=val;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(l=>{l.className=`q-opt${l.id===`opt-${qid}-${val}`?' selected':''}`});updateProgress();}
+function updateProgress(){
+  const total=40,answered=Object.values(userAnswers).filter(v=>v&&v.trim()!=='').length;
+  document.getElementById('answered-info').textContent=`${answered} / ${total} answered`;
+  document.getElementById('prog-fill').style.width=(answered/total*100)+'%';
+  [0,1,2].forEach(pi=>{const qs=QUESTIONS.filter(s=>s.passage===pi).flatMap(s=>s.items),done=qs.filter(q=>userAnswers[q.id]&&userAnswers[q.id].trim()!=='').length;document.getElementById(`badge${pi}`).textContent=`${done}/${qs.length}`;});
+}
+function goToPassage(idx){
+  if(idx<0||idx>2)return;currentPassage=idx;
+  [0,1,2].forEach(i=>document.getElementById(`tab${i}`).className=`ptab${i===idx?' active':''}`);
+  renderPassage(idx);renderQuestions(idx);
+  if(isReviewing){showReview();highlightPassageRefs(idx);}
+  updateNavBtns();document.getElementById('passage-panel').scrollTop=0;document.getElementById('questions-panel').scrollTop=0;
+}
+function highlightPassageRefs(pIdx){
+  const body=document.getElementById('passage-body');if(!body)return;
+  const qs=QUESTIONS.filter(s=>s.passage===pIdx).flatMap(s=>s.items);let html=body.innerHTML;
+  qs.forEach(q=>{const ref=PASSAGE_REFS[q.id];if(!ref)return;const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans,cls=isBlank?'ref-blank':isCorrect?'ref-correct':'ref-wrong',rbCls=isBlank?'rb-blank':isCorrect?'rb-correct':'rb-wrong',escaped=ref.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),re=new RegExp(escaped);if(re.test(html))html=html.replace(re,`<span class="passage-ref ${cls}"><span class="ref-badge ${rbCls}">${q.num}</span>${ref}</span>`);});
+  body.innerHTML=html;
+}
+function updateNavBtns(){
+  document.getElementById('btn-prev').disabled=currentPassage===0;document.getElementById('btn-prev').style.opacity=currentPassage===0?'0.4':'1';
+  const nxt=document.getElementById('btn-next');
+  if(currentPassage===2){nxt.textContent='Submit Test';nxt.onclick=submitTest;}else{nxt.textContent='Next Passage →';nxt.onclick=()=>goToPassage(currentPassage+1);}
+}
+function setHL(mode){
+  hlMode=mode;
+  ['y','g','p','b'].forEach(m=>{const btn=document.getElementById('hl'+m);if(btn)btn.classList.toggle('active',m===mode)});
+  if(mode!=='e') qhlMode=false;
+  document.getElementById('qhl-toggle').classList.remove('qmode-on');
+  document.getElementById('hl-note-txt').textContent='Passage';
+}
+function handleHighlight(e){
+  if(touchPending)return;
+  const sel=window.getSelection();if(!sel||sel.isCollapsed)return;
+  const range=sel.getRangeAt(0);
+  const passageBody=document.getElementById('passage-body');
+  const qPanel=document.getElementById('q-panel');
+  const inPassage=passageBody&&passageBody.contains(range.commonAncestorContainer);
+  const inQuestions=qPanel&&qPanel.contains(range.commonAncestorContainer);
+  if(qhlMode&&inQuestions){applyHighlight(range,qPanel);}
+  else if(!qhlMode&&inPassage){applyHighlight(range,passageBody);}
+}
+function applyHighlight(range,container){
+  if(hlMode==='e'){
+    const sel=window.getSelection();
+    container.querySelectorAll('mark').forEach(m=>{if(sel.containsNode(m,true)){const parent=m.parentNode;while(m.firstChild)parent.insertBefore(m.firstChild,m);parent.removeChild(m);}});
+    container.normalize();
+  } else {
+    const mark=document.createElement('mark');mark.className='h'+hlMode;
+    try{range.surroundContents(mark);}catch(e){const frag=range.extractContents();mark.appendChild(frag);range.insertNode(mark);}
+  }
+  window.getSelection()?.removeAllRanges();
+}
+function submitTest(){
+  clearInterval(timerInterval);let correct=0,wrong=0,blank=0;
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{const ans=(userAnswers[q.id]||'').trim();if(!ans){blank++;return;}checkAnswer(ans,ANSWER_KEY[q.id])?correct++:wrong++;});
+  document.getElementById('r-band').textContent=calcBand(correct);document.getElementById('r-correct').textContent=correct;document.getElementById('r-wrong').textContent=wrong;document.getElementById('r-blank').textContent=blank;document.getElementById('result-overlay').className='show';
+}
+function checkAnswer(given,key){
+  const g=given.toLowerCase().trim(),k=key.toLowerCase().trim();
+  if(g===k)return true;
+  /* fill-in flexible matching */
+  if(k==='clerk')return g==='clerk'||g==='a clerk';
+  if(k==='front lobby')return g.includes('front lobby');
+  if(k==='gallery')return g==='gallery';
+  if(k==='stockroom')return g==='stockroom'||g==='stock room';
+  if(k==='customers')return g==='customers'||g==='shoppers'||g==='customer';
+  if(k==='the 1960s')return g.includes('1960');
+  if(k==='tanzania')return g==='tanzania';
+  if(k==='close observation')return g.includes('close observation');
+  if(k==='cultural origin')return g.includes('cultural origin');
+  if(k==='liquid')return g==='liquid';
+  if(k==='disneyland')return g==='disneyland';
+  if(k==='rigorous experimentation')return g.includes('rigorous');
+  if(k==='grammar school')return g.includes('grammar school');
+  /* Q37-39: any of B, D, E is accepted */
+  if(['b','d','e'].includes(k))return ['b','d','e'].includes(g);
+  return false;
+}
+function calcBand(c){if(c>=39)return'9.0';if(c>=37)return'8.5';if(c>=35)return'8.0';if(c>=33)return'7.5';if(c>=30)return'7.0';if(c>=27)return'6.5';if(c>=23)return'6.0';if(c>=19)return'5.5';if(c>=15)return'5.0';if(c>=13)return'4.5';return'4.0';}
+function reviewAnswers(){document.getElementById('result-overlay').className='';isReviewing=true;goToPassage(0);showReview();}
+function showReview(){
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{
+    const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],reveal=document.getElementById(`reveal-${q.id}`),item=document.getElementById(`item-${q.id}`);
+    if(!reveal)return;const isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans;
+    if(item){item.classList.remove('review-correct','review-wrong','review-blank');item.classList.add(isBlank?'review-blank':isCorrect?'review-correct':'review-wrong');}
+    const displayKey=['q37','q38','q39'].includes(q.id)?'B, D, or E':key;
+    reveal.className=`q-answer-reveal show ${isCorrect?'correct-msg':'wrong-msg'}`;
+    reveal.innerHTML=isBlank?`<strong>Correct answer:</strong> ${displayKey}`:isCorrect?`✓ Correct!`:`✗ Your answer: <strong>${ans}</strong> — Correct: <strong>${displayKey}</strong>`;
+    if(q.type==='fill'){const inp=document.getElementById(`fill-${q.id}`);if(inp)inp.className=`q-fill ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='match'){const sel=document.getElementById(`sel-${q.id}`);if(sel)sel.className=`q-match-sel ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='mcq'){document.querySelectorAll(`[id^="opt-${q.id}-"]`).forEach(l=>{const letter=l.id.split('-').pop();if(letter===key)l.className='q-opt correct-ans';else if(letter===ans&&!isCorrect)l.className='q-opt wrong-ans';});}
+  });
+}
+function restartTest(){userAnswers={};isReviewing=false;timeLeft=3600;paused=false;document.getElementById('result-overlay').className='';clearInterval(timerInterval);goToPassage(0);renderTimer();updateProgress();startTimer();}
+function openNav(){document.getElementById('nav-overlay').className='show';}
+function closeNav(e){if(e.target===document.getElementById('nav-overlay'))document.getElementById('nav-overlay').className='';}
+
+/* ═══ MOBILE / TOUCH HIGHLIGHT ═══ */
+let mobileSelRange=null,ignoreSelChange=false,selTimer=null;
+function positionMobileBar(rect){
+  const bar=document.getElementById('mobile-hl-bar'),bW=268,bH=50,mg=10;
+  let cx=rect.left+rect.width/2,topY=rect.top-bH-14,botY=rect.bottom+14;
+  let left=Math.min(Math.max(cx-bW/2,mg),window.innerWidth-bW-mg);
+  let arr=Math.min(Math.max(cx-left,20),bW-20);
+  bar.style.setProperty('--arr',arr+'px');bar.style.left=left+'px';
+  if(topY>=mg){bar.style.top=topY+'px';bar.classList.remove('arr-up');bar.classList.add('arr-down');}
+  else{bar.style.top=botY+'px';bar.classList.remove('arr-down');bar.classList.add('arr-up');}
+}
+function showMobileHlBar(range){
+  clearTimeout(selTimer);selTimer=null;
+  mobileSelRange=range.cloneRange();
+  const rect=range.getBoundingClientRect();
+  ignoreSelChange=true;
+  window.getSelection()?.removeAllRanges();
+  setTimeout(()=>{ignoreSelChange=false;},300);
+  positionMobileBar(rect);
+  document.getElementById('mobile-hl-bar').classList.add('show');
+}
+function hideMobileHlBar(){document.getElementById('mobile-hl-bar').classList.remove('show');mobileSelRange=null;}
+function applyMobileHL(color){
+  if(!mobileSelRange){hideMobileHlBar();return;}
+  const pb=document.getElementById('passage-body'),qp=document.getElementById('q-panel');
+  const inP=pb&&pb.contains(mobileSelRange.commonAncestorContainer);
+  const inQ=qp&&qp.contains(mobileSelRange.commonAncestorContainer);
+  const cont=inP?pb:inQ?qp:null;if(!cont){hideMobileHlBar();return;}
+  ignoreSelChange=true;
+  const sel=window.getSelection();sel.removeAllRanges();sel.addRange(mobileSelRange);
+  const prev=hlMode;hlMode=color;applyHighlight(mobileSelRange,cont);hlMode=prev;
+  setTimeout(()=>{ignoreSelChange=false;},300);
+  hideMobileHlBar();
+}
+function initMobileHighlight(){
+  const bar=document.getElementById('mobile-hl-bar');
+  bar.addEventListener('mousedown',e=>e.preventDefault());
+  document.getElementById('mhl-y').addEventListener('click',()=>applyMobileHL('y'));
+  document.getElementById('mhl-g').addEventListener('click',()=>applyMobileHL('g'));
+  document.getElementById('mhl-p').addEventListener('click',()=>applyMobileHL('p'));
+  document.getElementById('mhl-b').addEventListener('click',()=>applyMobileHL('b'));
+  document.getElementById('mhl-e').addEventListener('click',()=>applyMobileHL('e'));
+  document.getElementById('mhl-close').addEventListener('click',()=>hideMobileHlBar());
+  if(!('ontouchstart' in window)&&navigator.maxTouchPoints===0)return;
+  document.addEventListener('selectionchange',()=>{
+    if(ignoreSelChange)return;
+    clearTimeout(selTimer);
+    selTimer=setTimeout(()=>{
+      const sel=window.getSelection();
+      if(!sel||sel.isCollapsed||sel.rangeCount===0){hideMobileHlBar();return;}
+      const r=sel.getRangeAt(0);
+      const pb=document.getElementById('passage-body'),qp=document.getElementById('q-panel');
+      const inP=pb&&pb.contains(r.commonAncestorContainer);
+      const inQ=qp&&qp.contains(r.commonAncestorContainer);
+      if(inP||inQ)showMobileHlBar(r);else hideMobileHlBar();
+    },350);
+  });
+  document.addEventListener('touchend',e=>{
+    if(bar.contains(e.target))return;
+    touchPending=true;setTimeout(()=>{touchPending=false;},300);
+    if(bar.classList.contains('show'))hideMobileHlBar();
+  },{passive:true});
+}
+init();
+</script>
+</body>
+</html>

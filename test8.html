@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IELTS Academic Reading — Recent Actual Test 6, Test 3 (Test 8)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f2eb;--surface:#ffffff;--surface2:#f9f7f2;--surface3:#f0ede4;
+  --accent:#1a5c3e;--accent-light:#e8f5ee;--accent2:#2a7a54;
+  --text:#1c1c1c;--muted:#6b6b6b;--muted2:#999;
+  --border:#ddd8cc;--border2:#e8e4da;
+  --hl-y:rgba(255,220,0,0.5);--hl-g:rgba(80,200,120,0.45);
+  --hl-p:rgba(255,100,160,0.45);--hl-b:rgba(60,150,255,0.45);
+  --shadow:0 2px 12px rgba(0,0,0,0.08);
+  --passage-fs:14.5px;--question-fs:12.5px;
+}
+html{height:100%;overflow:hidden}
+body{height:100%;overflow:hidden;display:flex;flex-direction:column;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+#topbar{height:52px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;position:relative;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+#topbar-left{display:flex;align-items:center;gap:10px}
+#topbar-logo{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:0.7}
+#topbar-title{font-size:14px;font-weight:600}
+#topbar-right{display:flex;align-items:center;gap:8px}
+#timer-display{font-size:20px;font-weight:700;font-family:'Courier New',monospace;letter-spacing:3px;min-width:70px;text-align:center}
+#timer-display.warn{color:#ffd080}
+#timer-display.danger{color:#ff8888;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.5}}
+.topbar-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s}
+.topbar-btn:hover{background:rgba(255,255,255,0.28)}
+.topbar-btn.submit{background:#fff;color:var(--accent);border-color:#fff}
+.topbar-btn.submit:hover{background:#e8f5ee}
+.fs-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;width:28px;height:28px;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;transition:background 0.2s;line-height:1}
+.fs-btn:hover{background:rgba(255,255,255,0.32)}
+.fs-group{display:flex;align-items:center;gap:3px;border:1px solid rgba(255,255,255,0.25);border-radius:6px;padding:2px 5px;gap:4px}
+.fs-label{font-size:10px;opacity:0.7;letter-spacing:0.5px;font-weight:600}
+#prog-bar{height:4px;background:rgba(255,255,255,0.2);flex-shrink:0}
+#prog-fill{height:100%;background:#6ee7b7;transition:width 0.4s ease}
+#passage-tabs{background:var(--surface);border-bottom:2px solid var(--border);display:flex;flex-shrink:0;overflow-x:auto}
+.ptab{padding:11px 18px;font-size:12px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all 0.18s;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:7px}
+.ptab:hover{color:var(--accent);background:var(--accent-light)}
+.ptab.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-light)}
+.ptab-badge{font-size:10px;background:var(--border);color:var(--muted);padding:2px 7px;border-radius:10px;font-weight:700}
+.ptab.active .ptab-badge{background:var(--accent);color:#fff}
+#main{display:flex;flex:1;overflow:hidden;min-height:0}
+#passage-panel{flex:1;overflow-y:auto;padding:28px 36px;background:var(--surface);border-right:1px solid var(--border);min-width:0}
+#passage-panel::-webkit-scrollbar{width:6px}
+#passage-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.passage-header{margin-bottom:22px}
+.passage-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.passage-title{font-size:22px;font-weight:700;font-family:'Merriweather',serif;color:var(--text);margin-bottom:6px}
+.passage-instruct{font-size:12px;color:var(--muted);font-style:italic;padding:8px 12px;background:var(--surface3);border-radius:6px;border-left:3px solid var(--accent)}
+.passage-body p{font-family:'Merriweather',serif;font-size:var(--passage-fs);line-height:1.9;margin-bottom:16px;text-align:justify;color:#222}
+.passage-body .section-letter{font-size:12px;font-weight:700;color:var(--accent);font-family:'Inter',sans-serif;border:2px solid var(--accent);border-radius:4px;padding:1px 7px;display:inline-block;margin-right:8px;vertical-align:middle}
+.passage-ref{border-radius:3px;padding:1px 3px;display:inline}
+.passage-ref.ref-correct{background:rgba(26,92,62,0.13);border-bottom:2px solid #1a5c3e}
+.passage-ref.ref-wrong{background:rgba(192,57,43,0.12);border-bottom:2px solid #c0392b}
+.passage-ref.ref-blank{background:rgba(224,160,32,0.13);border-bottom:2px solid #e0a020}
+.ref-badge{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;font-size:9px;font-weight:700;font-family:'Inter',sans-serif;color:#fff;vertical-align:middle;margin-right:2px;flex-shrink:0;line-height:1}
+.ref-badge.rb-correct{background:#1a5c3e}
+.ref-badge.rb-wrong{background:#c0392b}
+.ref-badge.rb-blank{background:#e0a020}
+mark.hy{background:var(--hl-y);border-radius:2px;padding:0 1px}
+mark.hg{background:var(--hl-g);border-radius:2px;padding:0 1px}
+mark.hp{background:var(--hl-p);border-radius:2px;padding:0 1px}
+mark.hb{background:var(--hl-b);border-radius:2px;padding:0 1px}
+#resizer{width:6px;background:var(--border);cursor:col-resize;flex-shrink:0;transition:background 0.2s;position:relative}
+#resizer:hover,#resizer.dragging{background:var(--accent)}
+#resizer::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:32px;background:var(--muted2);border-radius:2px}
+#questions-panel{width:400px;overflow-y:auto;background:var(--surface2);padding:16px;flex-shrink:0;min-width:260px}
+#questions-panel::-webkit-scrollbar{width:5px}
+#questions-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-bar{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 12px;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;box-shadow:var(--shadow)}
+.hl-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted)}
+.hl-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:transform 0.15s,border-color 0.15s;flex-shrink:0}
+.hl-dot:hover{transform:scale(1.2)}
+.hl-dot.active{border-color:#333;transform:scale(1.15)}
+.hl-dot.dy{background:#ffd800}
+.hl-dot.dg{background:#50c878}
+.hl-dot.dp{background:#ff64a0}
+.hl-dot.db{background:#3c96ff}
+.hl-sep{width:1px;height:20px;background:var(--border)}
+.hl-erase{font-size:11px;font-family:'Inter',sans-serif;color:var(--muted);background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:4px 9px;cursor:pointer;font-weight:600}
+.hl-erase:hover{background:var(--border)}
+.hl-note{font-size:10px;color:var(--muted2);font-style:italic}
+.hl-mode-btn{font-size:11px;font-family:'Inter',sans-serif;background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:4px 9px;cursor:pointer;font-weight:600;color:var(--muted);transition:all 0.15s;}
+.hl-mode-btn.qmode-on{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.q-section{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow)}
+.q-section-hd{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+.q-section-instruct{font-size:11.5px;color:var(--muted);font-style:italic;line-height:1.5;margin-bottom:12px;padding:7px 10px;background:var(--surface3);border-radius:5px}
+.q-item{border-bottom:1px solid var(--border2);padding-bottom:10px;margin-bottom:10px;border-radius:6px;padding:8px;transition:background 0.2s,border-left 0.2s;user-select:text}
+.q-item.review-correct{background:#edfaf3;border-left:4px solid #1a5c3e}
+.q-item.review-wrong{background:#fdf0f0;border-left:4px solid #c0392b}
+.q-item.review-blank{background:#fdf6e8;border-left:4px solid #e0a020}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-num{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px}
+.q-text{font-size:var(--question-fs);color:var(--text);line-height:1.5;margin-bottom:7px}
+.q-opts{display:flex;flex-direction:column;gap:4px}
+.q-opt{display:flex;align-items:flex-start;gap:7px;font-size:var(--question-fs);padding:5px 7px;border-radius:5px;cursor:pointer;transition:background 0.15s;line-height:1.45;border:1px solid transparent}
+.q-opt:hover{background:var(--accent-light);border-color:var(--border)}
+.q-opt input[type=radio]{accent-color:var(--accent);margin-top:2px;flex-shrink:0}
+.q-opt.selected{background:var(--accent-light);border-color:var(--accent)}
+.q-opt.correct-ans{background:#d4f4e8;border-color:#1a5c3e}
+.q-opt.wrong-ans{background:#fde8e8;border-color:#c0392b}
+.q-fill{width:100%;border:none;border-bottom:2px solid var(--border);background:transparent;font-size:var(--question-fs);font-family:'Inter',sans-serif;padding:4px 2px;outline:none;color:var(--text);transition:border-color 0.2s}
+.q-fill:focus{border-bottom-color:var(--accent)}
+.q-fill.correct{border-bottom-color:#1a5c3e;background:rgba(80,200,130,0.1)}
+.q-fill.wrong{border-bottom-color:#c0392b;background:rgba(200,60,60,0.08)}
+.q-match-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:var(--question-fs)}
+.q-match-sel{border:1px solid var(--border);border-radius:5px;padding:4px 7px;font-size:11.5px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;min-width:52px}
+.q-match-sel:focus{border-color:var(--accent)}
+.q-match-sel.correct{border-color:#1a5c3e;background:#d4f4e8}
+.q-match-sel.wrong{border-color:#c0392b;background:#fde8e8}
+#bottom-bar{height:48px;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+#answered-info{font-size:12px;color:var(--muted);font-weight:500}
+.nav-btns{display:flex;gap:8px}
+.nav-btn{padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.18s;border:1px solid var(--border);background:var(--surface2);color:var(--text)}
+.nav-btn:hover{background:var(--border)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-btn.primary:hover{background:var(--accent2)}
+#result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999;align-items:center;justify-content:center}
+#result-overlay.show{display:flex}
+#result-box{background:var(--surface);border-radius:16px;padding:40px 36px;max-width:460px;width:92%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25)}
+.result-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.result-title{font-size:22px;font-weight:700;margin-bottom:4px;font-family:'Merriweather',serif}
+.result-subtitle{font-size:13px;color:var(--muted);margin-bottom:18px}
+.band-score{font-size:64px;font-weight:700;color:var(--accent);line-height:1;margin:10px 0 6px;font-family:'Merriweather',serif}
+.band-label{font-size:12px;color:var(--muted);margin-bottom:20px}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.score-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 8px}
+.score-card .sc-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px}
+.score-card .sc-val{font-size:22px;font-weight:700;color:var(--text)}
+.result-btns{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.result-btn{padding:11px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border:1px solid var(--border);background:var(--surface2);color:var(--text);transition:all 0.18s}
+.result-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.result-btn:hover{opacity:0.88}
+#pause-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:500;align-items:center;justify-content:center}
+#pause-overlay.show{display:flex}
+#pause-box{background:var(--surface);border-radius:16px;padding:48px 40px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+#pause-box h2{font-size:28px;font-family:'Merriweather',serif;margin-bottom:8px}
+#pause-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
+.q-answer-reveal{font-size:11.5px;padding:6px 10px;border-radius:5px;margin-top:6px;display:none}
+.q-answer-reveal.show{display:block}
+.q-answer-reveal.correct-msg{background:#d4f4e8;color:#1a5c3e;border-left:3px solid #1a5c3e}
+.q-answer-reveal.wrong-msg{background:#fde8e8;color:#922b2b;border-left:3px solid #c0392b}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-tip{position:fixed;background:#1c1c1c;color:#fff;font-size:11px;padding:4px 10px;border-radius:4px;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:300;font-family:'Inter',sans-serif}
+#nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.52);z-index:998}
+#nav-overlay.show{display:flex}
+#nav-panel{background:var(--surface);width:290px;height:100%;overflow-y:auto;display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,0.18)}
+#nav-hd{background:var(--accent);color:#fff;padding:18px 20px}
+#nav-hd h3{font-size:15px;font-weight:700;margin-bottom:2px}
+#nav-hd p{font-size:11px;opacity:0.72}
+.nav-home-lnk{display:flex;align-items:center;gap:8px;padding:11px 20px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;transition:background 0.15s}
+.nav-home-lnk:hover{background:var(--accent-light);color:var(--accent)}
+.ntc{display:block;padding:13px 20px;border-bottom:1px solid var(--border2);text-decoration:none;color:var(--text);transition:background 0.15s;border-left:3px solid transparent}
+.ntc:hover{background:var(--accent-light)}
+.ntc.cur{background:var(--accent-light);border-left-color:var(--accent)}
+.ntc-num{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:2px}
+.ntc-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.ntc-pass{font-size:11px;color:var(--muted);line-height:1.5}
+.ntc-badge{display:inline-block;font-size:10px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:10px;margin-top:5px;font-weight:600}
+/* suppress iOS long-press callout on text panels */
+#passage-panel,#questions-panel{-webkit-touch-callout:none}
+/* ── MOBILE TOUCH HIGHLIGHT TOOLBAR ── */
+#mobile-hl-bar{display:none;position:fixed;background:#1c1c1c;border-radius:12px;padding:9px 13px;gap:9px;align-items:center;z-index:9999;box-shadow:0 6px 28px rgba(0,0,0,0.45);pointer-events:auto;white-space:nowrap}
+#mobile-hl-bar.show{display:flex}
+#mobile-hl-bar.arr-down::after{content:'';position:absolute;top:100%;left:var(--arr,50%);transform:translateX(-50%);border:7px solid transparent;border-top-color:#1c1c1c}
+#mobile-hl-bar.arr-up::before{content:'';position:absolute;bottom:100%;left:var(--arr,50%);transform:translateX(-50%);border:7px solid transparent;border-bottom-color:#1c1c1c}
+.mhl-dot{width:30px;height:30px;border-radius:50%;border:2.5px solid rgba(255,255,255,0.2);cursor:pointer;flex-shrink:0;transition:transform 0.12s}
+.mhl-dot:active{transform:scale(0.88)}
+.mdy{background:#ffd800}.mdg{background:#50c878}.mdp{background:#ff64a0}.mdb{background:#3c96ff}
+.mhl-sep{width:1px;height:22px;background:rgba(255,255,255,0.18);flex-shrink:0}
+.mhl-erase{font-size:11px;color:#fff;background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.22);border-radius:5px;padding:5px 9px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600}
+.mhl-close{font-size:17px;color:rgba(255,255,255,0.4);background:none;border:none;cursor:pointer;padding:2px 3px;line-height:1;font-family:'Inter',sans-serif}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div id="topbar-left">
+    <span style="opacity:0.3;font-size:16px">|</span>
+    <span id="topbar-title">IELTS Academic — Test 8</span>
+    <button class="topbar-btn" onclick="openNav()">☰ Tests</button>
+  </div>
+  <div id="topbar-right">
+    <div class="fs-group">
+      <span class="fs-label">A</span>
+      <button class="fs-btn" onclick="changeFontSize(-1)" title="Decrease font size">−</button>
+      <button class="fs-btn" onclick="changeFontSize(1)" title="Increase font size">+</button>
+    </div>
+    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" style="opacity:0.7"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span id="timer-display">60:00</span>
+    <button class="topbar-btn" id="pause-btn" onclick="togglePause()">Pause</button>
+    <button class="topbar-btn submit" onclick="submitTest()">Submit Test</button>
+  </div>
+</div>
+<div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
+
+<div id="passage-tabs">
+  <button class="ptab active" onclick="goToPassage(0)" id="tab0">
+    Passage 1 — Marine Chronometer
+    <span class="ptab-badge" id="badge0">0/14</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(1)" id="tab1">
+    Passage 2 — Crocodile Survives
+    <span class="ptab-badge" id="badge1">0/13</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(2)" id="tab2">
+    Passage 3 — Company Innovation
+    <span class="ptab-badge" id="badge2">0/13</span>
+  </button>
+</div>
+
+<div style="display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0" id="layout">
+<div id="main">
+  <div id="passage-panel"></div>
+  <div id="resizer"></div>
+  <div id="questions-panel">
+    <div id="hl-bar">
+      <span class="hl-label">Highlight</span>
+      <button class="hl-dot dy active" id="hly" onclick="setHL('y')" title="Yellow"></button>
+      <button class="hl-dot dg" id="hlg" onclick="setHL('g')" title="Green"></button>
+      <button class="hl-dot dp" id="hlp" onclick="setHL('p')" title="Pink"></button>
+      <button class="hl-dot db" id="hlb" onclick="setHL('b')" title="Blue"></button>
+      <div class="hl-sep"></div>
+      <button class="hl-erase" onclick="setHL('e')">✕ Erase</button>
+      <div class="hl-sep"></div>
+      <button class="hl-mode-btn" id="qhl-toggle" onclick="toggleQHL()" title="Toggle question highlighting">Q Highlight</button>
+      <span class="hl-note" id="hl-note-txt">Passage</span>
+    </div>
+    <div id="q-panel"></div>
+  </div>
+</div>
+<div id="bottom-bar">
+  <span id="answered-info">0 / 40 answered</span>
+  <div class="nav-btns">
+    <button class="nav-btn" onclick="goToPassage(currentPassage-1)" id="btn-prev">← Previous</button>
+    <button class="nav-btn primary" onclick="goToPassage(currentPassage+1)" id="btn-next">Next Passage →</button>
+  </div>
+</div>
+</div>
+
+<div id="pause-overlay">
+  <div id="pause-box">
+    <h2>Test Paused</h2>
+    <p>Your progress is saved. Click resume to continue.</p>
+    <button class="nav-btn primary" style="padding:12px 32px;font-size:14px" onclick="togglePause()">▶ Resume</button>
+  </div>
+</div>
+
+<div id="result-overlay">
+  <div id="result-box">
+    <div class="result-tag">Test Complete</div>
+    <div class="result-title">IELTS Academic Reading</div>
+    <div class="result-subtitle">Recent Actual Test 6, Test 3 — Your Results</div>
+    <div class="band-score" id="r-band">—</div>
+    <div class="band-label">Estimated Band Score</div>
+    <div class="score-grid">
+      <div class="score-card"><div class="sc-label">Correct</div><div class="sc-val" id="r-correct" style="color:#1a5c3e">—</div></div>
+      <div class="score-card"><div class="sc-label">Incorrect</div><div class="sc-val" id="r-wrong" style="color:#c0392b">—</div></div>
+      <div class="score-card"><div class="sc-label">Unanswered</div><div class="sc-val" id="r-blank" style="color:#999">—</div></div>
+    </div>
+    <div class="result-btns">
+      <button class="result-btn primary" onclick="reviewAnswers()">Review All Answers</button>
+      <button class="result-btn" onclick="location.href='index.html'">← All Tests</button>
+      <button class="result-btn" onclick="restartTest()">Restart Test</button>
+    </div>
+  </div>
+</div>
+
+<!-- Test Navigator -->
+<div id="nav-overlay" onclick="closeNav(event)">
+  <div id="nav-panel">
+    <div id="nav-hd"><h3>IELTS Practice Tests</h3><p>Academic Reading</p></div>
+    <a href="index.html" class="nav-home-lnk">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home — All Tests
+    </a>
+    <a href="test5.html" class="ntc">
+      <div class="ntc-num">Test 5</div>
+      <div class="ntc-name">Recent Actual Test 6</div>
+      <div class="ntc-pass">The Pearl · History of Automobile · Elephant Communication</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test6.html" class="ntc">
+      <div class="ntc-num">Test 6</div>
+      <div class="ntc-name">Academic Reading Test 6</div>
+      <div class="ntc-pass">History of Refrigeration · Ancient People in Sahara · Texting the Television</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test7.html" class="ntc">
+      <div class="ntc-num">Test 7</div>
+      <div class="ntc-name">Recent Actual Test 6 — Test 4</div>
+      <div class="ntc-pass">Education Philosophy · How Deserts Are Formed · The Olympic Torch</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test8.html" class="ntc cur">
+      <div class="ntc-num">Test 8</div>
+      <div class="ntc-name">Recent Actual Test 6 — Test 3</div>
+      <div class="ntc-pass">Marine Chronometer · Crocodile Survives · Company Innovation</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test9.html" class="ntc">
+      <div class="ntc-num">Test 9</div>
+      <div class="ntc-name">Recent Actual Test 6 — Test 2</div>
+      <div class="ntc-pass">Innovation of Grocery Stores · Chimpanzee Culture · Quantitative Research</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+  </div>
+</div>
+
+<!-- Mobile / Touch Highlight Toolbar -->
+<div id="mobile-hl-bar">
+  <button class="mhl-dot mdy" id="mhl-y" title="Yellow"></button>
+  <button class="mhl-dot mdg" id="mhl-g" title="Green"></button>
+  <button class="mhl-dot mdp" id="mhl-p" title="Pink"></button>
+  <button class="mhl-dot mdb" id="mhl-b" title="Blue"></button>
+  <div class="mhl-sep"></div>
+  <button class="mhl-erase" id="mhl-e">✕ Erase</button>
+  <div class="mhl-sep"></div>
+  <button class="mhl-close" id="mhl-close">✕</button>
+</div>
+<div id="hl-tip"></div>
+
+<script>
+const ANSWER_KEY = {
+  q1:'E', q2:'A', q3:'E', q4:'G', q5:'B',
+  q6:'A', q7:'B', q8:'C',
+  q9:'local time', q10:'2.8 seconds', q11:'lubrication',
+  q12:'sextant', q13:'angles', q14:'marine chronometer',
+  q15:'ix', q16:'iv', q17:'iii', q18:'v', q19:'i', q20:'vi', q21:'ii',
+  q22:'hot season', q23:'four months', q24:'water resources',
+  q25:'body weight', q26:'dehydration', q27:'growth',
+  q28:'F', q29:'C', q30:'G', q31:'B', q32:'F', q33:'E',
+  q34:'B', q35:'C', q36:'B', q37:'A',
+  q38:'C', q39:'A', q40:'D'
+};
+
+const PASSAGE_REFS = {
+  q1:'inspired the self-taught Yorkshire carpenter John Harrison',
+  q2:'navigators were still unable to exactly identify the position at sea',
+  q3:'Graham provided him with financial aid for his early-stage work on sea clocks',
+  q4:'made the final decision on format and productions system for the marine chronometer',
+  q5:'the time difference between the home time and the local time served for the measurement',
+  q6:'Theoretically, knowing the longitude position was quite simple',
+  q7:'another method was proposed, that is, the time difference between the home time and the local time',
+  q9:'local time (easily identified by checking the position of the Sun)',
+  q10:'within 2.8 seconds a day',
+  q11:'revolutionary because it required no lubrication',
+  q12:'an English mathematician called John Hadley, who developed sextant',
+  q13:'The sextant is the tool that people adopt to measure angles',
+  q14:'made the final decision on format and productions system for the marine chronometer, which turns it into a genuine modern commercial product',
+  q15:'they witnessed the rise and fall of the dinosaurs',
+  q16:'streamlined body, long tail, protective armour and long jaws',
+  q17:'crocodiles have a slower metabolism',
+  q18:'Crocodiles are successful because they are capable of switching feeding methods',
+  q19:'many crocodiles can protect themselves by digging holes and covering themselves in mud',
+  q20:'In a six-year study by Kennett and Christian',
+  q21:'The study discovered that the crocodiles’ metabolic engines function slowly',
+  q22:'the hot season brings drought',
+  q23:'spent nearly four months a year underground',
+  q24:'without access to water resources',
+  q25:'crocodiles lost water reserves and body weight when underground',
+  q26:'the aestivating animals had no dehydration',
+  q27:'slowed-down growth rate',
+  q28:'the craving for innovation has caused a frenzy for ‘intrapreneurship’',
+  q29:'the money spent on licensing and purchasing others’ intellectual property',
+  q30:'the trend of cannibalisation, which brings about businesses that will confront and jeopardise the existing ones',
+  q31:'Winners of today’s American business tend to be companies with innovative powers such as Dell, Amazon and Wal-Mart',
+  q32:'Procter &amp; Gamble is currently switching their entire business focus from countries to products',
+  q33:'Umagic has already raised $5m and is on its way to another $25m',
+  q34:'The future of Umagic is difficult to predict',
+  q36:'he would take it to a big company first',
+  q37:'the look of incomprehension when he tried to convince the idea lab of a big corporation such as IBM',
+  q38:'The desperate search for new ideas is the hormone for a large part of today’s merger boom',
+  q39:'In the management of creativity, size is your enemy',
+  q40:'Innovation, unlike sex, parenting, or fitness, is one area where a computer cannot tell people what to do'
+};
+
+const PASSAGES = [
+  {
+    tag:'Passage 1', title:'Timekeeper: Invention of Marine Chronometer',
+    instruct:'You should spend about 20 minutes on Questions 1–14, which are based on Reading Passage 1 below.',
+    body:`<p><span class="section-letter">A</span> Up to the middle of the 18th century, the navigators were still unable to exactly identify the position at sea, so they might face a great number of risks such as the shipwreck or running out of supplies before arriving at the destination. Knowing one's position on the earth requires two simple but essential coordinates, one of which is the longitude.</p>
+<p><span class="section-letter">B</span> The longitude is a term that can be used to measure the distance that one has covered from one's home to another place around the world without the limitations of naturally occurring baseline like the equator. To determine longitude, navigators had no choice but to measure the angle with the naval sextant between Moon centre and a specific star—lunar distance—along with the height of both heavenly bodies. Together with the nautical almanac, Greenwich Mean Time (GMT) was determined, which could be adopted to calculate longitude because one hour in GMT means 15-degree longitude. Unfortunately, this approach laid great reliance on the weather conditions, which brought great inconvenience to the crew members. Therefore, another method was proposed, that is, the time difference between the home time and the local time served for the measurement. Theoretically, knowing the longitude position was quite simple, even for the people in the middle of the sea with no land in sight. The key element for calculating the distance travelled was to know, at the very moment, the accurate home time. But the greatest problem is: how can a sailor know the home time at sea?</p>
+<p><span class="section-letter">C</span> The simple and again obvious answer is that one takes an accurate clock with him, which he sets to the home time before leaving. A comparison with the local time (easily identified by checking the position of the Sun) would indicate the time difference between the home time and the local time, and thus the distance from home was obtained. The truth was that nobody in the 18th century had ever managed to create a clock that could endure the violent shaking of a ship and the fluctuating temperature while still maintaining the accuracy of time for navigation.</p>
+<p><span class="section-letter">D</span> After 1714, as an attempt to find a solution to the problem, the British government offered a tremendous amount of £20,000, which were to be managed by the magnificently named 'Board of Longitude'. If timekeeper was the answer (and there could be other proposed solutions, since the money wasn't only offered for timekeeper), then the error of the required timekeeping for achieving this goal needed to be within 2.8 seconds a day, which was considered impossible for any clock or watch at sea, even when they were in their finest conditions.</p>
+<p><span class="section-letter">E</span> This award, worth about £2 million today, inspired the self-taught Yorkshire carpenter John Harrison to attempt a design for a practical marine clock. In the later stage of his early career, he worked alongside his younger brother James. The first big project of theirs was to build a turret clock for the stables at Brockelsby Park, which was revolutionary because it required no lubrication. Harrison designed a marine clock in 1730, and he travelled to London in seek of financial aid. He explained his ideas to Edmond Halley, the Astronomer Royal, who then introduced him to George Graham, Britain's first-class clockmaker. Graham provided him with financial aid for his early-stage work on sea clocks. It took Harrison five years to build Harrison Number One or H1. Later, he sought the improvement from alternate design and produced H4 with the giant clock appearance. Remarkable as it was, the Board of Longitude wouldn't grant him the prize for some time until it was adequately satisfied.</p>
+<p><span class="section-letter">F</span> Harrison had a principal contestant for the tempting prize at that time, an English mathematician called John Hadley, who developed sextant. The sextant is the tool that people adopt to measure angles, such as the one between the Sun and the horizon, for a calculation of the location of ships or planes. In addition, his invention is significant since it can help determine longitude.</p>
+<p><span class="section-letter">G</span> Most chronometer forerunners of that particular generation were English, but that doesn't mean every achievement was made by them. One wonderful figure in the history is the Lancastrian Thomas Earnshaw, who created the ultimate form of chronometer escapement—the spring detent escapement—and made the final decision on format and productions system for the marine chronometer, which turns it into a genuine modern commercial product, as well as a safe and pragmatic way of navigation at sea over the next century and half.</p>`
+  },
+  {
+    tag:'Passage 2', title:'The Evolutionary Mystery: Crocodile Survives',
+    instruct:'You should spend about 20 minutes on Questions 15–27, which are based on Reading Passage 2 below.',
+    body:`<p><span class="section-letter">A</span> Even though crocodiles have existed for 200 million years, they're anything but primitive. As crocodiles' ancestors, crocodilia came to adapt to an aquatic lifestyle. When most of the other contemporary reptiles went extinct, crocodiles were able to make it because their bodies changed and they adapted better to the climate. They witnessed the rise and fall of the dinosaurs, which once ruled the planet, and even the 65 million years of alleged mammalian dominance didn't wipe them off. Nowadays, the crocodiles and alligators are not that different from their prehistoric ancestors, which proves that they were (and still are) incredibly adaptive.</p>
+<p><span class="section-letter">B</span> The first crocodile-like ancestors came into existence approximately 230 million years ago, and they had many of the features which make crocodiles natural and perfect stealth hunters: streamlined body, long tail, protective armour and long jaws. They are born with four short, webbed legs, but this does not mean that their capacity to move on the ground shall ever be underestimated. When they move, they are so fast that you won't even have any chance to try making the same mistake again by getting too close, especially when they're hunting.</p>
+<p><span class="section-letter">C</span> Like other reptiles, crocodiles are poikilothermal animals (commonly known as cold-blooded, whose body temperature changes with that of the surroundings) and consequently, require exposure to sunlight regularly to raise body temperature. When it is too hot, they would rather stay in water or shade. Compared with mammals and birds, crocodiles have a slower metabolism, which makes them less vulnerable to food shortage. In the most extreme case, a crocodile can slow its metabolism down even further, to the point that it would survive without food for a whole year, enabling them to outlive mammals in relatively volatile environments.</p>
+<p><span class="section-letter">D</span> Crocodiles have a highly efficient way to prey catching. The prey rarely realises there might be a crocodile under the water because the crocodile makes a move without any noise or great vibration when spotting its prey. It only keeps its eyes above the water level. As soon as it feels close enough to the victim, it jerks out of the water with its wide open jaws. Crocodiles are successful because they are capable of switching feeding methods. It chases after fish and snatches birds at the water surface, hides in the waterside bushes in anticipation of a gazelle, and when the chance to ambush presents itself, the crocodile dashes forward, knocks the animal out with its powerful tail and then drags the prey into the water to drown.</p>
+<p><span class="section-letter">E</span> In many crocodilian habitats, the hot season brings drought that dries up their hunting grounds, leaving it harder for them to regulate body temperatures. This actually allowed reptiles to rule. For instance, many crocodiles can protect themselves by digging holes and covering themselves in mud, waiting for months without consuming any food or water until the rains finally return. They transform into a quiescent state called aestivation.</p>
+<p><span class="section-letter">F</span> The majority of crocodilian is considered to go into aestivation during the dry season. In a six-year study by Kennett and Christian, the King Crocodiles, a species of Australian freshwater crocodiles, spent nearly four months a year underground without access to water resources. Doubly labelled water was applied to detect field metabolic rates and water flux, and during some years, plasma fluid samples were taken once a month to keep track of the effects of aestivation regarding the accumulation of nitrogenous wastes and electrolyte concentrations.</p>
+<p><span class="section-letter">G</span> The study discovered that the crocodiles' metabolic engines function slowly, creating waste and exhausting water and fat reserves. Waste is stored in the urine, becoming more and more concentrated. Nevertheless, the concentration of waste products in blood doesn't fluctuate much, allowing the crocodiles to carry on their normal functions. Besides, even though the crocodiles lost water reserves and body weight when underground, the losses were proportional; upon emerging, the aestivating animals had no dehydration and displayed no other harmful effects such as a slowed-down growth rate. The two researchers reckon that this capacity of crocodiles to get themselves through the harsh times and the long starvation periods is sure to be the answer to the crocodilian line's survival throughout history.</p>`
+  },
+  {
+    tag:'Passage 3', title:'Company Innovation',
+    instruct:'You should spend about 20 minutes on Questions 28–40, which are based on Reading Passage 3 below.',
+    body:`<p><span class="section-letter">A</span> In a shabby office in downtown Manhattan, a group of 30 AI (artificial intelligence) programmers from Umagic are attempting to mimic the brains of a famous sexologist, a celebrated dietitian, a popular fitness coach and a bunch of other specialists. Umagic Systems is an up-and-coming firm, which sets up websites that enable their clients to seek advice from the virtual versions of those figures. The users put in all the information regarding themselves and their objectives; then it's Umagic's job to give advice that a star expert would give. Even though the neuroses of American consumers have always been a marketing focus, the future of Umagic is difficult to predict (who knows what it'll be like in ten years? Asking a computer about your sex life might be either normal or crazy). However, companies such as Umagic are starting to intimidate major American firms, because these young companies regard the half-crazy 'creative' ideas as the portal to their triumph in the future.</p>
+<p><span class="section-letter">B</span> Innovation has established itself as the catchword of American business management. Enterprises have realised that they are running out of things that can be outsourced or re-engineered (worryingly, by their competitors too). Winners of today's American business tend to be companies with innovative powers such as Dell, Amazon and Wal-Mart, which have come up with concepts or goods that have reshaped their industries.</p>
+<p><span class="section-letter">C</span> According to a new book by two consultants from Arthur D. Little, during the last 15 years, the top 20% of firms in Fortune magazine's annual innovation survey have attained twice as much the shareholder returns as their peers. The desperate search for new ideas is the hormone for a large part of today's merger boom. The same goes for the money spent on licensing and purchasing others' intellectual property. Based on the statistics from Pasadena-based Patent &amp; Licence Exchange, trade volume in intangible assets in America has gone up from $15 billion in 1990 to $100 billion in 1998, with small firms and individuals taking up an increasing share of the rewards.</p>
+<p><span class="section-letter">D</span> And that terrifies big companies: it appears that innovation works incompatible with them. Some major famous companies that are always known for 'innovative ideas', such as 3M, Procter &amp; Gamble and Rubbermaid, have recently had dry spells. Peter Chernin, who runs the Fox TV and film empire for News Corporation, points out that 'In the management of creativity, size is your enemy.' It's impossible for someone who's managing 20 movies to be as involved as someone doing 5. Therefore, he has tried to divide the studio into smaller parts, disregarding the risk of higher expenses.</p>
+<p><span class="section-letter">E</span> Nowadays, ideas are more likely to prosper outside big companies. In the old days, when a brilliant scientist came up with an idea and wanted to make money out of it, he would take it to a big company first. But now, with all these cheap venture capital around, he would probably want to commercialise it by himself. So far, Umagic has already raised $5m and is on its way to another $25m. Even in the case of capital-intensive businesses like pharmaceuticals, entrepreneurs have the option to conduct early-stage research and sell out to the big firms when they're faced with costly, risky clinical trials. Approximately 1/3 of drug firms' total revenue is now from licensed-in technology.</p>
+<p><span class="section-letter">F</span> Some of the major enterprises such as General Electric and Cisco have been impressively triumphant when it comes to snatching and incorporating small companies' scores. However, other giants are concerned about the money they have to spend and the way to keep those geniuses who generated the ideas. It is the dream of everyone to develop more ideas within their organisations. Procter &amp; Gamble is currently switching their entire business focus from countries to products; one of the goals is to get the whole company to accept the innovations. In other places, the craving for innovation has caused a frenzy for 'intrapreneurship'—transferring power and establishing internal idea-workshops and tracking inventory so that the talents will stay.</p>
+<p><span class="section-letter">G</span> Some people don't believe that this kind of restructuring is sufficient. Clayton Christensen argues in a new book that big firms' many advantages, such as taking care of their existing customers, can get in the way of innovative behaviour that is necessary for handling disruptive technologies. That's why there's been the trend of cannibalisation, which brings about businesses that will confront and jeopardise the existing ones. For example, Bank One has set up Wingspan, which is an online bank that in fact compete with its actual branches.</p>
+<p><span class="section-letter">H</span> There's no denying that innovation is a big deal. However, do major firms have to be this pessimistic? According to a recent survey of the top 50 innovations in America by Industry Week, ideas are equally likely to come from both big and small companies. Big companies can adopt new ideas when they are mature enough and the risks and rewards have become more quantifiable.</p>
+<p><span class="section-letter">I</span> Can all the creative destruction, cannibalisation and culture tweaking render the big firms more innovative? David Post, the founder of Umagic, cast doubt on this issue, 'The only successful intrapreneurs are ones who leave and become entrepreneurs.' He also recalls with glee the look of incomprehension when he tried to convince the idea lab of a big corporation such as IBM of his 'virtual experts' idea three years ago—though, he delightfully adds, 'of course, they could have been right. Innovation, unlike sex, parenting, or fitness, is one area where a computer cannot tell people what to do.'</p>`
+  }
+];
+
+const QUESTIONS = [
+  {id:'p1s1',passage:0,type:'section',heading:'Questions 1–5',instruct:'Reading Passage 1 has seven paragraphs, A–G.\nWhich paragraph contains the following information?\nWrite the correct letter, A–G.\nNB You may use any letter more than once.',items:[
+    {id:'q1',num:'1',text:'A description of Harrison\'s background.',type:'match',options:['A','B','C','D','E','F','G']},
+    {id:'q2',num:'2',text:'Problems caused by poor ocean navigation.',type:'match',options:['A','B','C','D','E','F','G']},
+    {id:'q3',num:'3',text:'The person who gave financial support to Harrison.',type:'match',options:['A','B','C','D','E','F','G']},
+    {id:'q4',num:'4',text:'An analysis of the long-term importance of sea clock invention.',type:'match',options:['A','B','C','D','E','F','G']},
+    {id:'q5',num:'5',text:'The practical usage of longitude.',type:'match',options:['A','B','C','D','E','F','G']},
+  ]},
+  {id:'p1s2',passage:0,type:'section',heading:'Questions 6–8',instruct:'Do the following statements agree with the information given in Reading Passage 1?\nA — TRUE   B — FALSE   C — NOT GIVEN',items:[
+    {id:'q6',num:'6',text:'In theory, sailors can easily calculate their longitude position at sea.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q7',num:'7',text:'To determine longitude, the measurement of the distance from the Moon to the given star is a must.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q8',num:'8',text:'Greenwich Mean Time was set up by the English navigators.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+  ]},
+  {id:'p1s3',passage:0,type:'section',heading:'Questions 9–14',instruct:'Complete the sentences below.\nChoose NO MORE THAN TWO WORDS AND/OR A NUMBER from the passage for each answer.',items:[
+    {id:'q9',num:'9',text:'Sailors were able to use the position of the Sun to calculate ___.',type:'fill'},
+    {id:'q10',num:'10',text:'An invention that could win the competition would lose no more than ___ every day.',type:'fill'},
+    {id:'q11',num:'11',text:'John and James Harrison\'s clock worked accurately without ___.',type:'fill'},
+    {id:'q12',num:'12',text:'Harrison\'s main competitor\'s invention was known as ___.',type:'fill'},
+    {id:'q13',num:'13',text:'Hadley\'s instrument can use ___ to make a calculation of location of ships or planes.',type:'fill'},
+    {id:'q14',num:'14',text:'The modern version of Harrison\'s invention is called ___.',type:'fill'},
+  ]},
+  {id:'p2s1',passage:1,type:'section',heading:'Questions 15–21',instruct:'Reading Passage 2 has seven paragraphs, A–G.\nChoose the correct heading for each paragraph from the list of headings below.\n\ni. The favourable feature in the impact of a drought\nii. A unique finding that was recently achieved\niii. Slow metabolism which makes crocodile a unique reptile\niv. The perfectly designed body for a great land roamer\nv. Shifting eating habits and food intake\nvi. A project on a special mechanism\nvii. Regulating body temperature by the surrounding environment\nviii. Underwater aid in body structure offered to a successful predator\nix. A historical story for the supreme survivors\nx. What makes the crocodile the fastest running animal on land\nxi. The competition between the crocodiles and other animals',items:[
+    {id:'q15',num:'15',text:'Paragraph A',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi']},
+    {id:'q16',num:'16',text:'Paragraph B',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi']},
+    {id:'q17',num:'17',text:'Paragraph C',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi']},
+    {id:'q18',num:'18',text:'Paragraph D',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi']},
+    {id:'q19',num:'19',text:'Paragraph E',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi']},
+    {id:'q20',num:'20',text:'Paragraph F',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi']},
+    {id:'q21',num:'21',text:'Paragraph G',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii','ix','x','xi']},
+  ]},
+  {id:'p2s2',passage:1,type:'section',heading:'Questions 22–27',instruct:'Complete the summary below.\nChoose NO MORE THAN TWO WORDS from the passage for each answer.\n\nAestivation\nIn many places inhabited by crocodilians, most types of crocodiles have evolved a successful scheme to survive in the drought brought by a (22) ___. According to Kennett and Christian\'s six-year study of Australian freshwater crocodiles\' aestivation, they found aestivating crocodiles spent around (23) ___ of the year and had no access to (24) ___. The amount of water in the body declined proportionately with (25) ___; thus there is no sign of (26) ___ and other health-damaging impact on the crocodiles even after an aestivation period. This super capacity helps crocodiles endure the tough drought without slowing their speed of (27) ___.',items:[
+    {id:'q22',num:'22',text:'Drought brought by a ___.',type:'fill'},
+    {id:'q23',num:'23',text:'Aestivating crocodiles spent around ___ of the year underground.',type:'fill'},
+    {id:'q24',num:'24',text:'They had no access to ___.',type:'fill'},
+    {id:'q25',num:'25',text:'The amount of water declined proportionately with ___.',type:'fill'},
+    {id:'q26',num:'26',text:'There is no sign of ___ after aestivation.',type:'fill'},
+    {id:'q27',num:'27',text:'Without slowing their speed of ___.',type:'fill'},
+  ]},
+  {id:'p3s1',passage:2,type:'section',heading:'Questions 28–33',instruct:'Reading Passage 3 has nine paragraphs, A–I.\nWhich paragraph contains the following information?\nWrite the correct letter, A–I.\nNB You may use any letter more than once.',items:[
+    {id:'q28',num:'28',text:'An approach to retain the best employees.',type:'match',options:['A','B','C','D','E','F','G','H','I']},
+    {id:'q29',num:'29',text:'Safeguarding expenses on innovative ideas.',type:'match',options:['A','B','C','D','E','F','G','H','I']},
+    {id:'q30',num:'30',text:'A certain counter-effect produced by integrating outside firms.',type:'match',options:['A','B','C','D','E','F','G','H','I']},
+    {id:'q31',num:'31',text:'An example of three famous American companies\' innovation.',type:'match',options:['A','B','C','D','E','F','G','H','I']},
+    {id:'q32',num:'32',text:'An example of one company changing its focus.',type:'match',options:['A','B','C','D','E','F','G','H','I']},
+    {id:'q33',num:'33',text:'An example of a company resolving financial difficulties itself.',type:'match',options:['A','B','C','D','E','F','G','H','I']},
+  ]},
+  {id:'p3s2',passage:2,type:'section',heading:'Questions 34–37',instruct:'Do the following statements agree with the information given in Reading Passage 3?\nA — TRUE   B — FALSE   C — NOT GIVEN',items:[
+    {id:'q34',num:'34',text:'Umagic is the most successful innovative company in this new field.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q35',num:'35',text:'Amazon and Wal-Mart exchanged their innovation experience.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q36',num:'36',text:'New ideas\' holders had already been known to take it to small companies in the past.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q37',num:'37',text:'IBM failed to understand Umagic\'s proposal of a new idea.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+  ]},
+  {id:'p3s3',passage:2,type:'section',heading:'Questions 38–40',instruct:'Choose the correct letter, A, B, C or D.',items:[
+    {id:'q38',num:'38',text:'What is the author\'s opinion on innovation in paragraph C?',type:'mcq',options:['A — It only works for big companies.','B — Fortune magazine has a globally huge influence.','C — It is becoming increasingly important.','D — Its effects on American companies are more evident.']},
+    {id:'q39',num:'39',text:'What is Peter Chernin\'s point of view on innovation?',type:'mcq',options:['A — Small companies are more innovative than big ones.','B — Film industry needs more innovation than other industries.','C — We need to cut the cost when risks occur.','D — New ideas are more likely going to big companies.']},
+    {id:'q40',num:'40',text:'What is the author\'s opinion on innovation at the end of this passage?',type:'mcq',options:['A — Umagic success lies on the accidental \'virtual expert\'.','B — Innovation is easy and straightforward.','C — IBM sets a good example on innovation.','D — The author\'s attitude is uncertain on innovation.']},
+  ]},
+];
+
+/* ═══ STATE ═══ */
+let currentPassage=0,timeLeft=3600,timerInterval=null,paused=false,userAnswers={},isReviewing=false,hlMode='y',qhlMode=false,touchPending=false;
+let passageFontSize=14.5,questionFontSize=12.5;
+const FS_MIN=10,FS_MAX=22,FS_STEP=1;
+
+function changeFontSize(delta){
+  passageFontSize=Math.min(FS_MAX,Math.max(FS_MIN,passageFontSize+delta));
+  questionFontSize=Math.min(FS_MAX,Math.max(FS_MIN,questionFontSize+delta));
+  document.documentElement.style.setProperty('--passage-fs',passageFontSize+'px');
+  document.documentElement.style.setProperty('--question-fs',questionFontSize+'px');
+}
+
+function toggleQHL(){
+  qhlMode=!qhlMode;
+  const btn=document.getElementById('qhl-toggle'),note=document.getElementById('hl-note-txt');
+  btn.classList.toggle('qmode-on',qhlMode);
+  note.textContent=qhlMode?'Questions':'Passage';
+}
+function suppressNativeSelectionUI(){
+  const blocked=['contextmenu','copy','cut','paste'];
+  const targets=[document.getElementById('passage-panel'),document.getElementById('questions-panel')];
+  targets.forEach(t=>{if(!t)return;blocked.forEach(evt=>t.addEventListener(evt,e=>e.preventDefault()));});
+}
+
+function init(){
+  renderPassage(0);renderQuestions(0);updateProgress();updateNavBtns();startTimer();
+  document.getElementById('passage-panel').addEventListener('mouseup',handleHighlight);
+  document.getElementById('questions-panel').addEventListener('mouseup',handleHighlight);
+  suppressNativeSelectionUI();
+  initResizer();initMobileHighlight();
+}
+function initResizer(){
+  const resizer=document.getElementById('resizer'),qPanel=document.getElementById('questions-panel'),main=document.getElementById('main');
+  let startX,startW;
+  resizer.addEventListener('mousedown',e=>{
+    startX=e.clientX;startW=qPanel.offsetWidth;resizer.classList.add('dragging');
+    document.body.style.cursor='col-resize';document.body.style.userSelect='none';
+    function onMove(e){const delta=startX-e.clientX;const newW=Math.min(Math.max(startW+delta,260),main.offsetWidth-300);qPanel.style.width=newW+'px';}
+    function onUp(){resizer.classList.remove('dragging');document.body.style.cursor='';document.body.style.userSelect='';document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);}
+    document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
+  });
+  resizer.addEventListener('touchstart',e=>{
+    const touch=e.touches[0];startX=touch.clientX;startW=qPanel.offsetWidth;resizer.classList.add('dragging');document.body.style.userSelect='none';
+    function onMove(e){e.preventDefault();const t=e.touches[0];const delta=startX-t.clientX;const newW=Math.min(Math.max(startW+delta,260),main.offsetWidth-300);qPanel.style.width=newW+'px';}
+    function onUp(){resizer.classList.remove('dragging');document.body.style.userSelect='';document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onUp);}
+    document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('touchend',onUp);
+    e.preventDefault();
+  },{passive:false});
+}
+function startTimer(){timerInterval=setInterval(()=>{if(paused)return;timeLeft--;renderTimer();if(timeLeft<=0){clearInterval(timerInterval);submitTest();}},1000);}
+function renderTimer(){const el=document.getElementById('timer-display'),m=Math.floor(timeLeft/60),s=timeLeft%60;el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');el.className=timeLeft<=300?'danger':timeLeft<=600?'warn':'';}
+function togglePause(){paused=!paused;document.getElementById('pause-btn').textContent=paused?'Resume':'Pause';document.getElementById('pause-overlay').className=paused?'show':'';}
+function renderPassage(idx){const p=PASSAGES[idx];document.getElementById('passage-panel').innerHTML=`<div class="passage-header"><div class="passage-tag">${p.tag}</div><div class="passage-title">${p.title}</div><div class="passage-instruct">${p.instruct}</div></div><div class="passage-body" id="passage-body">${p.body}</div>`;}
+function renderQuestions(pIdx){
+  const sections=QUESTIONS.filter(s=>s.passage===pIdx);let html='';
+  sections.forEach(sec=>{
+    html+=`<div class="q-section"><div class="q-section-hd">${sec.heading}</div><div class="q-section-instruct">${sec.instruct.replace(/\n/g,'<br>')}</div>`;
+    sec.items.forEach(q=>{
+      html+=`<div class="q-item" id="item-${q.id}"><div class="q-num">Question ${q.num}</div><div class="q-text">${q.text}</div>`;
+      if(q.type==='mcq'){html+=`<div class="q-opts">`;q.options.forEach(opt=>{const letter=opt[0],checked=userAnswers[q.id]===letter;html+=`<label class="q-opt${checked?' selected':''}" id="opt-${q.id}-${letter}"><input type="radio" name="${q.id}" value="${letter}" onchange="saveAnswer('${q.id}','${letter}')" ${checked?'checked':''}>${opt}</label>`;});html+=`</div>`;}
+      else if(q.type==='match'){html+=`<div class="q-match-row"><select class="q-match-sel" id="sel-${q.id}" onchange="saveAnswer('${q.id}',this.value)"><option value="">—</option>`;q.options.forEach(o=>{html+=`<option value="${o}" ${userAnswers[q.id]===o?'selected':''}>${o}</option>`;});html+=`</select></div>`;}
+      else if(q.type==='fill'){html+=`<input class="q-fill" type="text" id="fill-${q.id}" value="${userAnswers[q.id]||''}" placeholder="Type your answer…" oninput="saveAnswer('${q.id}',this.value)">`;}
+      html+=`<div class="q-answer-reveal" id="reveal-${q.id}"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  document.getElementById('q-panel').innerHTML=html;
+}
+function saveAnswer(qid,val){userAnswers[qid]=val;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(l=>{l.className=`q-opt${l.id===`opt-${qid}-${val}`?' selected':''}`});updateProgress();}
+function updateProgress(){
+  const total=40,answered=Object.values(userAnswers).filter(v=>v&&v.trim()!=='').length;
+  document.getElementById('answered-info').textContent=`${answered} / ${total} answered`;
+  document.getElementById('prog-fill').style.width=(answered/total*100)+'%';
+  [0,1,2].forEach(pi=>{const qs=QUESTIONS.filter(s=>s.passage===pi).flatMap(s=>s.items),done=qs.filter(q=>userAnswers[q.id]&&userAnswers[q.id].trim()!=='').length;document.getElementById(`badge${pi}`).textContent=`${done}/${qs.length}`;});
+}
+function goToPassage(idx){
+  if(idx<0||idx>2)return;currentPassage=idx;
+  [0,1,2].forEach(i=>document.getElementById(`tab${i}`).className=`ptab${i===idx?' active':''}`);
+  renderPassage(idx);renderQuestions(idx);
+  if(isReviewing){showReview();highlightPassageRefs(idx);}
+  updateNavBtns();document.getElementById('passage-panel').scrollTop=0;document.getElementById('questions-panel').scrollTop=0;
+}
+function highlightPassageRefs(pIdx){
+  const body=document.getElementById('passage-body');if(!body)return;
+  const qs=QUESTIONS.filter(s=>s.passage===pIdx).flatMap(s=>s.items);let html=body.innerHTML;
+  qs.forEach(q=>{const ref=PASSAGE_REFS[q.id];if(!ref)return;const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans,cls=isBlank?'ref-blank':isCorrect?'ref-correct':'ref-wrong',rbCls=isBlank?'rb-blank':isCorrect?'rb-correct':'rb-wrong',escaped=ref.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),re=new RegExp(escaped);if(re.test(html))html=html.replace(re,`<span class="passage-ref ${cls}"><span class="ref-badge ${rbCls}">${q.num}</span>${ref}</span>`);});
+  body.innerHTML=html;
+}
+function updateNavBtns(){
+  document.getElementById('btn-prev').disabled=currentPassage===0;document.getElementById('btn-prev').style.opacity=currentPassage===0?'0.4':'1';
+  const nxt=document.getElementById('btn-next');
+  if(currentPassage===2){nxt.textContent='Submit Test';nxt.onclick=submitTest;}else{nxt.textContent='Next Passage →';nxt.onclick=()=>goToPassage(currentPassage+1);}
+}
+function setHL(mode){
+  hlMode=mode;
+  ['y','g','p','b'].forEach(m=>{const btn=document.getElementById('hl'+m);if(btn)btn.classList.toggle('active',m===mode)});
+  if(mode!=='e') qhlMode=false;
+  document.getElementById('qhl-toggle').classList.remove('qmode-on');
+  document.getElementById('hl-note-txt').textContent='Passage';
+}
+function handleHighlight(e){
+  if(touchPending)return;
+  const sel=window.getSelection();if(!sel||sel.isCollapsed)return;
+  const range=sel.getRangeAt(0);
+  const passageBody=document.getElementById('passage-body');
+  const qPanel=document.getElementById('q-panel');
+  const inPassage=passageBody&&passageBody.contains(range.commonAncestorContainer);
+  const inQuestions=qPanel&&qPanel.contains(range.commonAncestorContainer);
+  if(qhlMode&&inQuestions){applyHighlight(range,qPanel);}
+  else if(!qhlMode&&inPassage){applyHighlight(range,passageBody);}
+}
+function applyHighlight(range,container){
+  if(hlMode==='e'){
+    const sel=window.getSelection();
+    container.querySelectorAll('mark').forEach(m=>{if(sel.containsNode(m,true)){const parent=m.parentNode;while(m.firstChild)parent.insertBefore(m.firstChild,m);parent.removeChild(m);}});
+    container.normalize();
+  } else {
+    const mark=document.createElement('mark');mark.className='h'+hlMode;
+    try{range.surroundContents(mark);}catch(e){const frag=range.extractContents();mark.appendChild(frag);range.insertNode(mark);}
+  }
+  window.getSelection()?.removeAllRanges();
+}
+function submitTest(){
+  clearInterval(timerInterval);let correct=0,wrong=0,blank=0;
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{const ans=(userAnswers[q.id]||'').trim();if(!ans){blank++;return;}checkAnswer(ans,ANSWER_KEY[q.id])?correct++:wrong++;});
+  document.getElementById('r-band').textContent=calcBand(correct);document.getElementById('r-correct').textContent=correct;document.getElementById('r-wrong').textContent=wrong;document.getElementById('r-blank').textContent=blank;document.getElementById('result-overlay').className='show';
+}
+function checkAnswer(given,key){
+  const g=given.toLowerCase().trim(),k=key.toLowerCase().trim();
+  if(g===k)return true;
+  if(k==='local time')return g.includes('local time');
+  if(k==='2.8 seconds')return g.replace(/\s/g,'').includes('2.8');
+  if(k==='lubrication')return g.includes('lubric');
+  if(k==='sextant')return g.includes('sextant');
+  if(k==='angles')return g==='angles'||g==='angle';
+  if(k==='marine chronometer')return g.includes('chronometer');
+  if(k==='hot season')return g.includes('hot season')||g.includes('dry season');
+  if(k==='four months')return g.includes('four months')||g.includes('4 months');
+  if(k==='water resources')return g.includes('water resource');
+  if(k==='body weight')return g.includes('body weight');
+  if(k==='dehydration')return g.includes('dehydr');
+  if(k==='growth')return g==='growth';
+  return false;
+}
+function calcBand(c){if(c>=39)return'9.0';if(c>=37)return'8.5';if(c>=35)return'8.0';if(c>=33)return'7.5';if(c>=30)return'7.0';if(c>=27)return'6.5';if(c>=23)return'6.0';if(c>=19)return'5.5';if(c>=15)return'5.0';if(c>=13)return'4.5';return'4.0';}
+function reviewAnswers(){document.getElementById('result-overlay').className='';isReviewing=true;goToPassage(0);showReview();}
+function showReview(){
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{
+    const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],reveal=document.getElementById(`reveal-${q.id}`),item=document.getElementById(`item-${q.id}`);
+    if(!reveal)return;const isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans;
+    if(item){item.classList.remove('review-correct','review-wrong','review-blank');item.classList.add(isBlank?'review-blank':isCorrect?'review-correct':'review-wrong');}
+    reveal.className=`q-answer-reveal show ${isCorrect?'correct-msg':'wrong-msg'}`;
+    reveal.innerHTML=isBlank?`<strong>Correct answer:</strong> ${key}`:isCorrect?`✓ Correct!`:`✗ Your answer: <strong>${ans}</strong> — Correct: <strong>${key}</strong>`;
+    if(q.type==='fill'){const inp=document.getElementById(`fill-${q.id}`);if(inp)inp.className=`q-fill ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='match'){const sel=document.getElementById(`sel-${q.id}`);if(sel)sel.className=`q-match-sel ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='mcq'){document.querySelectorAll(`[id^="opt-${q.id}-"]`).forEach(l=>{const letter=l.id.split('-').pop();if(letter===key)l.className='q-opt correct-ans';else if(letter===ans&&!isCorrect)l.className='q-opt wrong-ans';});}
+  });
+}
+function restartTest(){userAnswers={};isReviewing=false;timeLeft=3600;paused=false;document.getElementById('result-overlay').className='';clearInterval(timerInterval);goToPassage(0);renderTimer();updateProgress();startTimer();}
+function openNav(){document.getElementById('nav-overlay').className='show';}
+function closeNav(e){if(e.target===document.getElementById('nav-overlay'))document.getElementById('nav-overlay').className='';}
+
+/* ═══ MOBILE / TOUCH HIGHLIGHT ═══ */
+let mobileSelRange=null,ignoreSelChange=false,selTimer=null;
+function positionMobileBar(rect){
+  const bar=document.getElementById('mobile-hl-bar'),bW=268,bH=50,mg=10;
+  let cx=rect.left+rect.width/2,topY=rect.top-bH-14,botY=rect.bottom+14;
+  let left=Math.min(Math.max(cx-bW/2,mg),window.innerWidth-bW-mg);
+  let arr=Math.min(Math.max(cx-left,20),bW-20);
+  bar.style.setProperty('--arr',arr+'px');bar.style.left=left+'px';
+  if(topY>=mg){bar.style.top=topY+'px';bar.classList.remove('arr-up');bar.classList.add('arr-down');}
+  else{bar.style.top=botY+'px';bar.classList.remove('arr-down');bar.classList.add('arr-up');}
+}
+function showMobileHlBar(range){
+  clearTimeout(selTimer);selTimer=null;
+  mobileSelRange=range.cloneRange();
+  const rect=range.getBoundingClientRect();
+  ignoreSelChange=true;
+  window.getSelection()?.removeAllRanges();
+  setTimeout(()=>{ignoreSelChange=false;},300);
+  positionMobileBar(rect);
+  document.getElementById('mobile-hl-bar').classList.add('show');
+}
+function hideMobileHlBar(){document.getElementById('mobile-hl-bar').classList.remove('show');mobileSelRange=null;}
+function applyMobileHL(color){
+  if(!mobileSelRange){hideMobileHlBar();return;}
+  const pb=document.getElementById('passage-body'),qp=document.getElementById('q-panel');
+  const inP=pb&&pb.contains(mobileSelRange.commonAncestorContainer);
+  const inQ=qp&&qp.contains(mobileSelRange.commonAncestorContainer);
+  const cont=inP?pb:inQ?qp:null;if(!cont){hideMobileHlBar();return;}
+  ignoreSelChange=true;
+  const sel=window.getSelection();sel.removeAllRanges();sel.addRange(mobileSelRange);
+  const prev=hlMode;hlMode=color;applyHighlight(mobileSelRange,cont);hlMode=prev;
+  setTimeout(()=>{ignoreSelChange=false;},300);
+  hideMobileHlBar();
+}
+function initMobileHighlight(){
+  const bar=document.getElementById('mobile-hl-bar');
+  bar.addEventListener('mousedown',e=>e.preventDefault());
+  document.getElementById('mhl-y').addEventListener('click',()=>applyMobileHL('y'));
+  document.getElementById('mhl-g').addEventListener('click',()=>applyMobileHL('g'));
+  document.getElementById('mhl-p').addEventListener('click',()=>applyMobileHL('p'));
+  document.getElementById('mhl-b').addEventListener('click',()=>applyMobileHL('b'));
+  document.getElementById('mhl-e').addEventListener('click',()=>applyMobileHL('e'));
+  document.getElementById('mhl-close').addEventListener('click',()=>hideMobileHlBar());
+  if(!('ontouchstart' in window)&&navigator.maxTouchPoints===0)return;
+  document.addEventListener('selectionchange',()=>{
+    if(ignoreSelChange)return;
+    clearTimeout(selTimer);
+    selTimer=setTimeout(()=>{
+      const sel=window.getSelection();
+      if(!sel||sel.isCollapsed||sel.rangeCount===0){hideMobileHlBar();return;}
+      const r=sel.getRangeAt(0);
+      const pb=document.getElementById('passage-body'),qp=document.getElementById('q-panel');
+      const inP=pb&&pb.contains(r.commonAncestorContainer);
+      const inQ=qp&&qp.contains(r.commonAncestorContainer);
+      if(inP||inQ)showMobileHlBar(r);else hideMobileHlBar();
+    },350);
+  });
+  document.addEventListener('touchend',e=>{
+    if(bar.contains(e.target))return;
+    touchPending=true;setTimeout(()=>{touchPending=false;},300);
+    if(bar.classList.contains('show'))hideMobileHlBar();
+  },{passive:true});
+}
+init();
+</script>
+</body>
+</html>
