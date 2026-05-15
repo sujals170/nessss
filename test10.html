@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IELTS Academic Reading — Recent Actual Test 6, Test 1 (Test 10)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f2eb;--surface:#ffffff;--surface2:#f9f7f2;--surface3:#f0ede4;
+  --accent:#1a5c3e;--accent-light:#e8f5ee;--accent2:#2a7a54;
+  --text:#1c1c1c;--muted:#6b6b6b;--muted2:#999;
+  --border:#ddd8cc;--border2:#e8e4da;
+  --hl-y:rgba(255,220,0,0.5);--hl-g:rgba(80,200,120,0.45);
+  --hl-p:rgba(255,100,160,0.45);--hl-b:rgba(60,150,255,0.45);
+  --shadow:0 2px 12px rgba(0,0,0,0.08);
+  --passage-fs:14.5px;--question-fs:12.5px;
+}
+html{height:100%;overflow:hidden}
+body{height:100%;overflow:hidden;display:flex;flex-direction:column;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+#topbar{height:52px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;position:relative;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+#topbar-left{display:flex;align-items:center;gap:10px}
+#topbar-title{font-size:14px;font-weight:600}
+#topbar-right{display:flex;align-items:center;gap:8px}
+#timer-display{font-size:20px;font-weight:700;font-family:'Courier New',monospace;letter-spacing:3px;min-width:70px;text-align:center}
+#timer-display.warn{color:#ffd080}
+#timer-display.danger{color:#ff8888;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.5}}
+.topbar-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s}
+.topbar-btn:hover{background:rgba(255,255,255,0.28)}
+.topbar-btn.submit{background:#fff;color:var(--accent);border-color:#fff}
+.topbar-btn.submit:hover{background:#e8f5ee}
+.fs-btn{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;width:28px;height:28px;border-radius:5px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;transition:background 0.2s;line-height:1}
+.fs-btn:hover{background:rgba(255,255,255,0.32)}
+.fs-group{display:flex;align-items:center;gap:3px;border:1px solid rgba(255,255,255,0.25);border-radius:6px;padding:2px 5px;gap:4px}
+.fs-label{font-size:10px;opacity:0.7;letter-spacing:0.5px;font-weight:600}
+#prog-bar{height:4px;background:rgba(255,255,255,0.2);flex-shrink:0}
+#prog-fill{height:100%;background:#6ee7b7;transition:width 0.4s ease}
+#passage-tabs{background:var(--surface);border-bottom:2px solid var(--border);display:flex;flex-shrink:0;overflow-x:auto}
+.ptab{padding:11px 18px;font-size:12px;font-weight:600;border:none;background:transparent;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all 0.18s;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:7px}
+.ptab:hover{color:var(--accent);background:var(--accent-light)}
+.ptab.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-light)}
+.ptab-badge{font-size:10px;background:var(--border);color:var(--muted);padding:2px 7px;border-radius:10px;font-weight:700}
+.ptab.active .ptab-badge{background:var(--accent);color:#fff}
+#main{display:flex;flex:1;overflow:hidden;min-height:0}
+#passage-panel{flex:1;overflow-y:auto;padding:28px 36px;background:var(--surface);border-right:1px solid var(--border);min-width:0}
+#passage-panel::-webkit-scrollbar{width:6px}
+#passage-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.passage-header{margin-bottom:22px}
+.passage-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:3px 10px;border-radius:4px;margin-bottom:10px}
+.passage-title{font-size:22px;font-weight:700;font-family:'Merriweather',serif;color:var(--text);margin-bottom:6px}
+.passage-instruct{font-size:12px;color:var(--muted);font-style:italic;padding:8px 12px;background:var(--surface3);border-radius:6px;border-left:3px solid var(--accent)}
+.passage-body p{font-family:'Merriweather',serif;font-size:var(--passage-fs);line-height:1.9;margin-bottom:16px;text-align:justify;color:#222}
+.passage-body .section-letter{font-size:12px;font-weight:700;color:var(--accent);font-family:'Inter',sans-serif;border:2px solid var(--accent);border-radius:4px;padding:1px 7px;display:inline-block;margin-right:8px;vertical-align:middle}
+.passage-ref{border-radius:3px;padding:1px 3px;display:inline}
+.passage-ref.ref-correct{background:rgba(26,92,62,0.13);border-bottom:2px solid #1a5c3e}
+.passage-ref.ref-wrong{background:rgba(192,57,43,0.12);border-bottom:2px solid #c0392b}
+.passage-ref.ref-blank{background:rgba(224,160,32,0.13);border-bottom:2px solid #e0a020}
+.ref-badge{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;font-size:9px;font-weight:700;font-family:'Inter',sans-serif;color:#fff;vertical-align:middle;margin-right:2px;flex-shrink:0;line-height:1}
+.ref-badge.rb-correct{background:#1a5c3e}
+.ref-badge.rb-wrong{background:#c0392b}
+.ref-badge.rb-blank{background:#e0a020}
+mark.hy{background:var(--hl-y);border-radius:2px;padding:0 1px}
+mark.hg{background:var(--hl-g);border-radius:2px;padding:0 1px}
+mark.hp{background:var(--hl-p);border-radius:2px;padding:0 1px}
+mark.hb{background:var(--hl-b);border-radius:2px;padding:0 1px}
+#resizer{width:6px;background:var(--border);cursor:col-resize;flex-shrink:0;transition:background 0.2s;position:relative}
+#resizer:hover,#resizer.dragging{background:var(--accent)}
+#resizer::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:2px;height:32px;background:var(--muted2);border-radius:2px}
+#questions-panel{width:400px;overflow-y:auto;background:var(--surface2);padding:16px;flex-shrink:0;min-width:260px}
+#questions-panel::-webkit-scrollbar{width:5px}
+#questions-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-bar{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 12px;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;box-shadow:var(--shadow)}
+.hl-label{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted)}
+.hl-dot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:transform 0.15s,border-color 0.15s;flex-shrink:0}
+.hl-dot:hover{transform:scale(1.2)}
+.hl-dot.active{border-color:#333;transform:scale(1.15)}
+.hl-dot.dy{background:#ffd800}
+.hl-dot.dg{background:#50c878}
+.hl-dot.dp{background:#ff64a0}
+.hl-dot.db{background:#3c96ff}
+.hl-sep{width:1px;height:20px;background:var(--border)}
+.hl-erase{font-size:11px;font-family:'Inter',sans-serif;color:var(--muted);background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:4px 9px;cursor:pointer;font-weight:600}
+.hl-erase:hover{background:var(--border)}
+.hl-note{font-size:10px;color:var(--muted2);font-style:italic}
+.hl-mode-btn{font-size:11px;font-family:'Inter',sans-serif;background:var(--surface3);border:1px solid var(--border);border-radius:4px;padding:4px 9px;cursor:pointer;font-weight:600;color:var(--muted);transition:all 0.15s}
+.hl-mode-btn.qmode-on{background:var(--accent-light);border-color:var(--accent);color:var(--accent)}
+.q-section{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:15px;margin-bottom:12px;box-shadow:var(--shadow)}
+.q-section-hd{font-size:10px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+.q-section-instruct{font-size:11.5px;color:var(--muted);font-style:italic;line-height:1.5;margin-bottom:12px;padding:7px 10px;background:var(--surface3);border-radius:5px}
+.q-item{border-bottom:1px solid var(--border2);padding-bottom:10px;margin-bottom:10px;border-radius:6px;padding:8px;transition:background 0.2s,border-left 0.2s;user-select:text}
+.q-item.review-correct{background:#edfaf3;border-left:4px solid #1a5c3e}
+.q-item.review-wrong{background:#fdf0f0;border-left:4px solid #c0392b}
+.q-item.review-blank{background:#fdf6e8;border-left:4px solid #e0a020}
+.q-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.q-num{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px}
+.q-text{font-size:var(--question-fs);color:var(--text);line-height:1.5;margin-bottom:7px}
+.q-opts{display:flex;flex-direction:column;gap:4px}
+.q-opt{display:flex;align-items:flex-start;gap:7px;font-size:var(--question-fs);padding:5px 7px;border-radius:5px;cursor:pointer;transition:background 0.15s;line-height:1.45;border:1px solid transparent}
+.q-opt:hover{background:var(--accent-light);border-color:var(--border)}
+.q-opt input[type=radio]{accent-color:var(--accent);margin-top:2px;flex-shrink:0}
+.q-opt.selected{background:var(--accent-light);border-color:var(--accent)}
+.q-opt.correct-ans{background:#d4f4e8;border-color:#1a5c3e}
+.q-opt.wrong-ans{background:#fde8e8;border-color:#c0392b}
+.q-fill{width:100%;border:none;border-bottom:2px solid var(--border);background:transparent;font-size:var(--question-fs);font-family:'Inter',sans-serif;padding:4px 2px;outline:none;color:var(--text);transition:border-color 0.2s}
+.q-fill:focus{border-bottom-color:var(--accent)}
+.q-fill.correct{border-bottom-color:#1a5c3e;background:rgba(80,200,130,0.1)}
+.q-fill.wrong{border-bottom-color:#c0392b;background:rgba(200,60,60,0.08)}
+.q-match-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;font-size:var(--question-fs)}
+.q-match-sel{border:1px solid var(--border);border-radius:5px;padding:4px 7px;font-size:11.5px;font-family:'Inter',sans-serif;background:var(--surface);color:var(--text);outline:none;cursor:pointer;min-width:60px}
+.q-match-sel:focus{border-color:var(--accent)}
+.q-match-sel.correct{border-color:#1a5c3e;background:#d4f4e8}
+.q-match-sel.wrong{border-color:#c0392b;background:#fde8e8}
+#bottom-bar{height:48px;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0}
+#answered-info{font-size:12px;color:var(--muted);font-weight:500}
+.nav-btns{display:flex;gap:8px}
+.nav-btn{padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.18s;border:1px solid var(--border);background:var(--surface2);color:var(--text)}
+.nav-btn:hover{background:var(--border)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-btn.primary:hover{background:var(--accent2)}
+#result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999;align-items:center;justify-content:center}
+#result-overlay.show{display:flex}
+#result-box{background:var(--surface);border-radius:16px;padding:40px 36px;max-width:460px;width:92%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25)}
+.result-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:4px 12px;border-radius:20px;margin-bottom:14px}
+.result-title{font-size:22px;font-weight:700;margin-bottom:4px;font-family:'Merriweather',serif}
+.result-subtitle{font-size:13px;color:var(--muted);margin-bottom:18px}
+.band-score{font-size:64px;font-weight:700;color:var(--accent);line-height:1;margin:10px 0 6px;font-family:'Merriweather',serif}
+.band-label{font-size:12px;color:var(--muted);margin-bottom:20px}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.score-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 8px}
+.score-card .sc-label{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:4px}
+.score-card .sc-val{font-size:22px;font-weight:700;color:var(--text)}
+.result-btns{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.result-btn{padding:11px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;border:1px solid var(--border);background:var(--surface2);color:var(--text);transition:all 0.18s}
+.result-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.result-btn:hover{opacity:0.88}
+#pause-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:500;align-items:center;justify-content:center}
+#pause-overlay.show{display:flex}
+#pause-box{background:var(--surface);border-radius:16px;padding:48px 40px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+#pause-box h2{font-size:28px;font-family:'Merriweather',serif;margin-bottom:8px}
+#pause-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
+.q-answer-reveal{font-size:11.5px;padding:6px 10px;border-radius:5px;margin-top:6px;display:none}
+.q-answer-reveal.show{display:block}
+.q-answer-reveal.correct-msg{background:#d4f4e8;color:#1a5c3e;border-left:3px solid #1a5c3e}
+.q-answer-reveal.wrong-msg{background:#fde8e8;color:#922b2b;border-left:3px solid #c0392b}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+#hl-tip{position:fixed;background:#1c1c1c;color:#fff;font-size:11px;padding:4px 10px;border-radius:4px;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:300;font-family:'Inter',sans-serif}
+#nav-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.52);z-index:998}
+#nav-overlay.show{display:flex}
+#nav-panel{background:var(--surface);width:290px;height:100%;overflow-y:auto;display:flex;flex-direction:column;box-shadow:4px 0 24px rgba(0,0,0,0.18)}
+#nav-hd{background:var(--accent);color:#fff;padding:18px 20px}
+#nav-hd h3{font-size:15px;font-weight:700;margin-bottom:2px}
+#nav-hd p{font-size:11px;opacity:0.72}
+.nav-home-lnk{display:flex;align-items:center;gap:8px;padding:11px 20px;border-bottom:1px solid var(--border);text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;transition:background 0.15s}
+.nav-home-lnk:hover{background:var(--accent-light);color:var(--accent)}
+.ntc{display:block;padding:13px 20px;border-bottom:1px solid var(--border2);text-decoration:none;color:var(--text);transition:background 0.15s;border-left:3px solid transparent}
+.ntc:hover{background:var(--accent-light)}
+.ntc.cur{background:var(--accent-light);border-left-color:var(--accent)}
+.ntc-num{font-size:10px;font-weight:700;color:var(--accent);letter-spacing:0.8px;text-transform:uppercase;margin-bottom:2px}
+.ntc-name{font-size:13px;font-weight:600;margin-bottom:3px}
+.ntc-pass{font-size:11px;color:var(--muted);line-height:1.5}
+.ntc-badge{display:inline-block;font-size:10px;background:var(--accent-light);color:var(--accent);padding:2px 8px;border-radius:10px;margin-top:5px;font-weight:600}
+#passage-panel,#questions-panel{-webkit-touch-callout:none}
+#mobile-hl-bar{display:none;position:fixed;background:#1c1c1c;border-radius:12px;padding:9px 13px;gap:9px;align-items:center;z-index:9999;box-shadow:0 6px 28px rgba(0,0,0,0.45);pointer-events:auto;white-space:nowrap}
+#mobile-hl-bar.show{display:flex}
+#mobile-hl-bar.arr-down::after{content:'';position:absolute;top:100%;left:var(--arr,50%);transform:translateX(-50%);border:7px solid transparent;border-top-color:#1c1c1c}
+#mobile-hl-bar.arr-up::before{content:'';position:absolute;bottom:100%;left:var(--arr,50%);transform:translateX(-50%);border:7px solid transparent;border-bottom-color:#1c1c1c}
+.mhl-dot{width:30px;height:30px;border-radius:50%;border:2.5px solid rgba(255,255,255,0.2);cursor:pointer;flex-shrink:0;transition:transform 0.12s}
+.mhl-dot:active{transform:scale(0.88)}
+.mdy{background:#ffd800}.mdg{background:#50c878}.mdp{background:#ff64a0}.mdb{background:#3c96ff}
+.mhl-sep{width:1px;height:22px;background:rgba(255,255,255,0.18);flex-shrink:0}
+.mhl-erase{font-size:11px;color:#fff;background:rgba(255,255,255,0.14);border:1px solid rgba(255,255,255,0.22);border-radius:5px;padding:5px 9px;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600}
+.mhl-close{font-size:17px;color:rgba(255,255,255,0.4);background:none;border:none;cursor:pointer;padding:2px 3px;line-height:1;font-family:'Inter',sans-serif}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div id="topbar-left">
+    <span style="opacity:0.3;font-size:16px">|</span>
+    <span id="topbar-title">IELTS Academic — Test 10</span>
+    <button class="topbar-btn" onclick="openNav()">☰ Tests</button>
+  </div>
+  <div id="topbar-right">
+    <div class="fs-group">
+      <span class="fs-label">A</span>
+      <button class="fs-btn" onclick="changeFontSize(-1)" title="Decrease font size">−</button>
+      <button class="fs-btn" onclick="changeFontSize(1)" title="Increase font size">+</button>
+    </div>
+    <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" style="opacity:0.7"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span id="timer-display">60:00</span>
+    <button class="topbar-btn" id="pause-btn" onclick="togglePause()">Pause</button>
+    <button class="topbar-btn submit" onclick="submitTest()">Submit Test</button>
+  </div>
+</div>
+<div id="prog-bar"><div id="prog-fill" style="width:0%"></div></div>
+
+<div id="passage-tabs">
+  <button class="ptab active" onclick="goToPassage(0)" id="tab0">
+    Passage 1 — Concept of Childhood
+    <span class="ptab-badge" id="badge0">0/13</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(1)" id="tab1">
+    Passage 2 — Bestcom Computing
+    <span class="ptab-badge" id="badge1">0/13</span>
+  </button>
+  <button class="ptab" onclick="goToPassage(2)" id="tab2">
+    Passage 3 — Hurricanes
+    <span class="ptab-badge" id="badge2">0/14</span>
+  </button>
+</div>
+
+<div style="display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0" id="layout">
+<div id="main">
+  <div id="passage-panel"></div>
+  <div id="resizer"></div>
+  <div id="questions-panel">
+    <div id="hl-bar">
+      <span class="hl-label">Highlight</span>
+      <button class="hl-dot dy active" id="hly" onclick="setHL('y')" title="Yellow"></button>
+      <button class="hl-dot dg" id="hlg" onclick="setHL('g')" title="Green"></button>
+      <button class="hl-dot dp" id="hlp" onclick="setHL('p')" title="Pink"></button>
+      <button class="hl-dot db" id="hlb" onclick="setHL('b')" title="Blue"></button>
+      <div class="hl-sep"></div>
+      <button class="hl-erase" onclick="setHL('e')">✕ Erase</button>
+      <div class="hl-sep"></div>
+      <button class="hl-mode-btn" id="qhl-toggle" onclick="toggleQHL()" title="Toggle question highlighting">Q Highlight</button>
+      <span class="hl-note" id="hl-note-txt">Passage</span>
+    </div>
+    <div id="q-panel"></div>
+  </div>
+</div>
+<div id="bottom-bar">
+  <span id="answered-info">0 / 40 answered</span>
+  <div class="nav-btns">
+    <button class="nav-btn" onclick="goToPassage(currentPassage-1)" id="btn-prev">← Previous</button>
+    <button class="nav-btn primary" onclick="goToPassage(currentPassage+1)" id="btn-next">Next Passage →</button>
+  </div>
+</div>
+</div>
+
+<div id="pause-overlay">
+  <div id="pause-box">
+    <h2>Test Paused</h2>
+    <p>Your progress is saved. Click resume to continue.</p>
+    <button class="nav-btn primary" style="padding:12px 32px;font-size:14px" onclick="togglePause()">▶ Resume</button>
+  </div>
+</div>
+
+<div id="result-overlay">
+  <div id="result-box">
+    <div class="result-tag">Test Complete</div>
+    <div class="result-title">IELTS Academic Reading</div>
+    <div class="result-subtitle">Recent Actual Test 6, Test 1 — Your Results</div>
+    <div class="band-score" id="r-band">—</div>
+    <div class="band-label">Estimated Band Score</div>
+    <div class="score-grid">
+      <div class="score-card"><div class="sc-label">Correct</div><div class="sc-val" id="r-correct" style="color:#1a5c3e">—</div></div>
+      <div class="score-card"><div class="sc-label">Incorrect</div><div class="sc-val" id="r-wrong" style="color:#c0392b">—</div></div>
+      <div class="score-card"><div class="sc-label">Unanswered</div><div class="sc-val" id="r-blank" style="color:#999">—</div></div>
+    </div>
+    <div class="result-btns">
+      <button class="result-btn primary" onclick="reviewAnswers()">Review All Answers</button>
+      <button class="result-btn" onclick="location.href='index.html'">← All Tests</button>
+      <button class="result-btn" onclick="restartTest()">Restart Test</button>
+    </div>
+  </div>
+</div>
+
+<div id="nav-overlay" onclick="closeNav(event)">
+  <div id="nav-panel">
+    <div id="nav-hd"><h3>IELTS Practice Tests</h3><p>Academic Reading</p></div>
+    <a href="index.html" class="nav-home-lnk">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home — All Tests
+    </a>
+    <a href="test5.html" class="ntc">
+      <div class="ntc-num">Test 5</div>
+      <div class="ntc-name">Recent Actual Test 6</div>
+      <div class="ntc-pass">The Pearl · History of Automobile · Elephant Communication</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test6.html" class="ntc">
+      <div class="ntc-num">Test 6</div>
+      <div class="ntc-name">Academic Reading Test 6</div>
+      <div class="ntc-pass">History of Refrigeration · Ancient People in Sahara · Texting the Television</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test7.html" class="ntc">
+      <div class="ntc-num">Test 7</div>
+      <div class="ntc-name">Recent Actual Test 6 — Test 4</div>
+      <div class="ntc-pass">Education Philosophy · How Deserts Are Formed · The Olympic Torch</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test8.html" class="ntc">
+      <div class="ntc-num">Test 8</div>
+      <div class="ntc-name">Recent Actual Test 6 — Test 3</div>
+      <div class="ntc-pass">Marine Chronometer · Crocodile Survives · Company Innovation</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test9.html" class="ntc">
+      <div class="ntc-num">Test 9</div>
+      <div class="ntc-name">Recent Actual Test 6 — Test 2</div>
+      <div class="ntc-pass">Grocery Stores · Chimpanzee Culture · Quantitative Research</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test10.html" class="ntc cur">
+      <div class="ntc-num">Test 10</div>
+      <div class="ntc-name">Recent Actual Test 6 — Test 1</div>
+      <div class="ntc-pass">Concept of Childhood · Bestcom Computing · Hurricanes</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+    <a href="test11.html" class="ntc">
+      <div class="ntc-num">Test 11</div>
+      <div class="ntc-name">Recent Actual Test 5 — Test 6</div>
+      <div class="ntc-pass">The Paradox of Choice · False Belief · What is Meaning?</div>
+      <span class="ntc-badge">60 min · 40 Q</span>
+    </a>
+  </div>
+</div>
+
+<div id="mobile-hl-bar">
+  <button class="mhl-dot mdy" id="mhl-y" title="Yellow"></button>
+  <button class="mhl-dot mdg" id="mhl-g" title="Green"></button>
+  <button class="mhl-dot mdp" id="mhl-p" title="Pink"></button>
+  <button class="mhl-dot mdb" id="mhl-b" title="Blue"></button>
+  <div class="mhl-sep"></div>
+  <button class="mhl-erase" id="mhl-e">✕ Erase</button>
+  <div class="mhl-sep"></div>
+  <button class="mhl-close" id="mhl-close">✕</button>
+</div>
+<div id="hl-tip"></div>
+
+<script>
+const ANSWER_KEY = {
+  q1:'b', q2:'b', q3:'a', q4:'c', q5:'b', q6:'c', q7:'a',
+  q8:'history of childhood', q9:'miniature adults', q10:'industrialisation',
+  q11:'the factory act', q12:'play and education', q13:'a classroom',
+  q14:'c', q15:'a', q16:'a', q17:'a', q18:'b', q19:'c',
+  q20:'clues', q21:'relationship', q22:'message', q23:'reschedule',
+  q24:'voicemail', q25:'cellphone', q26:'meeting',
+  q27:'v', q28:'ii', q29:'vi', q30:'iii', q31:'vii', q32:'iv', q33:'viii',
+  q34:'thunderstorms', q35:'condensation', q36:'heat', q37:'eye', q38:'land',
+  q39:'b', q40:'c'
+};
+
+const PASSAGE_REFS = {
+  q1:'shared similar leisure activities and work',
+  q2:'this does not mean children were neglected, forsaken or despised',
+  q3:'whether long hours of labouring would interfere with children\'s growing bodies',
+  q4:'The influence of trade unions and economic changes',
+  q5:'a significant proportion of children never attended school in the 1840s',
+  q6:'all children are expected to spend a significant part of their day in a classroom',
+  q7:'organised into groups in the light of their age',
+  q8:'The history of childhood has been a heated topic in social history',
+  q9:'children were regarded as miniature adults',
+  q10:'industrialisation created a new demand for child labour',
+  q11:'the Factory Act of 1833 signified the emergence of legal protection',
+  q12:'childhood was deemed to be a time for play and education',
+  q13:'expected to spend a significant part of their day in a classroom',
+  q14:'as much as we are familiar with procreation',
+  q15:'We merely endure the consequences',
+  q16:'Microsoft has been conducting extensive in-house tests',
+  q17:'the truth is that most people are not as busy as they claim to be',
+  q18:'studied ten managers, researchers and interns at the workplace',
+  q20:'find out clues about what they are dealing with',
+  q21:'attempts to figure out what their relationship is',
+  q22:'Other callers will get a message on their screens',
+  q23:'reschedule a callback at a time which works for both',
+  q24:'simply leave a voicemail',
+  q25:'transfer selected callers to his cellphone',
+  q26:'unless his calendar implies that he is in a meeting',
+  q27:'absolutely nothing stands in their way',
+  q28:'Hurricanes grow in the form of thunderstorm clusters',
+  q29:'Our current studies are inspired by my past intuition',
+  q30:'our research team ran simulation experiments on computers',
+  q31:'the latter one went off the track to the west',
+  q32:'Future earth-orbiting solar power stations',
+  q33:'exquisitely targeted clouds bearing silver iodide',
+  q34:'thunderstorm clusters above the tropical seas',
+  q35:'Condensation gives out heat in the process',
+  q36:'so-called invisible heat of condensation',
+  q37:'creating the familiar eye',
+  q38:'When reaching the land, the hurricane no longer has',
+  q39:'thanks to the advancement of computer simulation',
+  q40:'it took us by surprise that our first simulation turned out to be an immediate success'
+};
+
+const PASSAGES = [
+  {
+    tag:'Passage 1', title:'The Concept of Childhood in Western Countries',
+    instruct:'You should spend about 20 minutes on Questions 1–13, which are based on Reading Passage 1 below.',
+    body:`<p>The history of childhood has been a heated topic in social history since the highly influential book 'Centuries of Childhood', written by French historian Philippe Aries, emerged in 1960. He claimed that 'childhood' is a concept created by modern society.</p>
+<p>Whether childhood is itself a recent invention has been one of the most intensely debated issues in the history of childhood. Historian Philippe Aries asserted that children were regarded as miniature adults, with all the intellect and personality that this implies, in Western Europe during the Middle Ages (up to about the end of the 15th century). After scrutinising medieval pictures and diaries, he concluded that there was no distinction between children and adults for they shared similar leisure activities and work. However, this does not mean children were neglected, forsaken or despised, he argued. The idea of childhood corresponds to awareness about the peculiar nature of childhood, which distinguishes the child from adult, even the young adult. Therefore, the concept of childhood is not to be confused with affection for children.</p>
+<p>Traditionally, children played a functional role in contributing to the family income in the history. Under this circumstance, children were considered to be useful. Back in the Middle Ages, children of 5 or 6 years old did necessary chores for their parents. During the 16th century, children of 9 or 10 years old were often encouraged or even forced to leave their family to work as servants for wealthier families or apprentices for a trade.</p>
+<p>In the 18th and 19th centuries, industrialisation created a new demand for child labour; thus many children were forced to work for a long time in mines, workshops and factories. The issue of whether long hours of labouring would interfere with children's growing bodies began to perplex social reformers. Some of them started to realise the potential of systematic studies to monitor how far these early deprivations might be influencing children's development.</p>
+<p>The concerns of reformers gradually had some impact upon the working condition of children. For example, in Britain, the Factory Act of 1833 signified the emergence of legal protection of children from exploitation and was also associated with the rise of schools for factory children. Due partly to factory reform, the worst forms of child exploitation were eliminated gradually. The influence of trade unions and economic changes also contributed to the evolution by leaving some forms of child labour redundant during the 19th century. Initiating children into work as 'useful' children was no longer a priority, and childhood was deemed to be a time for play and education for all children instead of a privileged minority. Childhood was increasingly understood as a more extended phase of dependency, development and learning with the delay of the age for starting full-time work.</p>
+<p>Even so, work continued to play a significant, if less essential, role in children's lives in the later 19th and 20th centuries. Finally, the 'useful child' has become a controversial concept during the first decade of the 21st century, especially in the context of global concern about large numbers of children engaged in child labour.</p>
+<p>The half-time schools established upon the Factory Act of 1833 allowed children to work and attend school. However, a significant proportion of children never attended school in the 1840s, and even if they did, they dropped out by the age of 10 or 11. By the end of the 19th century in Britain, the situation changed dramatically, and schools became the core to the concept of a 'normal' childhood.</p>
+<p>It is no longer a privilege for children to attend school and all children are expected to spend a significant part of their day in a classroom. Once in school, children's lives could be separated from domestic life and the adult world of work. In this way, school turns into an institution dedicated to shaping the minds, behaviour and morals of the young. Besides, education dominated the management of children's waking hours through the hours spent in the classroom, homework (the growth of 'after school' activities), and the importance attached to parental involvement.</p>
+<p>Industrialisation, urbanisation and mass schooling pose new challenges for those who are responsible for protecting children's welfare, as well as promoting their learning. An increasing number of children are being treated as a group with unique needs, and are organised into groups in the light of their age. For instance, teachers need to know some information about what to expect of children in their classrooms, what kinds of instruction are appropriate for different age groups, and what is the best way to assess children's progress. Also, they want tools enabling them to sort and select children according to their abilities and potential.</p>`
+  },
+  {
+    tag:'Passage 2', title:'Bestcom — Considerate Computing',
+    instruct:'You should spend about 20 minutes on Questions 14–26, which are based on Reading Passage 2 below.',
+    body:`<p>'Your battery is now fully charged,' announced the laptop to its owner Donald A. Norman in a synthetic voice, with great enthusiasm and maybe even a hint of pride. For the record, humans are not at all unfamiliar with distractions and multitasking. 'We are used to a complex life that gets constantly interrupted by computer's attention-seeking requests, as much as we are familiar with procreation,' laughs Ted Selker of the Massachusetts Institute of Technology (MIT) Media Lab.</p>
+<p>Humanity has been connected to approximately three billion networked telephones, computers, traffic lights and even fridges and picture frames since these things can facilitate our daily lives. That is why we do not typically turn off the phones, shut down the e-mail system, or close the office door even when we have a meeting coming or a stretch of concentrated work. We merely endure the consequences.</p>
+<p>Countless research reports have confirmed that if people are unexpectedly interrupted, they may suffer a drop in work efficiency, and they are more likely to make mistakes. According to Robert G. Picard from the University of Missouri, it appears to build up the feeling of frustration cumulatively, and that stress response makes it difficult to focus again. It is not solely about productivity and the pace of life. For some professionals like pilots, drivers, soldiers and doctors, loss of focus can be downright disastrous. 'If we could find a way to make our computers and phones realise the limits of human attention and memory, they may come off as more thoughtful and courteous,' says Eric Horvitz of Microsoft Research. Horvitz, Selker and Picard are just a few of a small but prospering group of researchers who are attempting to make computers, phones, cars and other devices to function more like considerate colleagues instead of egocentric oafs.</p>
+<p>To do this, the machines need new skills of three kinds: sensing, reasoning and communicating. First, a system must sense or infer where its owner is and what he or she is doing. Next, it must weigh the value of the messages it wants to convey against the cost of the disruption. Then it has to choose the best mode and time to interject. Each of these pushes the limits of computer science and raises issues of privacy, complexity or reliability. Nevertheless, 'Attentive' Computing Systems have started to make an appearance in the latest Volvos, and IBM has designed and developed a communications software called WebSphere that comes with an underlying sense of busyness. Microsoft has been conducting extensive in-house tests of a way more sophisticated system since 2003. In a couple of years, companies might manage to provide each office employee with a software version of the personal receptionist which is only available to corner-suite executives today.</p>
+<p>However, the truth is that most people are not as busy as they claim to be, which explains why we can often stand interruptions from our inconsiderate electronic paraphernalia. To find out the extent to which such disruption may claim people's daily time, an IBM Research team led by Jennifer Lai from Carnegie Mellon University studied ten managers, researchers and interns at the workplace. They had the subjects on videotape, and within every period of a specific time, they asked the subjects to evaluate their 'interruptibility'. The time a worker spent in leave-me-alone state varied from individual to individual and day to day, and the percentage ranged from 10 to 51. Generally, the employees wished to work without interruption for roughly 1/3 of the time. Similarly, by studying Microsoft workers, Horvitz also came to the discovery that they ordinarily spend over 65 per cent of their day in a low-attention mode.</p>
+<p>Obviously, today's phones and computers are probably correct about two-thirds of time by assuming that their users are always available to answer a call, check an email, or click the 'OK' button on an alert box. But for the considerate systems to be functional and useful, their accuracy has to be above 65 in sending when their users are about to reach their cognitive limits.</p>
+<p>Inspired by Horvitz's work, Microsoft prototype Bestcom-Enhanced Telephony (Bestcom-ET) digs a bit deeper into every user's computer to find out clues about what they are dealing with. Microsoft launched an internal beta test of the system in mid-2003. Horvitz points out that by the end of last October, nearly 3,800 people had been relying on the system to field their incoming calls.</p>
+<p>Horvitz is, in fact, a tester himself, and as we have our conversation in his office, Bestcom silently takes care of all the calls. Firstly, it checks if the caller is in his address book, the company directory, or the 'recent call' list. After triangulating all these resources at the same time, it attempts to figure out what their relationship is. The calls that get through are from family, supervisors and people he called earlier that day. Other callers will get a message on their screens that say he cannot answer now because he is in a meeting, and will not be available until 3pm. The system will scan both Horvitz's and the caller's calendar to check if it can reschedule a callback at a time which works for both of them. Some callers will take that option, while others simply leave a voicemail. The same happens with e-mails. When Horvitz is not in his office, Bestcom automatically offers to transfer selected callers to his cellphone, unless his calendar implies that he is in a meeting.</p>`
+  },
+  {
+    tag:'Passage 3', title:'Can Hurricanes be Moderated or Diverted?',
+    instruct:'You should spend about 20 minutes on Questions 27–40, which are based on Reading Passage 3 below.',
+    body:`<p><span class="section-letter">A</span> Each year, massive swirling storms bringing along winds greater than 74 miles per hour wipe across tropical oceans and land on shorelines — usually devastating vast swaths of territory. When these roiling tempests strike densely inhabited territories, they have the power to kill thousands and cause property damage worth of billions of dollars. Besides, absolutely nothing stands in their way. But can we ever find a way to control these formidable forces of nature?</p>
+<p><span class="section-letter">B</span> To see why hurricanes and other severe tropical storms may be susceptible to human intervention, a researcher must first learn about their nature and origins. Hurricanes grow in the form of thunderstorm clusters above the tropical seas. Oceans in low-latitude areas never stop giving out heat and moisture to the atmosphere, which brings about warm, wet air above the sea surface. When this kind of air rises, the water vapour in it condenses to form clouds and precipitation. Condensation gives out heat in the process — the solar heat is used to evaporate the water at the ocean surface. This so-called invisible heat of condensation makes the air more buoyant, leading to it ascending higher while reinforcing itself in the feedback process. At last, the tropical depression starts to form and grow stronger, creating the familiar eye — the calm centre hub that a hurricane spins around. When reaching the land, the hurricane no longer has a continuous supply of warm water, which causes it to swiftly weaken.</p>
+<p><span class="section-letter">C</span> Our current studies are inspired by my past intuition when I was learning about chaos theory 30 years ago. The reason why long-range forecasting is complicated is that the atmosphere is highly sensitive to small influences and tiny mistakes can compound fast in the weather-forecasting models. However, this sensitivity also made me realise a possibility: if we intentionally applied some slight inputs to a hurricane, we might create a strong influence that could affect the storms, either by steering them away from densely populated areas or by slowing them down. Back then, I was not able to test my ideas, but thanks to the advancement of computer simulation and remote-sensing technologies over the last 10 years, I can now renew my enthusiasm in large-scale weather control.</p>
+<p><span class="section-letter">D</span> To find out whether the sensitivity of the atmospheric system could be exploited to adjust such robust atmospheric phenomena as hurricanes, our research team ran simulation experiments on computers for a hurricane named Iniki that occurred in 1992. The current forecasting technologies were far from perfect, so it took us by surprise that our first simulation turned out to be an immediate success. With the goal of altering the path of Iniki in mind, we first picked the spot where we wanted the storm to stop after six hours. Then we used this target to generate artificial observations and put these into the computer model.</p>
+<p><span class="section-letter">E</span> The most significant alteration turned out to be the initial temperatures and winds. Usually, the temperature changes across the grid were only tenths of a degree, but the most noteworthy change, which was an increase of almost two degrees Celsius, took place in the lowest model layer to the west of the storm centre. The calculations produced wind-speed changes of two or three miles per hour. However, in several spots, the rates shifted by as much as 20 mph due to minor redirections of the winds close to the storm's centre. In terms of structure, the initial and altered versions of Hurricane Iniki seemed almost the same, but the changes in critical variables were so substantial that the latter one went off the track to the west during the first six hours of the simulation and then travelled due north, leaving Kauai untouched.</p>
+<p><span class="section-letter">F</span> Future earth-orbiting solar power stations, equipped with large mirrors to focus the sun's rays and panels of photovoltaic cells to gather and send energy to the Earth, might be adapted to beam microwaves which turn to be absorbed by water vapour molecules inside or around the storm. The microwaves would cause the water molecules to vibrate and heat up the surrounding air, which then leads to the hurricane slowing down or moving in a preferred direction.</p>
+<p><span class="section-letter">G</span> Simulations of hurricanes conducted on a computer have implied that by changing the precipitation, evaporation and air temperature, we could make a difference to a storm's route or abate its winds. Intervention could be in many different forms: exquisitely targeted clouds bearing silver iodide or other rainfall-inducing elements might deprive a hurricane of the water it needs to grow and multiply from its formidable eyewall, which is the essential characteristic of a severe tropical storm.</p>`
+  }
+];
+
+const QUESTIONS = [
+  {id:'p1s1',passage:0,type:'section',heading:'Questions 1–7',instruct:'Do the following statements agree with the information given in Reading Passage 1?\n\nA — TRUE    B — FALSE    C — NOT GIVEN',items:[
+    {id:'q1',num:'1',text:'Aries pointed out that children did different types of work like adults during the Middle Ages.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q2',num:'2',text:'Working children during the Middle Ages were generally unloved.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q3',num:'3',text:'Some scientists thought that overwork might damage the health of young children.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q4',num:'4',text:'The rise of trade unions majorly contributed to the protection of children from exploitation in the 19th century.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q5',num:'5',text:'By the aid of half-time schools, most children went to school in the mid-19th century.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q6',num:'6',text:'In the 20th century, almost all children needed to go to school with a full-time schedule.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q7',num:'7',text:'Nowadays, children\'s needs are much differentiated and categorised based on how old they are.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+  ]},
+  {id:'p1s2',passage:0,type:'section',heading:'Questions 8–13',instruct:'Answer the questions below.\nChoose NO MORE THAN THREE WORDS from the passage for each answer.',items:[
+    {id:'q8',num:'8',text:'What has not become a hot topic until the French historian Philippe Aries\' book caused great attention?',type:'fill'},
+    {id:'q9',num:'9',text:'What image did Aries believe children are supposed to be like in Western Europe during the Middle Ages?',type:'fill'},
+    {id:'q10',num:'10',text:'What historical event generated the need for a large number of children to work for a long time in the 18th and 19th centuries?',type:'fill'},
+    {id:'q11',num:'11',text:'What bill was enacted to protect children from exploitation in Britain in the 1800s?',type:'fill'},
+    {id:'q12',num:'12',text:'What activities were more and more regarded as preferable to almost all children in the 19th century?',type:'fill'},
+    {id:'q13',num:'13',text:'In what place did children spend the majority of time during their day in school?',type:'fill'},
+  ]},
+  {id:'p2s1',passage:1,type:'section',heading:'Questions 14–19',instruct:'Do the following statements agree with the information given in Reading Passage 2?\n\nA — TRUE    B — FALSE    C — NOT GIVEN',items:[
+    {id:'q14',num:'14',text:'According to Ted Selker, human reproduction has been disturbed throughout history.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q15',num:'15',text:'If people are interrupted by calls or e-mails, they usually put up with it instead of feeling sickness.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q16',num:'16',text:'Microsoft is now investigating a software which is compatible with ordinary offices.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q17',num:'17',text:'People usually have a misperception about whether they are busy or not.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q18',num:'18',text:'Experts in Carnegie Mellon University conducted a research observing all occupations of IBM.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+    {id:'q19',num:'19',text:'Current phone and computer systems have shortcut keys for people receiving information immediately.',type:'mcq',options:['A — TRUE','B — FALSE','C — NOT GIVEN']},
+  ]},
+  {id:'p2s2',passage:1,type:'section',heading:'Questions 20–26',instruct:'Complete the flow-chart below.\nChoose ONLY ONE WORD from the passage for each answer.\n\nBestcom Working Process:\n→ Bestcom finds (20) about what users are doing.\n→ In the office: Check the (21) between the caller and the user. If callers are not in directory, a(n) (22) will show on their screen. The system will (23) a suitable time, or callers can leave a(n) (24) to the user.\n→ Out of the office: Bestcom transfers the call to the user\'s (25) if there is no (26) in the schedule.',items:[
+    {id:'q20',num:'20',text:'Bestcom finds ___ about what users are doing.',type:'fill'},
+    {id:'q21',num:'21',text:'Check the ___ between the caller and the user.',type:'fill'},
+    {id:'q22',num:'22',text:'If callers are not in directory, a(n) ___ will show up on their screen.',type:'fill'},
+    {id:'q23',num:'23',text:'The system will ___ a suitable callback time for both parties.',type:'fill'},
+    {id:'q24',num:'24',text:'Alternatively, callers can leave a(n) ___ to the user.',type:'fill'},
+    {id:'q25',num:'25',text:'Out of office: Bestcom transfers the call to the user\'s ___.',type:'fill'},
+    {id:'q26',num:'26',text:'...if there is no ___ in his or her schedule.',type:'fill'},
+  ]},
+  {id:'p3s1',passage:2,type:'section',heading:'Questions 27–33',instruct:'Reading Passage 3 has seven paragraphs, A–G.\nChoose the correct heading for each paragraph from the list of headings below.\n\ni — Hurricanes in history\nii — How hurricanes form\niii — How a laboratory exercise re-routes a hurricane\niv — Exciting ways to utilise future technologies\nv — Are hurricanes unbeatable?\nvi — Re-visit earlier ideas\nvii — How lives might have been saved\nviii — A range of low-tech methods',items:[
+    {id:'q27',num:'27',text:'Paragraph A',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii']},
+    {id:'q28',num:'28',text:'Paragraph B',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii']},
+    {id:'q29',num:'29',text:'Paragraph C',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii']},
+    {id:'q30',num:'30',text:'Paragraph D',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii']},
+    {id:'q31',num:'31',text:'Paragraph E',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii']},
+    {id:'q32',num:'32',text:'Paragraph F',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii']},
+    {id:'q33',num:'33',text:'Paragraph G',type:'match',options:['i','ii','iii','iv','v','vi','vii','viii']},
+  ]},
+  {id:'p3s2',passage:2,type:'section',heading:'Questions 34–38',instruct:'Complete the summary below.\nChoose ONE WORD ONLY from the passage for each answer.\n\nHurricanes originate as groups of (34) over the tropical oceans. Low-latitude seas continuously provide heat and moisture to the atmosphere. When air rises, water vapour condenses. (35) releases heat — the solar heat used to evaporate water at the ocean surface. This so-called latent (36) of condensation makes the air more buoyant. Eventually the tropical depression forms the familiar (37) — the calm central hub. On passing over (38), the hurricane\'s warm water supply is cut off and it rapidly weakens.',items:[
+    {id:'q34',num:'34',text:'Hurricanes originate as groups of ___ over the tropical oceans.',type:'fill'},
+    {id:'q35',num:'35',text:'___ releases heat — the solar heat used to evaporate the water at the ocean surface.',type:'fill'},
+    {id:'q36',num:'36',text:'This so-called latent ___ of condensation makes the air more buoyant.',type:'fill'},
+    {id:'q37',num:'37',text:'The tropical depression forms the familiar ___ — the calm central hub.',type:'fill'},
+    {id:'q38',num:'38',text:'On passing over ___, the hurricane\'s warm water supply is cut off.',type:'fill'},
+  ]},
+  {id:'p3s3',passage:2,type:'section',heading:'Questions 39–40',instruct:'Choose the correct letter, A, B, C or D.',items:[
+    {id:'q39',num:'39',text:'What encouraged the writer to restart researching hurricane control?',type:'mcq',options:['A — The huge damage hurricanes trigger.','B — The developments in computer technologies.','C — The requirement of some local people.','D — The chaos theory learnt as a student.']},
+    {id:'q40',num:'40',text:'What was the writer\'s reaction after their first experiment?',type:'mcq',options:['A — Surprised that their intervention had not achieved a lot.','B — Ecstatic with the achievement the first experiment had.','C — Surprised that their intervention had the intended effect.','D — Regretful about the impending success.']},
+  ]},
+];
+
+/* ═══ STATE ═══ */
+let currentPassage=0,timeLeft=3600,timerInterval=null,paused=false,userAnswers={},isReviewing=false,hlMode='y',qhlMode=false,touchPending=false;
+let passageFontSize=14.5,questionFontSize=12.5;
+const FS_MIN=10,FS_MAX=22;
+
+function changeFontSize(delta){
+  passageFontSize=Math.min(FS_MAX,Math.max(FS_MIN,passageFontSize+delta));
+  questionFontSize=Math.min(FS_MAX,Math.max(FS_MIN,questionFontSize+delta));
+  document.documentElement.style.setProperty('--passage-fs',passageFontSize+'px');
+  document.documentElement.style.setProperty('--question-fs',questionFontSize+'px');
+}
+function toggleQHL(){
+  qhlMode=!qhlMode;
+  const btn=document.getElementById('qhl-toggle'),note=document.getElementById('hl-note-txt');
+  btn.classList.toggle('qmode-on',qhlMode);
+  note.textContent=qhlMode?'Questions':'Passage';
+}
+function suppressNativeSelectionUI(){
+  const blocked=['contextmenu','copy','cut','paste'];
+  const targets=[document.getElementById('passage-panel'),document.getElementById('questions-panel')];
+  targets.forEach(t=>{if(!t)return;blocked.forEach(evt=>t.addEventListener(evt,e=>e.preventDefault()));});
+}
+function init(){
+  renderPassage(0);renderQuestions(0);updateProgress();updateNavBtns();startTimer();
+  document.getElementById('passage-panel').addEventListener('mouseup',handleHighlight);
+  document.getElementById('questions-panel').addEventListener('mouseup',handleHighlight);
+  suppressNativeSelectionUI();
+  initResizer();initMobileHighlight();
+}
+function initResizer(){
+  const resizer=document.getElementById('resizer'),qPanel=document.getElementById('questions-panel'),main=document.getElementById('main');
+  let startX,startW;
+  resizer.addEventListener('mousedown',e=>{
+    startX=e.clientX;startW=qPanel.offsetWidth;resizer.classList.add('dragging');
+    document.body.style.cursor='col-resize';document.body.style.userSelect='none';
+    function onMove(e){const delta=startX-e.clientX;const newW=Math.min(Math.max(startW+delta,260),main.offsetWidth-300);qPanel.style.width=newW+'px';}
+    function onUp(){resizer.classList.remove('dragging');document.body.style.cursor='';document.body.style.userSelect='';document.removeEventListener('mousemove',onMove);document.removeEventListener('mouseup',onUp);}
+    document.addEventListener('mousemove',onMove);document.addEventListener('mouseup',onUp);
+  });
+  resizer.addEventListener('touchstart',e=>{
+    const touch=e.touches[0];startX=touch.clientX;startW=qPanel.offsetWidth;resizer.classList.add('dragging');document.body.style.userSelect='none';
+    function onMove(e){e.preventDefault();const t=e.touches[0];const delta=startX-t.clientX;const newW=Math.min(Math.max(startW+delta,260),main.offsetWidth-300);qPanel.style.width=newW+'px';}
+    function onUp(){resizer.classList.remove('dragging');document.body.style.userSelect='';document.removeEventListener('touchmove',onMove);document.removeEventListener('touchend',onUp);}
+    document.addEventListener('touchmove',onMove,{passive:false});document.addEventListener('touchend',onUp);
+    e.preventDefault();
+  },{passive:false});
+}
+function startTimer(){timerInterval=setInterval(()=>{if(paused)return;timeLeft--;renderTimer();if(timeLeft<=0){clearInterval(timerInterval);submitTest();}},1000);}
+function renderTimer(){const el=document.getElementById('timer-display'),m=Math.floor(timeLeft/60),s=timeLeft%60;el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');el.className=timeLeft<=300?'danger':timeLeft<=600?'warn':'';}
+function togglePause(){paused=!paused;document.getElementById('pause-btn').textContent=paused?'Resume':'Pause';document.getElementById('pause-overlay').className=paused?'show':'';}
+function renderPassage(idx){const p=PASSAGES[idx];document.getElementById('passage-panel').innerHTML=`<div class="passage-header"><div class="passage-tag">${p.tag}</div><div class="passage-title">${p.title}</div><div class="passage-instruct">${p.instruct}</div></div><div class="passage-body" id="passage-body">${p.body}</div>`;}
+function renderQuestions(pIdx){
+  const sections=QUESTIONS.filter(s=>s.passage===pIdx);let html='';
+  sections.forEach(sec=>{
+    html+=`<div class="q-section"><div class="q-section-hd">${sec.heading}</div><div class="q-section-instruct">${sec.instruct.replace(/\n/g,'<br>')}</div>`;
+    sec.items.forEach(q=>{
+      html+=`<div class="q-item" id="item-${q.id}"><div class="q-num">Question ${q.num}</div><div class="q-text">${q.text}</div>`;
+      if(q.type==='mcq'){html+=`<div class="q-opts">`;q.options.forEach(opt=>{const letter=opt[0],checked=userAnswers[q.id]===letter;html+=`<label class="q-opt${checked?' selected':''}" id="opt-${q.id}-${letter}"><input type="radio" name="${q.id}" value="${letter}" onchange="saveAnswer('${q.id}','${letter}')" ${checked?'checked':''}>${opt}</label>`;});html+=`</div>`;}
+      else if(q.type==='match'){html+=`<div class="q-match-row"><select class="q-match-sel" id="sel-${q.id}" onchange="saveAnswer('${q.id}',this.value)"><option value="">—</option>`;q.options.forEach(o=>{html+=`<option value="${o}" ${userAnswers[q.id]===o?'selected':''}>${o}</option>`;});html+=`</select></div>`;}
+      else if(q.type==='fill'){html+=`<input class="q-fill" type="text" id="fill-${q.id}" value="${userAnswers[q.id]||''}" placeholder="Type your answer…" oninput="saveAnswer('${q.id}',this.value)">`;}
+      html+=`<div class="q-answer-reveal" id="reveal-${q.id}"></div></div>`;
+    });
+    html+=`</div>`;
+  });
+  document.getElementById('q-panel').innerHTML=html;
+}
+function saveAnswer(qid,val){userAnswers[qid]=val;document.querySelectorAll(`[id^="opt-${qid}-"]`).forEach(l=>{l.className=`q-opt${l.id===`opt-${qid}-${val}`?' selected':''}`});updateProgress();}
+function updateProgress(){
+  const total=40,answered=Object.values(userAnswers).filter(v=>v&&v.trim()!=='').length;
+  document.getElementById('answered-info').textContent=`${answered} / ${total} answered`;
+  document.getElementById('prog-fill').style.width=(answered/total*100)+'%';
+  [0,1,2].forEach(pi=>{const qs=QUESTIONS.filter(s=>s.passage===pi).flatMap(s=>s.items),done=qs.filter(q=>userAnswers[q.id]&&userAnswers[q.id].trim()!=='').length;document.getElementById(`badge${pi}`).textContent=`${done}/${qs.length}`;});
+}
+function goToPassage(idx){
+  if(idx<0||idx>2)return;currentPassage=idx;
+  [0,1,2].forEach(i=>document.getElementById(`tab${i}`).className=`ptab${i===idx?' active':''}`);
+  renderPassage(idx);renderQuestions(idx);
+  if(isReviewing){showReview();highlightPassageRefs(idx);}
+  updateNavBtns();document.getElementById('passage-panel').scrollTop=0;document.getElementById('questions-panel').scrollTop=0;
+}
+function highlightPassageRefs(pIdx){
+  const body=document.getElementById('passage-body');if(!body)return;
+  const qs=QUESTIONS.filter(s=>s.passage===pIdx).flatMap(s=>s.items);let html=body.innerHTML;
+  qs.forEach(q=>{const ref=PASSAGE_REFS[q.id];if(!ref)return;const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans,cls=isBlank?'ref-blank':isCorrect?'ref-correct':'ref-wrong',rbCls=isBlank?'rb-blank':isCorrect?'rb-correct':'rb-wrong',escaped=ref.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),re=new RegExp(escaped);if(re.test(html))html=html.replace(re,`<span class="passage-ref ${cls}"><span class="ref-badge ${rbCls}">${q.num}</span>${ref}</span>`);});
+  body.innerHTML=html;
+}
+function updateNavBtns(){
+  document.getElementById('btn-prev').disabled=currentPassage===0;document.getElementById('btn-prev').style.opacity=currentPassage===0?'0.4':'1';
+  const nxt=document.getElementById('btn-next');
+  if(currentPassage===2){nxt.textContent='Submit Test';nxt.onclick=submitTest;}else{nxt.textContent='Next Passage →';nxt.onclick=()=>goToPassage(currentPassage+1);}
+}
+function setHL(mode){
+  hlMode=mode;
+  ['y','g','p','b'].forEach(m=>{const btn=document.getElementById('hl'+m);if(btn)btn.classList.toggle('active',m===mode)});
+  if(mode!=='e') qhlMode=false;
+  document.getElementById('qhl-toggle').classList.remove('qmode-on');
+  document.getElementById('hl-note-txt').textContent='Passage';
+}
+function handleHighlight(e){
+  if(touchPending)return;
+  const sel=window.getSelection();if(!sel||sel.isCollapsed)return;
+  const range=sel.getRangeAt(0);
+  const passageBody=document.getElementById('passage-body');
+  const qPanel=document.getElementById('q-panel');
+  const inPassage=passageBody&&passageBody.contains(range.commonAncestorContainer);
+  const inQuestions=qPanel&&qPanel.contains(range.commonAncestorContainer);
+  if(qhlMode&&inQuestions){applyHighlight(range,qPanel);}
+  else if(!qhlMode&&inPassage){applyHighlight(range,passageBody);}
+}
+function applyHighlight(range,container){
+  if(hlMode==='e'){
+    const sel=window.getSelection();
+    container.querySelectorAll('mark').forEach(m=>{if(sel.containsNode(m,true)){const parent=m.parentNode;while(m.firstChild)parent.insertBefore(m.firstChild,m);parent.removeChild(m);}});
+    container.normalize();
+  } else {
+    const mark=document.createElement('mark');mark.className='h'+hlMode;
+    try{range.surroundContents(mark);}catch(e){const frag=range.extractContents();mark.appendChild(frag);range.insertNode(mark);}
+  }
+  window.getSelection()?.removeAllRanges();
+}
+function submitTest(){
+  clearInterval(timerInterval);let correct=0,wrong=0,blank=0;
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{const ans=(userAnswers[q.id]||'').trim();if(!ans){blank++;return;}checkAnswer(ans,ANSWER_KEY[q.id])?correct++:wrong++;});
+  document.getElementById('r-band').textContent=calcBand(correct);document.getElementById('r-correct').textContent=correct;document.getElementById('r-wrong').textContent=wrong;document.getElementById('r-blank').textContent=blank;document.getElementById('result-overlay').className='show';
+}
+function checkAnswer(given,key){
+  const g=given.toLowerCase().trim(),k=key.toLowerCase().trim();
+  if(g===k)return true;
+  if(k==='history of childhood')return g.includes('history of childhood');
+  if(k==='miniature adults')return g.includes('miniature adults');
+  if(k==='industrialisation')return g==='industrialisation'||g==='industrialization';
+  if(k==='the factory act')return g==='the factory act'||g==='factory act';
+  if(k==='play and education')return g.includes('play and education');
+  if(k==='a classroom')return g==='a classroom'||g==='classroom';
+  if(k==='clues')return g==='clues'||g==='clue';
+  if(k==='relationship')return g==='relationship';
+  if(k==='message')return g==='message';
+  if(k==='reschedule')return g==='reschedule';
+  if(k==='voicemail')return g==='voicemail'||g==='voice mail';
+  if(k==='cellphone')return g==='cellphone'||g==='cell phone'||g==='mobile phone'||g==='mobile';
+  if(k==='meeting')return g==='meeting';
+  if(k==='thunderstorms')return g==='thunderstorms'||g==='thunderstorm';
+  if(k==='condensation')return g==='condensation';
+  if(k==='heat')return g==='heat';
+  if(k==='eye')return g==='eye';
+  if(k==='land')return g==='land';
+  return false;
+}
+function calcBand(c){if(c>=39)return'9.0';if(c>=37)return'8.5';if(c>=35)return'8.0';if(c>=33)return'7.5';if(c>=30)return'7.0';if(c>=27)return'6.5';if(c>=23)return'6.0';if(c>=19)return'5.5';if(c>=15)return'5.0';if(c>=13)return'4.5';return'4.0';}
+function reviewAnswers(){document.getElementById('result-overlay').className='';isReviewing=true;goToPassage(0);showReview();}
+function showReview(){
+  QUESTIONS.flatMap(s=>s.items).forEach(q=>{
+    const ans=(userAnswers[q.id]||'').trim(),key=ANSWER_KEY[q.id],reveal=document.getElementById(`reveal-${q.id}`),item=document.getElementById(`item-${q.id}`);
+    if(!reveal)return;const isCorrect=ans&&checkAnswer(ans,key),isBlank=!ans;
+    if(item){item.classList.remove('review-correct','review-wrong','review-blank');item.classList.add(isBlank?'review-blank':isCorrect?'review-correct':'review-wrong');}
+    reveal.className=`q-answer-reveal show ${isCorrect?'correct-msg':'wrong-msg'}`;
+    reveal.innerHTML=isBlank?`<strong>Correct answer:</strong> ${key}`:isCorrect?`✓ Correct!`:`✗ Your answer: <strong>${ans}</strong> — Correct: <strong>${key}</strong>`;
+    if(q.type==='fill'){const inp=document.getElementById(`fill-${q.id}`);if(inp)inp.className=`q-fill ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='match'){const sel=document.getElementById(`sel-${q.id}`);if(sel)sel.className=`q-match-sel ${isCorrect?'correct':'wrong'}`;}
+    if(q.type==='mcq'){document.querySelectorAll(`[id^="opt-${q.id}-"]`).forEach(l=>{const letter=l.id.split('-').pop();if(letter===key)l.className='q-opt correct-ans';else if(letter===ans&&!isCorrect)l.className='q-opt wrong-ans';});}
+  });
+}
+function restartTest(){userAnswers={};isReviewing=false;timeLeft=3600;paused=false;document.getElementById('result-overlay').className='';clearInterval(timerInterval);goToPassage(0);renderTimer();updateProgress();startTimer();}
+function openNav(){document.getElementById('nav-overlay').className='show';}
+function closeNav(e){if(e.target===document.getElementById('nav-overlay'))document.getElementById('nav-overlay').className='';}
+
+/* ═══ MOBILE / TOUCH HIGHLIGHT ═══ */
+let mobileSelRange=null,ignoreSelChange=false,selTimer=null;
+function positionMobileBar(rect){
+  const bar=document.getElementById('mobile-hl-bar'),bW=268,bH=50,mg=10;
+  let cx=rect.left+rect.width/2,topY=rect.top-bH-14,botY=rect.bottom+14;
+  let left=Math.min(Math.max(cx-bW/2,mg),window.innerWidth-bW-mg);
+  let arr=Math.min(Math.max(cx-left,20),bW-20);
+  bar.style.setProperty('--arr',arr+'px');bar.style.left=left+'px';
+  if(topY>=mg){bar.style.top=topY+'px';bar.classList.remove('arr-up');bar.classList.add('arr-down');}
+  else{bar.style.top=botY+'px';bar.classList.remove('arr-down');bar.classList.add('arr-up');}
+}
+function showMobileHlBar(range){
+  clearTimeout(selTimer);selTimer=null;
+  mobileSelRange=range.cloneRange();
+  const rect=range.getBoundingClientRect();
+  ignoreSelChange=true;
+  window.getSelection()?.removeAllRanges();
+  setTimeout(()=>{ignoreSelChange=false;},300);
+  positionMobileBar(rect);
+  document.getElementById('mobile-hl-bar').classList.add('show');
+}
+function hideMobileHlBar(){document.getElementById('mobile-hl-bar').classList.remove('show');mobileSelRange=null;}
+function applyMobileHL(color){
+  if(!mobileSelRange){hideMobileHlBar();return;}
+  const pb=document.getElementById('passage-body'),qp=document.getElementById('q-panel');
+  const inP=pb&&pb.contains(mobileSelRange.commonAncestorContainer);
+  const inQ=qp&&qp.contains(mobileSelRange.commonAncestorContainer);
+  const cont=inP?pb:inQ?qp:null;if(!cont){hideMobileHlBar();return;}
+  ignoreSelChange=true;
+  const sel=window.getSelection();sel.removeAllRanges();sel.addRange(mobileSelRange);
+  const prev=hlMode;hlMode=color;applyHighlight(mobileSelRange,cont);hlMode=prev;
+  setTimeout(()=>{ignoreSelChange=false;},300);
+  hideMobileHlBar();
+}
+function initMobileHighlight(){
+  const bar=document.getElementById('mobile-hl-bar');
+  bar.addEventListener('mousedown',e=>e.preventDefault());
+  document.getElementById('mhl-y').addEventListener('click',()=>applyMobileHL('y'));
+  document.getElementById('mhl-g').addEventListener('click',()=>applyMobileHL('g'));
+  document.getElementById('mhl-p').addEventListener('click',()=>applyMobileHL('p'));
+  document.getElementById('mhl-b').addEventListener('click',()=>applyMobileHL('b'));
+  document.getElementById('mhl-e').addEventListener('click',()=>applyMobileHL('e'));
+  document.getElementById('mhl-close').addEventListener('click',()=>hideMobileHlBar());
+  if(!('ontouchstart' in window)&&navigator.maxTouchPoints===0)return;
+  document.addEventListener('selectionchange',()=>{
+    if(ignoreSelChange)return;
+    clearTimeout(selTimer);
+    selTimer=setTimeout(()=>{
+      const sel=window.getSelection();
+      if(!sel||sel.isCollapsed||sel.rangeCount===0){hideMobileHlBar();return;}
+      const r=sel.getRangeAt(0);
+      const pb=document.getElementById('passage-body'),qp=document.getElementById('q-panel');
+      const inP=pb&&pb.contains(r.commonAncestorContainer);
+      const inQ=qp&&qp.contains(r.commonAncestorContainer);
+      if(inP||inQ)showMobileHlBar(r);else hideMobileHlBar();
+    },350);
+  });
+  document.addEventListener('touchend',e=>{
+    if(bar.contains(e.target))return;
+    touchPending=true;setTimeout(()=>{touchPending=false;},300);
+    if(bar.classList.contains('show'))hideMobileHlBar();
+  },{passive:true});
+}
+init();
+</script>
+</body>
+</html>
